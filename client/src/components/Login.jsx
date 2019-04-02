@@ -37,21 +37,21 @@ class Login extends Component {
       });
     }
 
-    if (!response.data.loginSuccess) {
-      if (response.data.wrong === "email") {
+    if (!response.loginSuccess) {
+      if (response.wrong === "email") {
         throw new SubmissionError({
 					email: 'Wrong email',
-          _error: response.data.message
+          _error: response.message
         });
       } else {
 				throw new SubmissionError({
 					password: 'Wrong password',
-          _error: response.data.message
+          _error: response.message
         });
 			}
     }
 
-    if (response && response.data.loginSuccess) {
+    if (response && response.loginSuccess) {
       this.props.history.push("/");
     }
   };

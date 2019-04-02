@@ -13,6 +13,7 @@ import TextInput from "../app/common/form/Textinput";
 
 const validate = values => {
   const errors = {};
+
   if (!values.name) {
     errors.name = "Required";
   } else if (values.name.length > 15) {
@@ -29,26 +30,36 @@ const validate = values => {
   if (values.password !== values.confirmPassword) {
     errors.confirmPassword = "Not the same";
   } else if (!values.confirmPassword) {
-		errors.confirmPassword = "Required";
-	}
+    errors.confirmPassword = "Required";
+  }
 
   return errors;
 };
 
 class Register extends Component {
-
   submit = async values => {
-  	const response = await this.props.register(values);
-		console.log(response)
-		if (!response.success) {
-			throw new SubmissionError({
-				_error: response.err.message
-			});
-		}
+    const response = await this.props.register(values);
+    console.log(response);
+    if (!response.success) {
+      throw new SubmissionError({
+        _error: response.err.message
+      });
+    } else {
+      setTimeout(() => {
+        this.props.history.push("/login");
+      }, 3000);
+    }
   };
 
   render() {
-    const { handleSubmit, invalid, submitting, pristine, error } = this.props;
+    const {
+      handleSubmit,
+      invalid,
+      submitting,
+      pristine,
+      error,
+      success
+    } = this.props;
 
     return (
       <div style={{ width: "500px", margin: "0 auto" }}>
@@ -78,17 +89,24 @@ class Register extends Component {
             label="Confirm Password"
             component={TextInput}
           />
-					{error && <p style={{ color: "red" }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <button type="submit" disabled={invalid || submitting || pristine}>
             Submit
           </button>
+          {success && <p>SUCCESS</p>}
         </form>
       </div>
     );
   }
 }
 
+const mapState = ({ user: { registerSuccess = null } }) => {
+  return {
+    success: registerSuccess
+  };
+};
+
 export default connect(
-  null,
+  mapState,
   { register }
 )(reduxForm({ form: "registerForm", validate })(Register));

@@ -1,28 +1,38 @@
-import {
-	LOGIN_USER,
-	REGISTER_USER
-} from '../actions/types';
-
-import { createReducer } from '../app/common/utils/createReducer';
+import { createReducer } from "../app/common/utils/createReducer";
+import { LOGIN_USER, LOGOUT_USER, REGISTER_USER, AUTH_USER } from "../actions/types";
 
 const initialState = {};
 
-export const loginUser = (state, payload) => {
+export const login = (state, payload) => {
   return {
     ...state,
-    loginSucces: payload
-  }
-}
+    loginSuccess: payload
+  };
+};
 
-export const registerUser = (state, payload) => {
-	console.log('register_reducer')
+export const logout = (state) => {
+  return {
+    ...state
+  };
+};
+
+export const register = (state, payload) => {
   return {
     ...state,
-    loginSucces: payload
-  }
-}
+    registerSuccess: payload
+  };
+};
+
+export const auth = (state, payload) => {
+  return {
+    ...state,
+    userData: payload
+  };
+};
 
 export default createReducer(initialState, {
-  [LOGIN_USER]: loginUser,
-  [REGISTER_USER]: registerUser,
-})
+	[LOGIN_USER]: login,
+	[LOGOUT_USER]: logout,
+  [REGISTER_USER]: register,
+  [AUTH_USER]: auth
+});
