@@ -1,5 +1,4 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const app = express();
@@ -161,12 +160,13 @@ app.post("/api/users/login", (req, res) => {
     if (!user)
       return res.json({
         loginSuccess: false,
-        message: "Auth failed, email not found"
+				message: "Auth failed, email not found",
+				wrong: "email"
       });
 
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
-        return res.json({ loginSuccess: false, message: "Wrong password" });
+        return res.json({ loginSuccess: false, message: "Wrong password", wrong: "password" });
 
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
@@ -188,6 +188,10 @@ app.get("/api/user/logout", auth, (req, res) => {
       success: true
     });
   });
+});
+
+app.use(function(req, res) {
+	res.status(err.status || 500);
 });
 
 const port = process.env.PORT || 3002;
