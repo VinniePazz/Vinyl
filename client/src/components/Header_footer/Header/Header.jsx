@@ -124,7 +124,7 @@ const styles = theme => ({
     color: "#ffffff",
     fontSize: "2.5rem",
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flexStart",
     alignItems: "center",
 		width: "20%",
 		marginLeft: 0,

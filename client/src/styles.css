@@ -442,7 +442,7 @@ footer .business_nfo .nfo {
 ==============================*/
 
 .card_block {
-    margin: 110px 0px;
+    margin: 3em 0px;
 }
 
 .card_block .title {
@@ -584,12 +584,12 @@ footer .business_nfo .nfo {
 }
 
 .shop_wrapper .right {
-    width: 800px;
+    width: 75%;
 }
 
 .collapse_title span {
     text-transform: uppercase;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .grid_btn {
