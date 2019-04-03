@@ -11,7 +11,8 @@ export default function(ComposedClass, reload, adminRoute = null) {
     };
 
     async componentDidMount() {
-      await this.props.auth();
+			await this.props.auth();
+			
       let user = this.props.user.userData;
 
       if (!user.isAuth) {

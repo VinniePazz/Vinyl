@@ -17,9 +17,10 @@ import {
   faCompass,
   faClock,
   faPhone,
-  faEnvelope
+	faEnvelope,
+	faShoppingCart
 } from "@fortawesome/free-solid-svg-icons";
-library.add(fab, faCompass, faClock, faPhone, faEnvelope);
+library.add(fab, faCompass, faClock, faPhone, faEnvelope, faShoppingCart);
 // =============================================================================
 
 const store = configureStore();

@@ -266,23 +266,12 @@ header {
     border-bottom: 1px solid white;
 }
 
-header .logo {
-    font-family: 'Monoton', cursive;
-    color: #ffffff;
-    font-size: 40px;
-    padding: 11px 0px;
-}
-
 header a {
     margin-left: 20px;
 }
 
 header .container {
     display: flex;
-}
-
-header .container .left{
-    width: 250px;
 }
 
 header .container .right{
@@ -527,6 +516,10 @@ footer .business_nfo .nfo {
 .card_item_wrapper .actions .button_wrapp:nth-child(1) {
     flex-grow: 1;
     padding-right: 10px;
+}
+
+.button_wrapp a.link_default {
+    margin: 0
 }
 
 .card_item_wrapper.grid_bars {

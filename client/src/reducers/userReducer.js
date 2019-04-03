@@ -12,7 +12,10 @@ export const login = (state, payload) => {
 
 export const logout = (state) => {
   return {
-    ...state
+		...state,
+		userData: {
+			isAuthL: false
+		}
   };
 };
 

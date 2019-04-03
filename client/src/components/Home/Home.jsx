@@ -1,27 +1,41 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+
+import HomeSlider from "./HomeSlider";
+import HomePromotion from "./HomePromotion";
+import CardBlock from "../CardBlock";
+
+import {
+  getProductsBySell,
+  getProductsByArrival
+} from "../../actions/productActions";
 
 class Home extends Component {
+  componentDidMount() {
+    this.props.getProductsBySell();
+    this.props.getProductsByArrival();
+  }
+
   render() {
-    const { classes } = this.props;
+    const { products } = this.props;
     return (
-      <Grid container spacing={8}>
-        <Grid item xs>
-          <Typography color="secondary">Column 1</Typography>
-        </Grid>
-        <Grid item xs>
-          <Button size="large" color="secondary" variant="contained" classes={{containedSecondary: classes.containedSecondary}}>Primary</Button>
-        </Grid>
-        <Grid item>Column 3</Grid>
-      </Grid>
+      <>
+        <HomeSlider />
+        <CardBlock list={products.bySell} title="Best Selling guitars" />
+        <HomePromotion />
+        <CardBlock list={products.byArrival} title="New arrivals" />
+      </>
     );
   }
 }
 
-const styles = theme => ({
-})
+const mapStateToProps = state => {
+  return {
+    products: state.products
+  };
+};
 
-export default withStyles(styles)(Home);
+export default connect(
+  mapStateToProps,
+  { getProductsBySell, getProductsByArrival }
+)(Home);

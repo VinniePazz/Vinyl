@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
 
 import { connect } from "react-redux";
 import { logout } from "../../../actions/userActions";
@@ -36,15 +37,14 @@ class Header extends Component {
       },
       {
         name: "Log out",
-        linkTo: "/user/logout",
         public: false
       }
     ]
   };
 
   logoutHandler = async () => {
-		const response = await this.props.logout();
-		
+    const response = await this.props.logout();
+
     if (response.success) {
       this.props.history.push("/");
     }
@@ -100,13 +100,14 @@ class Header extends Component {
 
   render() {
     const { page, user } = this.state;
+    const { classes } = this.props;
 
     return (
       <header className="bck_b_light">
         <div className="container">
-          <div className="left">
-            <div className="logo">VINYL</div>
-          </div>
+          <Link to="/" className={classes.logo}>
+            VINYL
+          </Link>
           <div className="right">
             <div className="top">{this.showLinks(user)}</div>
             <div className="bottom">{this.showLinks(page)}</div>
@@ -117,6 +118,27 @@ class Header extends Component {
   }
 }
 
+const styles = theme => ({
+  logo: {
+    fontFamily: '"Monoton", cursive',
+    color: "#ffffff",
+    fontSize: "2.5rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+		width: "20%",
+		marginLeft: 0,
+
+    [theme.breakpoints.down("sm")]: {
+			width: "30%",	
+		},
+		[theme.breakpoints.down("xs")]: {
+			fontSize: "1.8rem",
+			width: "35%",
+    },
+  }
+});
+
 const mapStateToProps = ({ user }) => {
   return {
     user
@@ -126,4 +148,4 @@ const mapStateToProps = ({ user }) => {
 export default connect(
   mapStateToProps,
   { logout }
-)(withRouter(Header));
+)(withRouter(withStyles(styles)(Header)));
