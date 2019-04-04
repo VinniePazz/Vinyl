@@ -3,17 +3,24 @@ import { connect } from "react-redux";
 
 import Grid from "@material-ui/core/Grid";
 
-import { getBrands, getWoods } from "../actions/productActions";
+import ShopGallery from "./ShopGallery";
+import FilterBar from "./FilterBar";
+
+import {
+  getBrands,
+  getWoods,
+  getProductsToShop
+} from "../actions/productActions";
 import { price } from "../app/data/price";
 import { frets } from "../app/data/frets";
 
 import PageTop from "./PageTop";
-import CollapseCheckbox from "./CollapseCheckbox";
-import CollapseRadio from './CollapseRadio';
+
+import ShopBar from "./ShopBar";
 
 class Shop extends Component {
   state = {
-    grid: "",
+    grid: "table",
     limit: 6,
     skip: 0,
     filters: {
@@ -25,8 +32,13 @@ class Shop extends Component {
   };
 
   componentDidMount() {
+		const { skip, limit, filters } = this.state;
+		window.scrollTo(0, 0);
+
     this.props.getBrands();
     this.props.getWoods();
+
+    this.props.getProductsToShop(skip, limit, filters);
   }
 
   handlePrice = value => {
@@ -50,13 +62,37 @@ class Shop extends Component {
       newFilters[category] = priceValues;
     }
 
-    this.setState(
-      {
-        filters: newFilters
-      },
-      () => console.log(this.state)
-    );
+    this.showFilteredResults(newFilters);
+
+    this.setState({ filters: newFilters });
   };
+
+  showFilteredResults = async filters => {
+    await this.props.getProductsToShop(0, this.state.limit, filters);
+    this.setState({
+      skip: 0
+    });
+  };
+
+  loadMoreCards = async () => {
+    let { skip, limit, filters } = this.state;
+    skip = skip + limit;
+
+    await this.props.getProductsToShop(
+      skip,
+      limit,
+      filters,
+      this.props.products.toShop
+    );
+
+    this.setState({
+      skip
+    });
+  };
+
+  handleGrid = (type) => {
+    this.setState({ grid: type });
+	};
 
   render() {
     const { products } = this.props;
@@ -66,34 +102,18 @@ class Shop extends Component {
         <PageTop title="Browse Products" />
         <div className="container">
           <Grid container spacing={24}>
-            <Grid item sm={4}>
-              <CollapseCheckbox
-                initState={true}
-                title="Brands"
-                list={products.brands}
-                handleFilters={filters => this.handleFilters(filters, "brand")}
-              />
-              <CollapseCheckbox
-                initState={false}
-                title="Frets"
-                list={frets}
-                handleFilters={filters => this.handleFilters(filters, "frets")}
-              />
-              <CollapseCheckbox
-                initState={false}
-                title="Wood"
-                list={products.woods}
-                handleFilters={filters => this.handleFilters(filters, "wood")}
-              />
-              <CollapseRadio
-                initState={true}
-                title="Price"
-                list={price}
-                handleFilters={filters => this.handleFilters(filters, "price")}
-              />
+            <Grid item xs={4}>
+              <FilterBar products={products} handleFilters={this.handleFilters} />
             </Grid>
-            <Grid item sm={8}>
-              right
+            <Grid item xs={8}>
+              <ShopBar grid={this.state.grid} onClick={this.handleGrid} />
+              <ShopGallery
+                grid={this.state.grid}
+                limit={this.state.limit}
+                size={products.toShopSize}
+                products={products.toShop}
+                loadMore={this.loadMoreCards}
+              />
             </Grid>
           </Grid>
         </div>
@@ -110,5 +130,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getBrands, getWoods }
+  { getBrands, getWoods, getProductsToShop }
 )(Shop);

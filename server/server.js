@@ -25,6 +25,42 @@ const { admin } = require("./middleware/admin");
 //=================================
 //             PRODUCTS
 //=================================
+app.post("/api/product/shop", (req, res) => {
+  let order = req.body.order ? req.body.order : "desc";
+  let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+	let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+  let skip = parseInt(req.body.skip);
+  let findArgs = {};
+
+  for (let key in req.body.filters) {
+    if (req.body.filters[key].length > 0) {
+      if (key === "price") {
+        findArgs[key] = {
+          $gte: req.body.filters[key][0],
+          $lte: req.body.filters[key][1]
+        };
+      } else {
+        findArgs[key] = req.body.filters[key];
+      }
+    }
+  }
+
+  findArgs["publish"] = true;
+
+  Product.find(findArgs)
+    .populate("brand")
+    .populate("wood")
+    .sort([[sortBy, order]])
+    .skip(skip)
+    .limit(limit)
+    .exec((err, articles) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({
+        size: articles.length,
+        articles
+      });
+    });
+});
 
 // BY ARRIVAL
 // /articles?sortBy=createdAt&order=desc&limit=4
@@ -39,7 +75,7 @@ app.get("/api/product/articles", (req, res) => {
   Product.find()
     .populate("brand")
     .populate("wood")
-    .sort({[sortBy]: order})
+    .sort({ [sortBy]: order })
     .limit(limit)
     .exec((err, articles) => {
       if (err) return res.status(400).send(err);
@@ -160,13 +196,17 @@ app.post("/api/users/login", (req, res) => {
     if (!user)
       return res.json({
         loginSuccess: false,
-				message: "Auth failed, email not found",
-				wrong: "email"
+        message: "Auth failed, email not found",
+        wrong: "email"
       });
 
     user.comparePassword(req.body.password, (err, isMatch) => {
       if (!isMatch)
-        return res.json({ loginSuccess: false, message: "Wrong password", wrong: "password" });
+        return res.json({
+          loginSuccess: false,
+          message: "Wrong password",
+          wrong: "password"
+        });
 
       user.generateToken((err, user) => {
         if (err) return res.status(400).send(err);
@@ -191,7 +231,7 @@ app.get("/api/users/logout", auth, (req, res) => {
 });
 
 app.use(function(req, res) {
-	res.status(err.status || 500);
+  res.status(err.status || 500);
 });
 
 const port = process.env.PORT || 3002;
