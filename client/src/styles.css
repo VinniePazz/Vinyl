@@ -23,7 +23,8 @@ body {
 
 .container {
     max-width:1100px;
-    margin: 0 auto;
+		margin: 0 auto;
+		padding: 0 .5em 0 .5em;
 }
 .page_container {
     min-height: 75vh;

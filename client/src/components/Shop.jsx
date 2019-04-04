@@ -32,8 +32,8 @@ class Shop extends Component {
   };
 
   componentDidMount() {
-		const { skip, limit, filters } = this.state;
-		window.scrollTo(0, 0);
+    const { skip, limit, filters } = this.state;
+    window.scrollTo(0, 0);
 
     this.props.getBrands();
     this.props.getWoods();
@@ -90,12 +90,13 @@ class Shop extends Component {
     });
   };
 
-  handleGrid = (type) => {
+  handleGrid = type => {
     this.setState({ grid: type });
-	};
+  };
 
   render() {
-    const { products } = this.props;
+		const { products } = this.props;
+		const { grid, limit } = this.state;
 
     return (
       <>
@@ -103,13 +104,16 @@ class Shop extends Component {
         <div className="container">
           <Grid container spacing={24}>
             <Grid item xs={4}>
-              <FilterBar products={products} handleFilters={this.handleFilters} />
+              <FilterBar
+                products={products}
+                handleFilters={this.handleFilters}
+              />
             </Grid>
             <Grid item xs={8}>
-              <ShopBar grid={this.state.grid} onClick={this.handleGrid} />
+              <ShopBar grid={grid} onClick={this.handleGrid} />
               <ShopGallery
-                grid={this.state.grid}
-                limit={this.state.limit}
+                grid={grid}
+                limit={limit}
                 size={products.toShopSize}
                 products={products.toShop}
                 loadMore={this.loadMoreCards}

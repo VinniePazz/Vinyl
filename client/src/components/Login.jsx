@@ -57,7 +57,7 @@ class Login extends Component {
   };
 
   render() {
-    const { handleSubmit, invalid, submitting, pristine, error } = this.props;
+    const { handleSubmit, invalid, submitting, pristine } = this.props;
     return (
       <div style={{ width: "500px", margin: "0 auto" }}>
         <form onSubmit={handleSubmit(this.submit)}>
@@ -73,7 +73,6 @@ class Login extends Component {
             label="Password"
             component={TextInput}
           />
-          {/* {error && <p style={{ color: "red" }}>{error}</p>} */}
           <button type="submit" disabled={invalid || submitting || pristine}>
             Submit
           </button>

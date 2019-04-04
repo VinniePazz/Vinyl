@@ -15,5 +15,12 @@ export default createMuiTheme({
 	typography: {
 		fontFamily: '"Oswald", sans-serif',
 		useNextVariants: true
+	},
+	overrides: {
+		MuiButton: {
+			root: {
+				borderRadius: 0
+			}
+		}
 	}
 });

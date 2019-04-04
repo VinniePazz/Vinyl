@@ -15,21 +15,23 @@ const ShopGallery = ({ products, grid, loadMore, size, limit }) => {
     </Button>
   );
 
+  const renderGrid = grid =>
+    grid === "table"
+      ? products.map(product => (
+          <Grid item key={product._id} md={4} xs={12} sm={6}>
+            <ShopCard {...product} grid={grid} />
+          </Grid>
+        ))
+      : products.map(product => (
+          <Grid item key={product._id} xs={12}>
+            <ShopCard {...product} grid={grid} />
+          </Grid>
+        ));
+
   return (
     <>
       <Grid container spacing={16}>
-        {grid === "table" &&
-          products.map(product => (
-            <Grid item key={product._id} md={4} xs={12} sm={6}>
-              <ShopCard {...product} grid='table' />
-            </Grid>
-          ))}
-        {grid === "row" &&
-          products.map(product => (
-            <Grid item key={product._id} xs={12} >
-              <ShopCard {...product} grid='row' />
-            </Grid>
-          ))}
+        {renderGrid(grid)}
       </Grid>
       <div style={{ margin: "1em 0 5em 0", textAlign: "center" }}>
         {size > 0 && size >= limit && renderButton()}

@@ -45,7 +45,7 @@ app.post("/api/product/shop", (req, res) => {
     }
   }
 
-  findArgs["publish"] = true;
+	findArgs["publish"] = true;
 
   Product.find(findArgs)
     .populate("brand")

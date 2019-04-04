@@ -6,18 +6,35 @@ import { AppBar, Toolbar } from "@material-ui/core";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const ShopBar = ({ onClick }) => {
+const ShopBar = ({ onClick, grid }) => {
+  const active = "rgba(0, 0, 0, 0.75)";
+  const passive = "rgba(0, 0, 0, 0.47)";
+
   return (
-    <div style={{ display: "flex", justifyContent: "flex-end", color: '#635e5e', marginBottom: '1em' }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "flex-end",
+        color: "#635e5e",
+        marginBottom: "1em"
+      }}
+    >
       <ViewStream
         fontSize="large"
         onClick={() => onClick("row")}
-        style={{ cursor: "pointer" }}
+        style={{
+          cursor: "pointer",
+          color: grid === "row" ? active : passive
+        }}
       />
       <ViewModule
+        color="action"
         fontSize="large"
         onClick={() => onClick("table")}
-        style={{ cursor: "pointer" }}
+        style={{
+          cursor: "pointer",
+          color: grid === "table" ? active : passive
+        }}
       />
     </div>
   );

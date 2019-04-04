@@ -23,89 +23,53 @@ const ShopCard = ({
   grid,
   classes
 }) => {
-  if (grid === 'row') {
-    return (
-      <Card className={classes.grid}>
-        <CardMedia
-          image={images.length > 0 ? images[0] : "/images/placeholder.png"}
-          title="Vinyl item"
-          className={classes.mediaRow}
-        />
-        <CardContent className={classes.root}>
-          <Typography variant="h5">{brand.name}</Typography>
-          <Typography variant="h4" color="secondary">
-            {name}
-          </Typography>
-					<Typography component="p">`${description}`</Typography>
-          <Typography variant="h6" color="textSecondary">
-            {`$${price}`}
-          </Typography>
-          {grid === "rows" && (
-            <Typography component="p">`${description}`</Typography>
-          )}
-          <CardActions>
-            <Button
-              fullWidth
-              variant="outlined"
-              component={Link}
-              to={`/product_detail/${_id}`}
-            >
-              View product
-            </Button>
-            <IconButton
-              color="secondary"
-              className={classes.button}
-              aria-label="Add to shopping cart"
-              onClick={() => {
-                console.log("added to cart");
-              }}
-            >
-              <AddShoppingCartIcon />
-            </IconButton>
-          </CardActions>
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
-    <Card>
+    <Card className={grid === "row" ? classes.grid : ''}>
       <CardMedia
-        image={images.length > 0 ? images[0] : "/images/placeholder.png"}
-        title="Vinyl item"
-        className={classes.media}
+        image={images.length > 0 ? images[0] : `/images/featured/featured_home_2.jpg`}
+        title="Vinyl music"
+        className={grid === "row" ? classes.mediaRow : classes.mediaTable}
       />
-      <CardContent className={classes.content}>
-        <Typography gutterBottom variant="h5">
+      <CardContent
+        className={grid === "row" ? classes.rootRow : classes.rootTable}
+      >
+        <Typography gutterBottom variant="h5" className={classes.h5} >
           {brand.name}
         </Typography>
-        <Typography gutterBottom variant="h4" color="secondary">
+        <Typography gutterBottom variant="h5" color="secondary">
           {name}
         </Typography>
         <Typography gutterBottom variant="h6" color="textSecondary">
           {`$${price}`}
         </Typography>
+        {grid === "row" && (
+          <Typography component="p">`${description}`</Typography>
+        )}
+
+        <CardActions
+          className={grid === "row" ? classes.actionRow : classes.action}
+        >
+          <Button
+            fullWidth
+						className={classes.buttonBg}
+            variant="outlined"
+            component={Link}
+            to={`/product_detail/${_id}`}
+          >
+            View product
+          </Button>
+          <IconButton
+            color="secondary"
+            className={classes.button}
+            aria-label="Add to shopping cart"
+            onClick={() => {
+              console.log("added to cart");
+            }}
+          >
+            <AddShoppingCartIcon />
+          </IconButton>
+        </CardActions>
       </CardContent>
-      <CardActions>
-        <Button
-          fullWidth
-          variant="outlined"
-          component={Link}
-          to={`/product_detail/${_id}`}
-        >
-          View product
-        </Button>
-        <IconButton
-          color="secondary"
-          className={classes.button}
-          aria-label="Add to shopping cart"
-          onClick={() => {
-            console.log("added to cart");
-          }}
-        >
-          <AddShoppingCartIcon />
-        </IconButton>
-      </CardActions>
     </Card>
   );
 };
@@ -114,24 +78,40 @@ const styles = theme => ({
   grid: {
     display: "flex"
   },
-  root: {
-    width: "65%",
+  rootRow: {
+    width: "60%",
     display: "flex",
     flexDirection: "column",
-		alignItems: "center",
-		padding: '0 0 0 1em !important',
+    alignItems: "center",
+    padding: "0 0 0 1em !important"
   },
-  media: {
+  mediaTable: {
     height: 0,
-    paddingTop: "76.25%"
+		paddingTop: "76.25%",
+		borderBottom: '1px solid #80808069'
   },
   mediaRow: {
-    width: "35%"
+		width: "40%",
+		borderRight: '1px solid #80808069'
   },
-  content: {
-		textAlign: "center",
-		paddingBottom: 0
-  }
+  rootTable: {
+    textAlign: "center",
+    paddingBottom: '.5em !important'
+  },
+  action: {
+    padding: 0
+  },
+  actionRow: {
+    alignSelf: "flex-end"
+	},
+	h5 : {
+		fontSize: '1rem',
+		fontWeight: 700
+	},
+	buttonBg: {
+		backgroundColor: '#e1ddc3',
+		color: 'rgb(64, 64, 64)'
+	}
 });
 
 export default withStyles(styles)(ShopCard);
