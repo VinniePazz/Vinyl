@@ -26,7 +26,7 @@ const ShopCard = ({
   return (
     <Card className={grid === "row" ? classes.grid : ''}>
       <CardMedia
-        image={images.length > 0 ? images[0] : `/images/featured/featured_home_2.jpg`}
+        image={images.length > 0 ? images[0].url : `/images/featured/featured_home_2.jpg`}
         title="Vinyl music"
         className={grid === "row" ? classes.mediaRow : classes.mediaTable}
       />

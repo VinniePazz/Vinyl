@@ -12,7 +12,6 @@ import {
   getProductsToShop
 } from "../actions/productActions";
 import { price } from "../app/data/price";
-import { frets } from "../app/data/frets";
 
 import PageTop from "./PageTop";
 

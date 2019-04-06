@@ -52,10 +52,8 @@ class ProductForm extends Component {
   }
 
   submit = async values => {
-    console.log("values", values);
     values.images = this.state.images;
     const response = await this.props.addProduct(values);
-    console.log(response);
 
     if (!response.success) {
       throw new SubmissionError({
@@ -66,7 +64,8 @@ class ProductForm extends Component {
       this.props.reset();
       this.setState({
         images: []
-      });
+			});
+			window.scrollTo({ top: 0, behavior: "smooth" })
     }
   };
 

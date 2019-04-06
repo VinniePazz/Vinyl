@@ -3,16 +3,17 @@ import {
   GET_PRODUCTS_BY_SELL,
   GET_PRODUCTS_BY_ARRIVAL,
   GET_BRANDS,
-	GET_WOODS,
-	GET_PRODUCTS_TO_SHOP,
-	ADD_PRODUCT,
-	CLEAR_PRODUCT
+  ADD_BRAND,
+  GET_WOODS,
+  ADD_WOOD,
+  GET_PRODUCTS_TO_SHOP,
+  ADD_PRODUCT,
+  CLEAR_PRODUCT
 } from "./types";
 
 import { PRODUCT_SERVER } from "../app/common/utils/misc";
 
 export const getProductsBySell = () => async dispatch => {
-  //?sortBy=sold&order=desc&limit=100
   const response = await axios.get(
     `${PRODUCT_SERVER}/articles?sortBy=sold&order=desc&limit=4`
   );
@@ -26,29 +27,31 @@ export const getProductsByArrival = () => async dispatch => {
   dispatch({ type: GET_PRODUCTS_BY_ARRIVAL, payload: response.data });
 };
 
-export const getProductsToShop = (skip, limit ,filters = [], previousState = []) => async dispatch => {
-	const data = {limit, skip, filters}
-  const response = await axios.post(
-    `${PRODUCT_SERVER}/shop`, data
-	);
-	console.log(response)
-	let newState = [
-		...previousState,
-		...response.data.articles
-	];
-  dispatch({ type: GET_PRODUCTS_TO_SHOP, payload: { articles: newState, size: response.data.size, } });
+export const getProductsToShop = (
+  skip,
+  limit,
+  filters = [],
+  previousState = []
+) => async dispatch => {
+  const data = { limit, skip, filters };
+  const response = await axios.post(`${PRODUCT_SERVER}/shop`, data);
+  console.log(response);
+  let newState = [...previousState, ...response.data.articles];
+  dispatch({
+    type: GET_PRODUCTS_TO_SHOP,
+    payload: { articles: newState, size: response.data.size }
+  });
 };
 
-export const addProduct = (product) => async dispatch => {
-	const response = await axios.post(`${PRODUCT_SERVER}/article`,product)
-	console.log(response)
-	dispatch({ type: ADD_PRODUCT, payload: response.data });
-	return response.data;
-}
+export const addProduct = product => async dispatch => {
+  const response = await axios.post(`${PRODUCT_SERVER}/article`, product);
+  dispatch({ type: ADD_PRODUCT, payload: response.data });
+  return response.data;
+};
 
 export const clearProduct = () => {
-	return { type: CLEAR_PRODUCT, payload: '' };
-}
+  return { type: CLEAR_PRODUCT, payload: "" };
+};
 
 ////////////////////////////////////
 //////        CATEGORIES
@@ -59,7 +62,29 @@ export const getBrands = () => async dispatch => {
   dispatch({ type: GET_BRANDS, payload: response.data });
 };
 
+export const addBrand = (brand, existingBrands) => async dispatch => {
+  const response = await axios.post(`${PRODUCT_SERVER}/brand`, brand);
+
+  let brands = [...existingBrands, response.data.brand];
+
+  dispatch({
+    type: ADD_BRAND,
+    payload: { success: response.data.success, brands }
+  });
+  return response.data;
+};
+
 export const getWoods = () => async dispatch => {
   const response = await axios.get(`${PRODUCT_SERVER}/woods`);
   dispatch({ type: GET_WOODS, payload: response.data });
+};
+
+export const addWood = (wood, existingWoods) => async dispatch => {
+  const response = await axios.post(`${PRODUCT_SERVER}/wood`, wood);
+  let woods = [...existingWoods, response.data.wood];
+  dispatch({
+    type: ADD_WOOD,
+    payload: { success: response.data.success, woods }
+  });
+  return response.data;
 };

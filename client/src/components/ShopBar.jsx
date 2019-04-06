@@ -2,10 +2,6 @@ import React from "react";
 import ViewModule from "@material-ui/icons/ViewModule";
 import ViewStream from "@material-ui/icons/ViewStream";
 
-import { AppBar, Toolbar } from "@material-ui/core";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
 const ShopBar = ({ onClick, grid }) => {
   const active = "rgba(0, 0, 0, 0.75)";
   const passive = "rgba(0, 0, 0, 0.47)";

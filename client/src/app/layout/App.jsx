@@ -8,6 +8,7 @@ import Register from "../../components/Register";
 
 import UserDashboard from "../../components/User/UserDashboard";
 import ProductForm from '../../components/User/Admin/ProductForm';
+import ManageCategories from '../../components/User/Admin/ManageCategories';
 
 import Shop from '../../components/Shop';
 import Vector from '../../components/Vector';
@@ -21,7 +22,7 @@ const App = () => {
       <Switch>
 				<Route path="/user/dashboard" exact component={Auth(UserDashboard,true)}/>
 				<Route path="/admin/add_product" exact component={Auth(ProductForm,true)}/>
-				
+				<Route path="/admin/manage_categories" exact component={Auth(ManageCategories,true)}/>			
 				<Route path="/register" exact component={Auth(Register,false)}/>
 				<Route path="/login" exact component={Auth(Login,false)}/>
 				<Route path="/shop" exact component={Auth(Shop,null)}/>

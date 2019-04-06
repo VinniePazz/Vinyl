@@ -3,10 +3,12 @@ import {
   GET_PRODUCTS_BY_SELL,
   GET_PRODUCTS_BY_ARRIVAL,
   GET_BRANDS,
-	GET_WOODS,
-	GET_PRODUCTS_TO_SHOP,
-	ADD_PRODUCT,
-	CLEAR_PRODUCT
+  ADD_BRAND,
+  GET_WOODS,
+  ADD_WOOD,
+  GET_PRODUCTS_TO_SHOP,
+  ADD_PRODUCT,
+  CLEAR_PRODUCT
 } from "../actions/types";
 
 const initialState = {};
@@ -32,6 +34,14 @@ export const brands = (state, payload) => {
   };
 };
 
+export const addBrand = (state, payload) => {
+  return {
+    ...state,
+    addBrand: payload.success,
+    brands: payload.brands
+  };
+};
+
 export const woods = (state, payload) => {
   return {
     ...state,
@@ -39,25 +49,33 @@ export const woods = (state, payload) => {
   };
 };
 
+export const addWood = (state, payload) => {
+  return {
+    ...state,
+    addWood: payload.success,
+    woods: payload.woods
+  };
+};
+
 export const productsToShop = (state, payload) => {
   return {
     ...state,
-		toShop: payload.articles,
-		toShopSize: payload.size
+    toShop: payload.articles,
+    toShopSize: payload.size
   };
 };
 
 export const addProduct = (state, payload) => {
   return {
     ...state,
-		addProduct: payload
+    addProduct: payload
   };
 };
 
 export const clearProduct = (state, payload) => {
   return {
     ...state,
-		addProduct: payload
+    addProduct: payload
   };
 };
 
@@ -68,5 +86,7 @@ export default createReducer(initialState, {
   [GET_WOODS]: woods,
   [GET_PRODUCTS_TO_SHOP]: productsToShop,
   [ADD_PRODUCT]: addProduct,
-  [CLEAR_PRODUCT]: clearProduct
+  [CLEAR_PRODUCT]: clearProduct,
+  [ADD_BRAND]: addBrand,
+  [ADD_WOOD]: addWood
 });

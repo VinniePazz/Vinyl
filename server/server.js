@@ -130,10 +130,11 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
 //=================================
 
 app.post("/api/product/wood", auth, admin, (req, res) => {
+	console.log(req.body)
   const wood = new Wood(req.body);
 
-  wood.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
+  wood.save((error, doc) => {
+    if (error) return res.json({ success: false, error });
     res.status(200).json({
       success: true,
       wood: doc
@@ -142,8 +143,8 @@ app.post("/api/product/wood", auth, admin, (req, res) => {
 });
 
 app.get("/api/product/woods", (req, res) => {
-  Wood.find({}, (err, woods) => {
-    if (err) return res.status(400).send(err);
+  Wood.find({}, (error, woods) => {
+    if (error) return res.status(400).send(error);
     res.status(200).send(woods);
   });
 });
@@ -155,8 +156,8 @@ app.get("/api/product/woods", (req, res) => {
 app.post("/api/product/brand", auth, admin, (req, res) => {
   const brand = new Brand(req.body);
 
-  brand.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
+  brand.save((error, doc) => {
+    if (error) return res.json({ success: false, error });
     res.status(200).json({
       success: true,
       brand: doc
@@ -165,8 +166,8 @@ app.post("/api/product/brand", auth, admin, (req, res) => {
 });
 
 app.get("/api/product/brands", (req, res) => {
-  Brand.find({}, (err, brands) => {
-    if (err) return res.status(400).send(err);
+  Brand.find({}, (error, brands) => {
+    if (error) return res.status(400).send(error);
     res.status(200).send(brands);
   });
 });
