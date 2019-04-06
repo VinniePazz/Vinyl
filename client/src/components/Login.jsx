@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import { Field, reduxForm, SubmissionError } from "redux-form";
-import { withRouter } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
 
 import { connect } from "react-redux";
 import { login } from "../actions/userActions";
 
-import TextInput from "../app/common/form/Textinput";
+import TextInput from "../app/common/form/TextInput";
 
 const validate = values => {
   const errors = {};

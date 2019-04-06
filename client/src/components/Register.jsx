@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 
 import { register } from "../actions/userActions";
-import TextInput from "../app/common/form/Textinput";
+import TextInput from "../app/common/form/TextInput";
 
 const validate = values => {
   const errors = {};
@@ -42,7 +42,7 @@ class Register extends Component {
     console.log(response);
     if (!response.success) {
       throw new SubmissionError({
-        _error: response.err.message
+        _error: response.error.message
       });
     } else {
       setTimeout(() => {

@@ -5,19 +5,28 @@ import Layout from "./Layout";
 import Home from "../../components/Home/Home";
 import Login from "../../components/Login";
 import Register from "../../components/Register";
+
 import UserDashboard from "../../components/User/UserDashboard";
-import Auth from '../../components/auth/Auth';
+import ProductForm from '../../components/User/Admin/ProductForm';
+
 import Shop from '../../components/Shop';
+import Vector from '../../components/Vector';
+
+import Auth from '../../components/auth/Auth';
+
 
 const App = () => {
   return (
     <Layout>
       <Switch>
 				<Route path="/user/dashboard" exact component={Auth(UserDashboard,true)}/>
+				<Route path="/admin/add_product" exact component={Auth(ProductForm,true)}/>
+				
 				<Route path="/register" exact component={Auth(Register,false)}/>
 				<Route path="/login" exact component={Auth(Login,false)}/>
 				<Route path="/shop" exact component={Auth(Shop,null)}/>
 				<Route path="/" exact component={Auth(Home,null)}/>
+				<Route path="/vector" exact component={Vector}/>
       </Switch>
     </Layout>
   );

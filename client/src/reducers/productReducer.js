@@ -4,7 +4,9 @@ import {
   GET_PRODUCTS_BY_ARRIVAL,
   GET_BRANDS,
 	GET_WOODS,
-	GET_PRODUCTS_TO_SHOP
+	GET_PRODUCTS_TO_SHOP,
+	ADD_PRODUCT,
+	CLEAR_PRODUCT
 } from "../actions/types";
 
 const initialState = {};
@@ -45,10 +47,26 @@ export const productsToShop = (state, payload) => {
   };
 };
 
+export const addProduct = (state, payload) => {
+  return {
+    ...state,
+		addProduct: payload
+  };
+};
+
+export const clearProduct = (state, payload) => {
+  return {
+    ...state,
+		addProduct: payload
+  };
+};
+
 export default createReducer(initialState, {
   [GET_PRODUCTS_BY_SELL]: bySell,
   [GET_PRODUCTS_BY_ARRIVAL]: byArrival,
   [GET_BRANDS]: brands,
   [GET_WOODS]: woods,
-  [GET_PRODUCTS_TO_SHOP]: productsToShop
+  [GET_PRODUCTS_TO_SHOP]: productsToShop,
+  [ADD_PRODUCT]: addProduct,
+  [CLEAR_PRODUCT]: clearProduct
 });

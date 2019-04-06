@@ -4,7 +4,9 @@ import {
   GET_PRODUCTS_BY_ARRIVAL,
   GET_BRANDS,
 	GET_WOODS,
-	GET_PRODUCTS_TO_SHOP
+	GET_PRODUCTS_TO_SHOP,
+	ADD_PRODUCT,
+	CLEAR_PRODUCT
 } from "./types";
 
 import { PRODUCT_SERVER } from "../app/common/utils/misc";
@@ -37,7 +39,16 @@ export const getProductsToShop = (skip, limit ,filters = [], previousState = [])
   dispatch({ type: GET_PRODUCTS_TO_SHOP, payload: { articles: newState, size: response.data.size, } });
 };
 
+export const addProduct = (product) => async dispatch => {
+	const response = await axios.post(`${PRODUCT_SERVER}/article`,product)
+	console.log(response)
+	dispatch({ type: ADD_PRODUCT, payload: response.data });
+	return response.data;
+}
 
+export const clearProduct = () => {
+	return { type: CLEAR_PRODUCT, payload: '' };
+}
 
 ////////////////////////////////////
 //////        CATEGORIES
