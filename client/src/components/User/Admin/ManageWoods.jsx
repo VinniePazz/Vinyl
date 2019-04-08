@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 
@@ -14,7 +14,7 @@ const validate = values => {
   return errors;
 };
 
-class ManageWoods extends Component {
+class ManageWoods extends PureComponent {
   componentDidMount() {
     this.props.getWoods();
   }

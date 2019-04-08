@@ -8,7 +8,7 @@ import "./styles.css";
 
 import { configureStore } from "./app/store/configureStore";
 import App from "./app/layout/App";
-import theme from './theme';
+import theme from "./theme";
 
 //============================-font-awesome-====================================
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -17,14 +17,29 @@ import {
   faCompass,
   faClock,
   faPhone,
-	faEnvelope,
-	faShoppingCart,
-	faTh,
-	faBars,
-	faPlusCircle
+  faEnvelope,
+  faShoppingCart,
+  faTh,
+  faBars,
+  faPlusCircle,
+  faTruck,
+  faCheck,
+  faTimes
 } from "@fortawesome/free-solid-svg-icons";
-library.add(fab, faCompass, faClock, faPhone, faEnvelope, faShoppingCart, faTh,
-	faBars, faPlusCircle);
+library.add(
+  fab,
+  faCompass,
+  faClock,
+  faPhone,
+  faEnvelope,
+  faShoppingCart,
+  faTh,
+  faBars,
+  faPlusCircle,
+  faTruck,
+  faCheck,
+  faTimes
+);
 // =============================================================================
 
 const store = configureStore();

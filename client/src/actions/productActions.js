@@ -8,10 +8,24 @@ import {
   ADD_WOOD,
   GET_PRODUCTS_TO_SHOP,
   ADD_PRODUCT,
-  CLEAR_PRODUCT
+  CLEAR_PRODUCT,
+  GET_PRODUCT_DETAIL,
+  CLEAR_PRODUCT_DETAIL
 } from "./types";
 
 import { PRODUCT_SERVER } from "../app/common/utils/misc";
+
+export const getProductDetail = (id) => async dispatch => {
+
+	const response = await axios.get(
+    `${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`
+  );
+  dispatch({ type: GET_PRODUCT_DETAIL, payload: response.data });
+}
+
+export const clearProductDetail = () => {
+  return({ type: CLEAR_PRODUCT_DETAIL, payload: "" });
+}
 
 export const getProductsBySell = () => async dispatch => {
   const response = await axios.get(

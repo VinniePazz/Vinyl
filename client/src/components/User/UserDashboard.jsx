@@ -2,7 +2,7 @@ import React from "react";
 import UserLayout from "./UserLayout";
 import Button from "../Button";
 
-const UserDashboard = ({user}) => {
+const UserDashboard = React.memo(({ user }) => {
   return (
     <UserLayout>
       <div>
@@ -27,6 +27,6 @@ const UserDashboard = ({user}) => {
       </div>
     </UserLayout>
   );
-};
+});
 
 export default UserDashboard;

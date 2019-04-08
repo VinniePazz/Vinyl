@@ -133,6 +133,7 @@ class ProductForm extends Component {
             label="Description"
             placeholder="Describe product"
             rows={10}
+						cols={10}
             component={TextArea}
           />
           <Field name="price" type="text" label="Price" component={TextInput} />

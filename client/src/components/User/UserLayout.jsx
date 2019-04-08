@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 const links = [
   {
@@ -32,7 +32,7 @@ const admin = [
   }
 ];
 
-const UserLayout = props => {
+const UserLayout = React.memo(({ user, children }) => {
   const generateLinks = links =>
     links.map((item, i) => (
       <Link to={item.linkTo} key={i}>
@@ -46,18 +46,18 @@ const UserLayout = props => {
         <div className="user_left_nav">
           <h2>My account</h2>
           <div className="links">{generateLinks(links)}</div>
-          {props.user.userData.isAdmin ? (
+          {user.userData.isAdmin ? (
             <div>
               <h2>Admin</h2>
               <div className="links">{generateLinks(admin)}</div>
             </div>
           ) : null}
         </div>
-        <div className="user_right">{props.children}</div>
+        <div className="user_right">{children}</div>
       </div>
     </div>
   );
-};
+});
 
 const mapStateToProps = state => {
   return {
