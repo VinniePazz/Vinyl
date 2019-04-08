@@ -11,11 +11,11 @@ import {
 } from "../../actions/productActions";
 
 class Home extends Component {
+
   componentDidMount() {
     this.props.getProductsBySell();
     this.props.getProductsByArrival();
 	}
-
 
   render() {
     const { products } = this.props;

@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import { Switch, Route } from "react-router-dom";
 
 import Layout from "./Layout";
@@ -16,21 +17,27 @@ import ProductPage from '../../components/Product/ProductPage';
 import Auth from '../../components/auth/Auth';
 
 
-const App = () => {
-  return (
-    <Layout>
-      <Switch>
-				<Route path="/user/dashboard" exact component={Auth(UserDashboard,true)}/>
-				<Route path="/admin/add_product" exact component={Auth(ProductForm,true)}/>
-				<Route path="/admin/manage_categories" exact component={Auth(ManageCategories,true)}/>
-				<Route path="/product_detail/:id" exact component={Auth(ProductPage,null)}/>			
-				<Route path="/register" exact component={Auth(Register,false)}/>
-				<Route path="/login" exact component={Auth(Login,false)}/>
-				<Route path="/shop" exact component={Auth(Shop,null)}/>
-				<Route path="/" exact component={Auth(Home,null)}/>
-      </Switch>
-    </Layout>
-  );
+class App extends React.Component {
+	
+	render() {
+		console.log('App is rendered')
+		return (
+			<BrowserRouter>
+				<Layout>
+					<Switch>
+						<Route path="/user/dashboard" exact component={Auth(UserDashboard,true)}/>
+						<Route path="/admin/add_product" exact component={Auth(ProductForm,true)}/>
+						<Route path="/admin/manage_categories" exact component={Auth(ManageCategories,true)}/>
+						<Route path="/product_detail/:id" exact component={Auth(ProductPage,null)}/>			
+						<Route path="/register" exact component={Auth(Register,false)}/>
+						<Route path="/login" exact component={Auth(Login,false)}/>
+						<Route path="/shop" exact component={Auth(Shop,null)}/>
+						<Route path="/" exact component={Auth(Home,null)}/>
+					</Switch>
+				</Layout>
+			</BrowserRouter>
+		);
+		}
 };
 
 export default App;

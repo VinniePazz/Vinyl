@@ -1,9 +1,9 @@
 import React from "react";
-import Card from "./Card";
+import ShopCard from "./ShopCard";
 
 const CardBlock = props => {
   const renderCards = () =>
-    props.list ? props.list.map((card, i) => <Card key={i} {...card} />) : null;
+    props.list ? props.list.map((card, i) => <ShopCard key={i} {...card} />) : null;
 
   return (
     <div className="card_block">
@@ -12,7 +12,8 @@ const CardBlock = props => {
         <div
           style={{
             display: "flex",
-            flexWrap: "wrap"
+            flexWrap: "wrap",
+						justifyContent: 'space-around'
           }}
         >
           {renderCards(props.list)}

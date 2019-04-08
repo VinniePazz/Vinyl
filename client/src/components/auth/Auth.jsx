@@ -43,14 +43,14 @@ export default function(ComposedClass, reload, adminRoute = null) {
     }
   }
 
-  function mapState(state) {
+  function mapStateToProps(state) {
     return {
       user: state.user
     };
   }
 
   return connect(
-    mapState,
+    mapStateToProps,
     { auth }
   )(AuthenticationCheck);
 }

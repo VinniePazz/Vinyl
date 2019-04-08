@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -13,6 +14,8 @@ import {
 
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
+import { addToCart } from "../actions/userActions";
+
 const ShopCard = ({
   name,
   price,
@@ -21,19 +24,21 @@ const ShopCard = ({
   description,
   _id,
   grid,
-  classes
+	classes,
+	user,
+	addToCart
 }) => {
   return (
-    <Card className={grid === "row" ? classes.grid : ''}>
+    <Card className={grid === "row" ? classes.grid : ""}>
       <CardMedia
-        image={images.length > 0 ? images[0].url : `/images/featured/featured_home_2.jpg`}
+        image={images.length > 0 ? images[0].url : `/images/placeholder.png`}
         title="Vinyl music"
         className={grid === "row" ? classes.mediaRow : classes.mediaTable}
       />
       <CardContent
         className={grid === "row" ? classes.rootRow : classes.rootTable}
       >
-        <Typography gutterBottom variant="h5" className={classes.h5} >
+        <Typography gutterBottom variant="h5" className={classes.h5}>
           {brand.name}
         </Typography>
         <Typography gutterBottom variant="h5" color="secondary">
@@ -51,7 +56,7 @@ const ShopCard = ({
         >
           <Button
             fullWidth
-						className={classes.buttonBg}
+            className={classes.buttonBg}
             variant="outlined"
             component={Link}
             to={`/product_detail/${_id}`}
@@ -63,7 +68,9 @@ const ShopCard = ({
             className={classes.button}
             aria-label="Add to shopping cart"
             onClick={() => {
-              console.log("added to cart");
+              user.userData.isAuth
+                ? addToCart(_id)
+                : console.log("you need to log in");
             }}
           >
             <AddShoppingCartIcon />
@@ -87,31 +94,43 @@ const styles = theme => ({
   },
   mediaTable: {
     height: 0,
-		paddingTop: "76.25%",
-		borderBottom: '1px solid #80808069'
+    paddingTop: "76.25%",
+    borderBottom: "1px solid #80808069"
   },
   mediaRow: {
-		width: "40%",
-		borderRight: '1px solid #80808069'
+    width: "40%",
+    borderRight: "1px solid #80808069"
   },
   rootTable: {
     textAlign: "center",
-    paddingBottom: '.5em !important'
+    paddingBottom: ".5em !important"
   },
   action: {
     padding: 0
   },
   actionRow: {
     alignSelf: "flex-end"
-	},
-	h5 : {
-		fontSize: '1rem',
-		fontWeight: 700
-	},
-	buttonBg: {
-		backgroundColor: '#e1ddc3',
-		color: 'rgb(64, 64, 64)'
-	}
+  },
+  h5: {
+    fontSize: "1rem",
+    fontWeight: 700
+  },
+  buttonBg: {
+    backgroundColor: "#e1ddc3",
+    color: "rgb(64, 64, 64)"
+  }
 });
 
-export default withStyles(styles)(ShopCard);
+const mapStateToProps = state => {
+	console.log(state)
+  return {
+    user: state.user
+  };
+};
+
+const StyledCard = withStyles(styles)(ShopCard);
+
+export default connect(
+  mapStateToProps,
+  { addToCart }
+)(StyledCard);

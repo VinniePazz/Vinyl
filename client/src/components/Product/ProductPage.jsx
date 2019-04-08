@@ -5,7 +5,7 @@ import ProductInfo from "./ProductInfo";
 import ProductImage from "./ProductImage";
 
 import { connect } from "react-redux";
-// import { addToCart } from "../../actions/user_actions";
+import { addToCart } from "../../actions/userActions";
 import {
   getProductDetail,
   clearProductDetail
@@ -26,9 +26,9 @@ class ProductPage extends Component {
     this.props.clearProductDetail();
   }
 
-  // addToCartHandler(id) {
-  //   this.props.addToCart(id);
-  // }
+  addToCartHandler(id) {
+    this.props.addToCart(id);
+  }
 
   render() {
     return (
@@ -44,7 +44,7 @@ class ProductPage extends Component {
               </div>
               <div className="right">
                 <ProductInfo
-                  // addToCart={id => this.addToCartHandler(id)}
+                  addToCart={id => this.addToCartHandler(id)}
                   detail={this.props.products.prodDetail[0]}
                 />
               </div>
@@ -66,5 +66,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getProductDetail, clearProductDetail }
+  { getProductDetail, clearProductDetail, addToCart }
 )(ProductPage);

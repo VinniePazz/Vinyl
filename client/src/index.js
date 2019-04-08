@@ -47,11 +47,9 @@ const store = configureStore();
 let render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <BrowserRouter>
-        <MuiThemeProvider theme={theme}>
-          <App />
-        </MuiThemeProvider>
-      </BrowserRouter>
+			<MuiThemeProvider theme={theme}>
+				<App />
+			</MuiThemeProvider>
     </Provider>,
     document.getElementById("root")
   );
