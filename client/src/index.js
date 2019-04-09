@@ -24,7 +24,9 @@ import {
   faPlusCircle,
   faTruck,
   faCheck,
-  faTimes
+	faTimes,
+	faFrown,
+	faSmile
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   fab,
@@ -38,7 +40,9 @@ library.add(
   faPlusCircle,
   faTruck,
   faCheck,
-  faTimes
+	faTimes,
+	faFrown,
+	faSmile
 );
 // =============================================================================
 

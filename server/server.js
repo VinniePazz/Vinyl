@@ -1,7 +1,8 @@
 const express = require("express");
+const async = require("async");
 const cookieParser = require("cookie-parser");
-const formidable = require('express-formidable');
-const cloudinary = require('cloudinary');
+const formidable = require("express-formidable");
+const cloudinary = require("cloudinary");
 
 const app = express();
 const mongoose = require("mongoose");
@@ -15,16 +16,17 @@ app.use(express.json());
 app.use(cookieParser());
 
 cloudinary.config({
-	cloud_name: process.env.CLOUD_NAME,
-	api_key: process.env.CLOUD_API_KEY,
-	api_secret: process.env.CLOUD_API_SECRET
-})
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_API_SECRET
+});
 
 // Models
 const { User } = require("./models/user");
 const { Brand } = require("./models/brand");
 const { Wood } = require("./models/wood");
 const { Product } = require("./models/product");
+const { Payment } = require('./models/payment');
 
 // Middlewares
 const { auth } = require("./middleware/auth");
@@ -36,7 +38,7 @@ const { admin } = require("./middleware/admin");
 app.post("/api/product/shop", (req, res) => {
   let order = req.body.order ? req.body.order : "desc";
   let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
-	let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+  let limit = req.body.limit ? parseInt(req.body.limit) : 100;
   let skip = parseInt(req.body.skip);
   let findArgs = {};
 
@@ -53,7 +55,7 @@ app.post("/api/product/shop", (req, res) => {
     }
   }
 
-	findArgs["publish"] = true;
+  findArgs["publish"] = true;
 
   Product.find(findArgs)
     .populate("brand")
@@ -130,7 +132,7 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
 //=================================
 
 app.post("/api/product/wood", auth, admin, (req, res) => {
-	console.log(req.body)
+  console.log(req.body);
   const wood = new Wood(req.body);
 
   wood.save((error, doc) => {
@@ -239,27 +241,31 @@ app.get("/api/users/logout", auth, (req, res) => {
   });
 });
 
-app.post('/api/users/uploadimage',auth,admin,formidable(),(req,res)=>{
-	cloudinary.uploader.upload(req.files.file.path,(result)=>{
-			console.log(result);
-			res.status(200).send({
-					public_id: result.public_id,
-					url: result.url
-			})
-	},{
-			public_id: `${Date.now()}`,
-			resource_type: 'auto'
-	})
-})
+app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
+  cloudinary.uploader.upload(
+    req.files.file.path,
+    result => {
+      console.log(result);
+      res.status(200).send({
+        public_id: result.public_id,
+        url: result.url
+      });
+    },
+    {
+      public_id: `${Date.now()}`,
+      resource_type: "auto"
+    }
+  );
+});
 
-app.get('/api/users/removeimage',auth,admin,(req,res)=>{
-	let image_id = req.query.public_id;
+app.get("/api/users/removeimage", auth, admin, (req, res) => {
+  let image_id = req.query.public_id;
 
-	cloudinary.uploader.destroy(image_id,(error,result)=>{
-			if(error) return res.json({succes:false,error});
-			res.status(200).send('ok');
-	})
-})
+  cloudinary.uploader.destroy(image_id, (error, result) => {
+    if (error) return res.json({ succes: false, error });
+    res.status(200).send("ok");
+  });
+});
 
 app.post("/api/users/addToCart", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, doc) => {
@@ -306,6 +312,107 @@ app.post("/api/users/addToCart", auth, (req, res) => {
   });
 });
 
+app.get("/api/users/removeFromCart", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $pull: { cart: { id: mongoose.Types.ObjectId(req.query._id) } } },
+    { new: true },
+    (err, doc) => {
+      console.log("DOC: ", doc);
+      let cart = doc.cart;
+      console.log("CART: ", cart);
+      let array = cart.map(item => {
+        return mongoose.Types.ObjectId(item.id);
+      });
+
+      Product.find({ _id: { $in: array } })
+        .populate("brand")
+        .populate("wood")
+        .exec((err, cartDetail) => {
+          return res.status(200).json({
+            cartDetail,
+            cart
+          });
+        });
+    }
+  );
+});
+
+app.post("/api/users/purchase", auth, (req, res) => {
+  let history = [];
+  let paymentData = {};
+
+  // user history
+  req.body.cartDetail.forEach(item => {
+    history.push({
+      dateOfPurchase: Date.now(),
+      name: item.name,
+      brand: item.brand.name,
+      id: item._id,
+      price: item.price,
+      quantity: item.quantity,
+      paymentId: `PAY-${Date.now()}` //dummy payment id
+    });
+  });
+
+  // PAYMENTS DASH
+  paymentData.user = {
+    id: req.user._id,
+    name: req.user.name,
+    lastname: req.user.lastname,
+    email: req.user.email
+  };
+  paymentData.metaData = {
+		paymentId: `PAY-${Date.now()}`,
+		dateOfPurchase: Date.now()
+	};
+  paymentData.buyingProduct = history;
+
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    { $push: { history: history }, $set: { cart: [] } },
+    { new: true },
+    (error, user) => {
+      if (error) return res.json({ success: false, error });
+
+			const payment = new Payment(paymentData);
+			
+      payment.save((error, doc) => {
+				if (error) return res.json({ success: false, error });
+				
+				let products = [];
+				
+        doc.buyingProduct.forEach(item => {
+          products.push({ id: item.id, quantity: item.quantity });
+        });
+
+        async.eachSeries(
+          products,
+          (item, callback) => {
+            Product.update(
+              { _id: item.id },
+              {
+                $inc: {
+                  sold: item.quantity
+                }
+              },
+              { new: false },
+              callback
+            );
+          },
+          error => {
+            if (error) return res.json({ success: false, error });
+            res.status(200).json({
+              successPurchase: true,
+              cart: user.cart,
+              cartDetail: []
+            });
+          }
+        );
+      });
+    }
+  );
+});
 /////////////////////////  BOTTOM  //////////////////////////////
 
 app.use(function(req, res) {

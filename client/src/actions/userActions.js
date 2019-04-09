@@ -5,10 +5,13 @@ import {
   LOGOUT_USER,
   REGISTER_USER,
   AUTH_USER,
-  ADD_TO_CART_USER
+  ADD_TO_CART_USER,
+  GET_CART_ITEMS_USER,
+  REMOVE_CART_ITEM_USER,
+  ON_PURCHASE_PRODUCTS
 } from "./types";
 
-import { USER_SERVER } from "../app/common/utils/misc";
+import { USER_SERVER, PRODUCT_SERVER } from "../app/common/utils/misc";
 
 export const register = user => async dispatch => {
   try {
@@ -46,10 +49,61 @@ export const login = user => async dispatch => {
 };
 
 export const addToCart = _id => async dispatch => {
-  const response = await axios.post(`${USER_SERVER}/addToCart?productId=${_id}`);
+  const response = await axios.post(
+    `${USER_SERVER}/addToCart?productId=${_id}`
+  );
 
   dispatch({
     type: ADD_TO_CART_USER,
+    payload: response.data
+  });
+};
+
+export const getCartItems = (cartItems, userCart) => async dispatch => {
+  const response = await axios.get(
+    `${PRODUCT_SERVER}/articles_by_id?id=${cartItems}&type=array`
+  );
+
+  userCart.forEach(item => {
+    response.data.forEach((k, i) => {
+      if (item.id === k._id) {
+        response.data[i].quantity = item.quantity;
+      }
+    });
+  });
+
+  dispatch({
+    type: GET_CART_ITEMS_USER,
+    payload: response.data
+  });
+
+  return response.data;
+};
+
+export const removeCartItem = id => async dispatch => {
+  const response = await axios.get(`${USER_SERVER}/removeFromCart?_id=${id}`);
+
+  response.data.cart.forEach(item => {
+    response.data.cartDetail.forEach((k, i) => {
+      if (item.id === k._id) {
+        response.data.cartDetail[i].quantity = item.quantity;
+      }
+    });
+  });
+
+  dispatch({
+    type: REMOVE_CART_ITEM_USER,
+    payload: response.data
+  });
+
+  return response.data;
+};
+
+export const onPurchase = (cardDetail) => async dispatch => {
+  const response = await axios.post(`${USER_SERVER}/purchase`, cardDetail);
+	console.log(response)
+  dispatch({
+    type: ON_PURCHASE_PRODUCTS,
     payload: response.data
   });
 };

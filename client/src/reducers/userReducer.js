@@ -4,7 +4,10 @@ import {
   LOGOUT_USER,
   REGISTER_USER,
   AUTH_USER,
-  ADD_TO_CART_USER
+  ADD_TO_CART_USER,
+  GET_CART_ITEMS_USER,
+  REMOVE_CART_ITEM_USER,
+  ON_PURCHASE_PRODUCTS
 } from "../actions/types";
 
 const initialState = {};
@@ -49,10 +52,43 @@ export const addToCart = (state, payload) => {
   };
 };
 
+export const getCartItems = (state, payload) => {
+  return {
+    ...state,
+    cartDetail: payload
+  };
+};
+
+export const removeCartItem = (state, payload) => {
+  return {
+    ...state,
+    cartDetail: payload.cartDetail,
+    userData: {
+      ...state.userData,
+      cart: payload.cart
+    }
+  };
+};
+
+export const onPurchase = (state, payload) => {
+  return {
+    ...state,
+    successPurchase: payload.successPurchase,
+    userData: {
+      ...state.userData,
+      cart: payload.cart
+    },
+    cartDetail: payload.cartDetail
+  };
+};
+
 export default createReducer(initialState, {
   [LOGIN_USER]: login,
   [LOGOUT_USER]: logout,
   [REGISTER_USER]: register,
   [AUTH_USER]: auth,
-  [ADD_TO_CART_USER]: addToCart
+  [ADD_TO_CART_USER]: addToCart,
+  [GET_CART_ITEMS_USER]: getCartItems,
+  [REMOVE_CART_ITEM_USER]: removeCartItem,
+  [ON_PURCHASE_PRODUCTS]: onPurchase
 });
