@@ -14,6 +14,8 @@ import ManageCategories from '../../components/User/Admin/ManageCategories';
 import Shop from '../../components/Shop';
 import ProductPage from '../../components/Product/ProductPage';
 import UserCart from '../../components/User/UserCart';
+import EditProfileInfo from '../../components/User/EditProfileInfo';
+
 
 import Auth from '../../components/auth/Auth';
 
@@ -28,6 +30,7 @@ class App extends React.Component {
 					<Switch>
 						<Route path="/user/dashboard" exact component={Auth(UserDashboard,true)}/>
 						<Route path="/user/cart" exact component={Auth(UserCart,true)}/>
+						<Route path="/user/user_profile" exact component={Auth(EditProfileInfo,true)}/>
 						<Route path="/admin/add_product" exact component={Auth(ProductForm,true)}/>
 						<Route path="/admin/manage_categories" exact component={Auth(ManageCategories,true)}/>
 						<Route path="/product_detail/:id" exact component={Auth(ProductPage,null)}/>			

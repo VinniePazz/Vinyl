@@ -1,5 +1,6 @@
 import React from "react";
 import UserLayout from "./UserLayout";
+import UserHistory from "./UserHistory";
 import Button from "../Button";
 
 const UserDashboard = React.memo(({ user }) => {
@@ -20,10 +21,14 @@ const UserDashboard = React.memo(({ user }) => {
           />
         </div>
 
-        <div className="user_nfo_panel">
-          <h1>History purchases</h1>
-          <div className="user_product_block_wrapper">history</div>
-        </div>
+        {user.userData.history ? (
+          <div className="user_nfo_panel">
+            <h1>History purchases</h1>
+            <div className="user_product_block_wrapper">
+              <UserHistory products={user.userData.history} />
+            </div>
+          </div>
+        ) : null}
       </div>
     </UserLayout>
   );

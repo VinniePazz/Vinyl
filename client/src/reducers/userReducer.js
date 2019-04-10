@@ -7,7 +7,8 @@ import {
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
-  ON_PURCHASE_PRODUCTS
+  ON_PURCHASE_PRODUCTS,
+  EDIT_USER_PROFILE
 } from "../actions/types";
 
 const initialState = {};
@@ -82,6 +83,10 @@ export const onPurchase = (state, payload) => {
   };
 };
 
+export const editProfile = (state, payload) => {
+  return { ...state, userData: payload.userData };
+};
+
 export default createReducer(initialState, {
   [LOGIN_USER]: login,
   [LOGOUT_USER]: logout,
@@ -90,5 +95,6 @@ export default createReducer(initialState, {
   [ADD_TO_CART_USER]: addToCart,
   [GET_CART_ITEMS_USER]: getCartItems,
   [REMOVE_CART_ITEM_USER]: removeCartItem,
-  [ON_PURCHASE_PRODUCTS]: onPurchase
+  [ON_PURCHASE_PRODUCTS]: onPurchase,
+  [EDIT_USER_PROFILE]: editProfile
 });

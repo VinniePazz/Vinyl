@@ -34,7 +34,7 @@ const validate = values => {
 class Register extends Component {
   submit = async values => {
     const response = await this.props.register(values);
-    console.log(response);
+
     if (!response.success) {
       throw new SubmissionError({
         _error: response.error.message
@@ -95,13 +95,13 @@ class Register extends Component {
   }
 }
 
-const mapState = ({ user: { registerSuccess = null } }) => {
+const mapStateToProps = ({ user: { registerSuccess = null } }) => {
   return {
     success: registerSuccess
   };
 };
 
 export default connect(
-  mapState,
+  mapStateToProps,
   { register }
 )(reduxForm({ form: "registerForm", validate })(Register));

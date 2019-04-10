@@ -8,7 +8,8 @@ import {
   ADD_TO_CART_USER,
   GET_CART_ITEMS_USER,
   REMOVE_CART_ITEM_USER,
-  ON_PURCHASE_PRODUCTS
+  ON_PURCHASE_PRODUCTS,
+  EDIT_USER_PROFILE
 } from "./types";
 
 import { USER_SERVER, PRODUCT_SERVER } from "../app/common/utils/misc";
@@ -81,7 +82,7 @@ export const getCartItems = (cartItems, userCart) => async dispatch => {
 };
 
 export const removeCartItem = id => async dispatch => {
-  const response = await axios.get(`${USER_SERVER}/removeFromCart?_id=${id}`);
+  const response = await axios.get(`${USER_SERVER}/removeFromCart?id=${id}`);
 
   response.data.cart.forEach(item => {
     response.data.cartDetail.forEach((k, i) => {
@@ -99,11 +100,22 @@ export const removeCartItem = id => async dispatch => {
   return response.data;
 };
 
-export const onPurchase = (cardDetail) => async dispatch => {
+export const onPurchase = cardDetail => async dispatch => {
   const response = await axios.post(`${USER_SERVER}/purchase`, cardDetail);
-	console.log(response)
+  console.log(response);
   dispatch({
     type: ON_PURCHASE_PRODUCTS,
     payload: response.data
   });
 };
+
+export const editProfile = (dataToSubmit) => async dispatch => {
+  const response = await axios
+    .post(`${USER_SERVER}/update_profile`, dataToSubmit)
+		dispatch({
+			type: EDIT_USER_PROFILE,
+			payload: response.data
+		}) 
+	
+	return response.data;
+}

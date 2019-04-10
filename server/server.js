@@ -313,9 +313,11 @@ app.post("/api/users/addToCart", auth, (req, res) => {
 });
 
 app.get("/api/users/removeFromCart", auth, (req, res) => {
+	console.log('QUERY', req.query)
+	console.log('USER', req.user)
   User.findOneAndUpdate(
     { _id: req.user._id },
-    { $pull: { cart: { id: mongoose.Types.ObjectId(req.query._id) } } },
+    { $pull: { cart: { id: mongoose.Types.ObjectId(req.query.id) } } },
     { new: true },
     (err, doc) => {
       console.log("DOC: ", doc);
@@ -413,6 +415,34 @@ app.post("/api/users/purchase", auth, (req, res) => {
     }
   );
 });
+
+app.post('/api/users/update_profile',auth,(req,res)=>{
+
+	User.findOneAndUpdate(
+			{ _id: req.user._id },
+			{
+					"$set": req.body
+			},
+			{ new: true },
+			(error,doc)=>{
+					if(error) return res.json({success:false,error});
+					console.log(doc)
+					return res.status(200).send({
+							userData: {
+								isAdmin: doc.role === 0 ? false : true,
+								isAuth: true,
+								email: doc.email,
+								name: doc.name,
+								lastname: doc.lastname,
+								role: doc.role,
+								cart: doc.cart,
+								history: doc.history
+							},
+							success:true
+					})
+			}
+	);
+})
 /////////////////////////  BOTTOM  //////////////////////////////
 
 app.use(function(req, res) {
