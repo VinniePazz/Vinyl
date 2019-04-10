@@ -450,10 +450,6 @@ if( process.env.NODE_ENV === 'production' ){
 
 // ERROR
 
-app.use(function(req, res) {
-  res.status(err.status || 500);
-});
-
 const port = process.env.PORT || 3002;
 app.listen(port, () => {
   console.log(`Server Running at ${port}`);
