@@ -132,7 +132,6 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
 //=================================
 
 app.post("/api/product/wood", auth, admin, (req, res) => {
-  console.log(req.body);
   const wood = new Wood(req.body);
 
   wood.save((error, doc) => {
@@ -245,7 +244,6 @@ app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(
     req.files.file.path,
     result => {
-      console.log(result);
       res.status(200).send({
         public_id: result.public_id,
         url: result.url
@@ -313,16 +311,12 @@ app.post("/api/users/addToCart", auth, (req, res) => {
 });
 
 app.get("/api/users/removeFromCart", auth, (req, res) => {
-	console.log('QUERY', req.query)
-	console.log('USER', req.user)
   User.findOneAndUpdate(
     { _id: req.user._id },
     { $pull: { cart: { id: mongoose.Types.ObjectId(req.query.id) } } },
     { new: true },
     (err, doc) => {
-      console.log("DOC: ", doc);
       let cart = doc.cart;
-      console.log("CART: ", cart);
       let array = cart.map(item => {
         return mongoose.Types.ObjectId(item.id);
       });
@@ -426,7 +420,6 @@ app.post('/api/users/update_profile',auth,(req,res)=>{
 			{ new: true },
 			(error,doc)=>{
 					if(error) return res.json({success:false,error});
-					console.log(doc)
 					return res.status(200).send({
 							userData: {
 								isAdmin: doc.role === 0 ? false : true,
