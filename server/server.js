@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require('path');
 const async = require("async");
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
@@ -442,8 +443,8 @@ app.post('/api/users/update_profile',auth,(req,res)=>{
 
 // HEROKU 
 if( process.env.NODE_ENV === 'production' ){
-	const path = require('path');
-	app.get('/*',(req,res)=>{
+
+	app.get('*',(req,res)=>{
 			res.sendfile(path.resolve(__dirname,'../client','build','index.html'))
 	})
 }
