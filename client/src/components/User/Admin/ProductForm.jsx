@@ -4,7 +4,7 @@ import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 
 import UserLayout from "../UserLayout";
-import TextInput from "../../../app/common/form/TextInput";
+import TextInput from "../../../app/common/form/Textinput";
 import SelectInput from "../../../app/common/form/SelectInput";
 import TextArea from "../../../app/common/form/TextArea";
 import FileUpload from "../../FileUpload";

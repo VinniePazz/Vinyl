@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import UserLayout from "./UserLayout";
 import { Field, reduxForm, SubmissionError } from "redux-form";
-import TextInput from "../../app/common/form/TextInput";
+import TextInput from "../../app/common/form/Textinput";
 
 import { editProfile } from "../../actions/userActions";
 

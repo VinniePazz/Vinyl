@@ -4,7 +4,7 @@ import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 import { login } from "../actions/userActions";
 
-import TextInput from "../app/common/form/TextInput";
+import TextInput from "../app/common/form/Textinput";
 
 const validate = values => {
   const errors = {};

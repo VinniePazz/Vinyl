@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 
-import TextInput from "../../../app/common/form/TextInput";
+import TextInput from "../../../app/common/form/Textinput";
 
 import { getBrands, addBrand } from "../../../actions/productActions";
 
