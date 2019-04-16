@@ -2,10 +2,8 @@ import { createReducer } from "../app/common/utils/createReducer";
 import {
   GET_PRODUCTS_BY_SELL,
   GET_PRODUCTS_BY_ARRIVAL,
-  GET_BRANDS,
-  ADD_BRAND,
-  GET_WOODS,
-  ADD_WOOD,
+  GET_GENRES,
+  ADD_GENRE,
   GET_PRODUCTS_TO_SHOP,
   ADD_PRODUCT,
 	CLEAR_PRODUCT,
@@ -29,33 +27,18 @@ export const byArrival = (state, payload) => {
   };
 };
 
-export const brands = (state, payload) => {
+export const genres = (state, payload) => {
   return {
     ...state,
-    brands: payload
+    genres: payload
   };
 };
 
-export const addBrand = (state, payload) => {
+export const addGenre = (state, payload) => {
   return {
     ...state,
-    addBrand: payload.success,
-    brands: payload.brands
-  };
-};
-
-export const woods = (state, payload) => {
-  return {
-    ...state,
-    woods: payload
-  };
-};
-
-export const addWood = (state, payload) => {
-  return {
-    ...state,
-    addWood: payload.success,
-    woods: payload.woods
+    addGenre: payload.success,
+    genres: payload.genres
   };
 };
 
@@ -98,13 +81,11 @@ export const clearProductDetail = (state, payload) => {
 export default createReducer(initialState, {
   [GET_PRODUCTS_BY_SELL]: bySell,
   [GET_PRODUCTS_BY_ARRIVAL]: byArrival,
-  [GET_BRANDS]: brands,
-  [GET_WOODS]: woods,
+  [GET_GENRES]: genres,
   [GET_PRODUCTS_TO_SHOP]: productsToShop,
   [ADD_PRODUCT]: addProduct,
   [CLEAR_PRODUCT]: clearProduct,
   [GET_PRODUCT_DETAIL]: getProductDetail,
   [CLEAR_PRODUCT_DETAIL]: clearProductDetail,
-  [ADD_BRAND]: addBrand,
-  [ADD_WOOD]: addWood
+  [ADD_GENRE]: addGenre
 });

@@ -3,6 +3,7 @@ import ShopCard from "./ShopCard";
 import { Grid, Button } from "@material-ui/core";
 
 const ShopGallery = ({ products, grid, loadMore, size, limit }) => {
+	
   if (!products) {
     return <div>Loading...</div>;
   } else if (products.length === 0) {

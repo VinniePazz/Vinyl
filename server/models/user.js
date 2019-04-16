@@ -44,7 +44,7 @@ const userSchema = mongoose.Schema({
 });
 
 userSchema.pre('save',function(next){
-    var user = this;
+    const user = this;
 
     if(user.isModified('password')){
         bcrypt.genSalt(SALT_I,function(err,salt){
@@ -70,8 +70,8 @@ userSchema.methods.comparePassword = function(candidatePassword,cb){
 
 
 userSchema.methods.generateToken = function(cb){
-    var user = this;
-    var token = jwt.sign(user._id.toHexString(),process.env.SECRET)
+    const user = this;
+    const token = jwt.sign(user._id.toHexString(),process.env.SECRET)
 
     user.token = token;
     user.save(function(err,user){
@@ -81,7 +81,7 @@ userSchema.methods.generateToken = function(cb){
 }
 
 userSchema.statics.findByToken = function(token,cb){
-    var user = this;
+    const user = this;
 
     jwt.verify(token,process.env.SECRET,function(err,decode){
         user.findOne({"_id":decode,"token":token},function(err,user){

@@ -2,10 +2,8 @@ import axios from "axios";
 import {
   GET_PRODUCTS_BY_SELL,
   GET_PRODUCTS_BY_ARRIVAL,
-  GET_BRANDS,
-  ADD_BRAND,
-  GET_WOODS,
-  ADD_WOOD,
+  GET_GENRES,
+  ADD_GENRE,
   GET_PRODUCTS_TO_SHOP,
   ADD_PRODUCT,
   CLEAR_PRODUCT,
@@ -49,7 +47,7 @@ export const getProductsToShop = (
 ) => async dispatch => {
   const data = { limit, skip, filters };
   const response = await axios.post(`${PRODUCT_SERVER}/shop`, data);
-  console.log(response);
+
   let newState = [...previousState, ...response.data.articles];
   dispatch({
     type: GET_PRODUCTS_TO_SHOP,
@@ -71,34 +69,19 @@ export const clearProduct = () => {
 //////        CATEGORIES
 ////////////////////////////////////
 
-export const getBrands = () => async dispatch => {
-  const response = await axios.get(`${PRODUCT_SERVER}/brands`);
-  dispatch({ type: GET_BRANDS, payload: response.data });
+export const getGenres = () => async dispatch => {
+  const response = await axios.get(`${PRODUCT_SERVER}/genres`);
+  dispatch({ type: GET_GENRES, payload: response.data });
 };
 
-export const addBrand = (brand, existingBrands) => async dispatch => {
-  const response = await axios.post(`${PRODUCT_SERVER}/brand`, brand);
+export const addGenre = (genre, existingGenres) => async dispatch => {
+  const response = await axios.post(`${PRODUCT_SERVER}/genre`, genre);
 
-  let brands = [...existingBrands, response.data.brand];
+  let genres = [...existingGenres, response.data.genre];
 
   dispatch({
-    type: ADD_BRAND,
-    payload: { success: response.data.success, brands }
-  });
-  return response.data;
-};
-
-export const getWoods = () => async dispatch => {
-  const response = await axios.get(`${PRODUCT_SERVER}/woods`);
-  dispatch({ type: GET_WOODS, payload: response.data });
-};
-
-export const addWood = (wood, existingWoods) => async dispatch => {
-  const response = await axios.post(`${PRODUCT_SERVER}/wood`, wood);
-  let woods = [...existingWoods, response.data.wood];
-  dispatch({
-    type: ADD_WOOD,
-    payload: { success: response.data.success, woods }
+    type: ADD_GENRE,
+    payload: { success: response.data.success, genres }
   });
   return response.data;
 };

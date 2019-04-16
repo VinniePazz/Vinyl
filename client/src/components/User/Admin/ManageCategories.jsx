@@ -1,13 +1,11 @@
 import React from 'react';
 import UserLayout from '../../User/UserLayout';
-import ManageBrands from './ManageBrands';
-import ManageWoods from './ManageWoods';
+import ManageGenres from './ManageGenres';
 
 const ManageCategories = () => {
     return (
         <UserLayout>
-            <ManageBrands/>
-            <ManageWoods/>
+            <ManageGenres/>
         </UserLayout>
     );
 };

@@ -73,12 +73,13 @@ const ProdNfo = props => {
   return (
     <div>
       <h1>
-        {detail.brand.name} {detail.name}
+        {/* {detail.brand.name} {detail.name} */}
+				PRODUCT INFO HERE
       </h1>
-      <p>{detail.description}</p>
-      {showProdTags(detail)}
+      {/* <p>{detail.description}</p>
+      {showProdTags(detail)} */}
       {showProdActions(detail)}
-      {showProdSpecifications(detail)}
+      {/* {showProdSpecifications(detail)} */}
     </div>
   );
 };

@@ -7,8 +7,7 @@ import ShopGallery from "./ShopGallery";
 import FilterBar from "./FilterBar";
 
 import {
-  getBrands,
-  getWoods,
+  getGenres,
   getProductsToShop
 } from "../actions/productActions";
 import { price } from "../app/data/price";
@@ -23,9 +22,7 @@ class Shop extends Component {
     limit: 6,
     skip: 0,
     filters: {
-      brand: [],
-      frets: [],
-      wood: [],
+      genre: [],
       price: []
     }
   };
@@ -34,8 +31,7 @@ class Shop extends Component {
     const { skip, limit, filters } = this.state;
     window.scrollTo(0, 0);
 
-    this.props.getBrands();
-    this.props.getWoods();
+    this.props.getGenres();
 
     this.props.getProductsToShop(skip, limit, filters);
   }
@@ -133,5 +129,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { getBrands, getWoods, getProductsToShop }
+  { getGenres, getProductsToShop }
 )(Shop);

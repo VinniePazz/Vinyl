@@ -10,35 +10,25 @@ import TextArea from "../../../app/common/form/TextArea";
 import FileUpload from "../../FileUpload";
 
 import {
-  getBrands,
-  getWoods,
+  getGenres,
   addProduct,
   clearProduct
 } from "../../../actions/productActions";
 
 const validate = values => {
   const errors = {};
-  console.log(values);
+
   const requiredFields = [
-    "name",
-    "description",
-    "brand",
+    "author",
+    "album",
+    "genre",
     "price",
-    "shipping",
-    "available",
-    "wood",
-    "frets",
-    "publish"
   ];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = "Required";
     }
   });
-
-  if (values.name && values.name.length > 10) {
-    errors.name = "Must be 10 characters or less";
-  }
 
   return errors;
 };
@@ -47,8 +37,7 @@ class ProductForm extends Component {
   state = { images: [], uploading: false };
 
   async componentDidMount() {
-    await this.props.getBrands();
-    await this.props.getWoods();
+    await this.props.getGenres();
   }
 
   submit = async values => {
@@ -127,62 +116,24 @@ class ProductForm extends Component {
             images={this.state.images}
             uploading={this.state.uploading}
           />
-          <Field name="name" type="text" label="Name" component={TextInput} />
+          <Field name="author" type="text" label="Author" component={TextInput} />
+          <Field name="album" type="text" label="Album or song" component={TextInput} />
+					<Field
+            name="genre"
+            label="Genres"
+            options={products.genres || []}
+            component={SelectInput}
+          />
           <Field
             name="description"
             label="Description"
-            placeholder="Describe product"
+            placeholder="Describe vinyl's content"
             rows={10}
 						cols={10}
             component={TextArea}
           />
           <Field name="price" type="text" label="Price" component={TextInput} />
-          <div className="form_devider" />
-          <Field
-            name="brand"
-            label="Brands"
-            options={products.brands || []}
-            component={SelectInput}
-          />
-          <Field
-            name="shipping"
-            label="Shipping"
-            options={[{ key: true, value: "Yes" }, { key: false, value: "No" }]}
-            component={SelectInput}
-          />
-          <Field
-            name="available"
-            label="Available"
-            options={[{ key: true, value: "Yes" }, { key: false, value: "No" }]}
-            component={SelectInput}
-          />
-          <div className="form_devider" />
-          <Field
-            name="wood"
-            label="Woods"
-            options={products.woods || []}
-            component={SelectInput}
-          />
-          <Field
-            name="frets"
-            label="Frets"
-            options={[
-              { key: 20, value: 20 },
-              { key: 21, value: 21 },
-              { key: 22, value: 22 },
-              { key: 24, value: 24 }
-            ]}
-            component={SelectInput}
-          />
-          <Field
-            name="publish"
-            label="Publish"
-            options={[
-              { key: true, value: "Public" },
-              { key: false, value: "Hidden" }
-            ]}
-            component={SelectInput}
-          />
+					
           <button type="submit" disabled={invalid || submitting || pristine}>
             Submit
           </button>
@@ -203,8 +154,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    getBrands,
-    getWoods,
+    getGenres,
     addProduct,
     clearProduct
   }

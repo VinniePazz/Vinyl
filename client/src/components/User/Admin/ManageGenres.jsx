@@ -4,25 +4,25 @@ import { connect } from "react-redux";
 
 import TextInput from "../../../app/common/form/Textinput";
 
-import { getBrands, addBrand } from "../../../actions/productActions";
+import { getGenres, addGenre } from "../../../actions/productActions";
 
 const validate = values => {
   const errors = {};
-  if (!values.brand) {
+  if (!values.genre) {
     errors.name = "Required";
   }
   return errors;
 };
 
-class ManageBrands extends PureComponent {
+class ManageGenres extends PureComponent {
   componentDidMount() {
-    this.props.getBrands();
+    this.props.getGenres();
   }
 
   submit = async values => {
-    let existingWoods = this.props.products.brands;
+    let existingGenres = this.props.products.genres;
 
-    const response = await this.props.addBrand(values, existingWoods);
+    const response = await this.props.addGenre(values, existingGenres);
 
     if (!response.success) {
       throw new SubmissionError({
@@ -34,8 +34,8 @@ class ManageBrands extends PureComponent {
   };
 
   showCategoryItems = () =>
-    this.props.products.brands
-      ? this.props.products.brands.map(item => (
+    this.props.products.genres
+      ? this.props.products.genres.map(item => (
           <div className="category_item" key={item._id}>
             {item.name}
           </div>
@@ -63,9 +63,9 @@ class ManageBrands extends PureComponent {
           <div className="right">
             <form onSubmit={handleSubmit(this.submit)}>
               <Field
-                name="name"
+                name="genre"
                 type="text"
-                label="Add new brand"
+                label="Add new genre"
                 component={TextInput}
               />
               <button
@@ -93,7 +93,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    getBrands,
-    addBrand
+    getGenres,
+    addGenre
   }
-)(reduxForm({ form: "addBrand", validate })(ManageBrands));
+)(reduxForm({ form: "addGenre", validate })(ManageGenres));

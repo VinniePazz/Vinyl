@@ -17,9 +17,10 @@ import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import { addToCart } from "../actions/userActions";
 
 const ShopCard = ({
-  name,
+	author,
+	album,
+	genre,
   price,
-  brand,
   images,
   description,
   _id,
@@ -39,10 +40,10 @@ const ShopCard = ({
         className={grid === "row" ? classes.rootRow : classes.rootTable}
       >
         <Typography gutterBottom variant="h5" className={classes.h5}>
-          {brand.name}
+          {author}
         </Typography>
         <Typography gutterBottom variant="h5" color="secondary">
-          {name}
+          {album}
         </Typography>
         <Typography gutterBottom variant="h6" color="textSecondary">
           {`$${price}`}

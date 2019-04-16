@@ -1,17 +1,16 @@
 const express = require("express");
 const path = require('path');
 const async = require("async");
+const crypto = require('crypto');
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
-
 const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI);
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -24,24 +23,28 @@ cloudinary.config({
   api_secret: process.env.CLOUD_API_SECRET
 });
 
-// Models
+// Models ================================================
 const { User } = require("./models/user");
-const { Brand } = require("./models/brand");
-const { Wood } = require("./models/wood");
+const { Genre } = require("./models/genre");
 const { Product } = require("./models/product");
 const { Payment } = require('./models/payment');
 
-// Middlewares
+// Middlewares ===================================================
 const { auth } = require("./middleware/auth");
 const { admin } = require("./middleware/admin");
 
-//=================================
+//NodeMailer will be here
+
+
+
+//=================================================================
 //             PRODUCTS
-//=================================
+//=================================================================
+
 app.post("/api/product/shop", (req, res) => {
-  let order = req.body.order ? req.body.order : "desc";
-  let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
-  let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+	let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+	let order = req.body.order ? req.body.order : "desc";
+  let limit = req.body.limit ? parseInt(req.body.limit) : 10;
   let skip = parseInt(req.body.skip);
   let findArgs = {};
 
@@ -56,18 +59,15 @@ app.post("/api/product/shop", (req, res) => {
         findArgs[key] = req.body.filters[key];
       }
     }
-  }
-
-  findArgs["publish"] = true;
-
+	}
+	
   Product.find(findArgs)
-    .populate("brand")
-    .populate("wood")
-    .sort([[sortBy, order]])
+    .populate("genre")
+    .sort({ [sortBy]: order })
     .skip(skip)
     .limit(limit)
-    .exec((err, articles) => {
-      if (err) return res.status(400).send(err);
+    .exec((error, articles) => {
+      if (error) return res.status(400).send(error);
       res.status(200).json({
         size: articles.length,
         articles
@@ -75,28 +75,29 @@ app.post("/api/product/shop", (req, res) => {
     });
 });
 
-// BY ARRIVAL
+// BY ARRIVAL // QUERY STRING PARAMETRES
 // /articles?sortBy=createdAt&order=desc&limit=4
 
 // BY SELL
-// /articles?sortBy=sold&order=desc&limit=100&skip=5
+// /articles?sortBy=sold&order=desc&limit=10
+
 app.get("/api/product/articles", (req, res) => {
   let order = req.query.order ? req.query.order : "asc";
   let sortBy = req.query.sortBy ? req.query.sortBy : "_id";
-  let limit = req.query.limit ? parseInt(req.query.limit) : 100;
+  let limit = req.query.limit ? parseInt(req.query.limit) : 10;
 
   Product.find()
-    .populate("brand")
-    .populate("wood")
+    .populate("genre")
     .sort({ [sortBy]: order })
     .limit(limit)
-    .exec((err, articles) => {
-      if (err) return res.status(400).send(err);
+    .exec((error, articles) => {
+      if (error) return res.status(400).send(error);
       res.send(articles);
     });
 });
 
 /// /api/product/article?id=HSHSHSKSK,JSJSJSJS,SDSDHHSHDS,JSJJSDJ&type=single
+
 app.get("/api/product/articles_by_id", (req, res) => {
   let type = req.query.type;
   let items = req.query.id;
@@ -110,9 +111,9 @@ app.get("/api/product/articles_by_id", (req, res) => {
   }
 
   Product.find({ _id: { $in: items } })
-    .populate("brand")
-    .populate("wood")
-    .exec((err, docs) => {
+    .populate("genre")
+    .exec((error, docs) => {
+			if (error) return res.status(400).send(error);
       return res.status(200).send(docs);
     });
 });
@@ -131,48 +132,25 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
 });
 
 //=================================
-//              WOODS
+//              GENRE
 //=================================
 
-app.post("/api/product/wood", auth, admin, (req, res) => {
-  const wood = new Wood(req.body);
+app.post("/api/product/genre", auth, admin, (req, res) => {
+  const genre = new Genre(req.body);
 
-  wood.save((error, doc) => {
+  genre.save((error, doc) => {
     if (error) return res.json({ success: false, error });
     res.status(200).json({
       success: true,
-      wood: doc
+      genre: doc
     });
   });
 });
 
-app.get("/api/product/woods", (req, res) => {
-  Wood.find({}, (error, woods) => {
+app.get("/api/product/genres", (req, res) => {
+  Genre.find({}, (error, genres) => {
     if (error) return res.status(400).send(error);
-    res.status(200).send(woods);
-  });
-});
-
-//=================================
-//              BRAND
-//=================================
-
-app.post("/api/product/brand", auth, admin, (req, res) => {
-  const brand = new Brand(req.body);
-
-  brand.save((error, doc) => {
-    if (error) return res.json({ success: false, error });
-    res.status(200).json({
-      success: true,
-      brand: doc
-    });
-  });
-});
-
-app.get("/api/product/brands", (req, res) => {
-  Brand.find({}, (error, brands) => {
-    if (error) return res.status(400).send(error);
-    res.status(200).send(brands);
+    res.status(200).send(genres);
   });
 });
 
@@ -259,6 +237,7 @@ app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
   );
 });
 
+
 app.get("/api/users/removeimage", auth, admin, (req, res) => {
   let image_id = req.query.public_id;
 
@@ -267,6 +246,7 @@ app.get("/api/users/removeimage", auth, admin, (req, res) => {
     res.status(200).send("ok");
   });
 });
+
 
 app.post("/api/users/addToCart", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, doc) => {
@@ -325,8 +305,7 @@ app.get("/api/users/removeFromCart", auth, (req, res) => {
       });
 
       Product.find({ _id: { $in: array } })
-        .populate("brand")
-        .populate("wood")
+        .populate("genre")
         .exec((err, cartDetail) => {
           return res.status(200).json({
             cartDetail,
@@ -345,8 +324,9 @@ app.post("/api/users/purchase", auth, (req, res) => {
   req.body.cartDetail.forEach(item => {
     history.push({
       dateOfPurchase: Date.now(),
-      name: item.name,
-      brand: item.brand.name,
+      author: item.author,
+      album: item.album,
+      genre: item.genre.name,
       id: item._id,
       price: item.price,
       quantity: item.quantity,
@@ -443,13 +423,12 @@ app.post('/api/users/update_profile',auth,(req,res)=>{
 
 // HEROKU 
 if( process.env.NODE_ENV === 'production' ){
-
 	app.get('*',(req,res)=>{
 			res.sendfile(path.resolve(__dirname,'../client','build','index.html'))
 	})
 }
 
-// ERROR
+// ERROR ROUTE MUST BE HERE!!!
 
 const port = process.env.PORT || 3002;
 app.listen(port, () => {
