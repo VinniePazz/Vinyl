@@ -5,9 +5,9 @@ import { withStyles } from "@material-ui/core/styles";
 const HomePromotion = ({ classes }) => {
 
   const promotion = {
-    img: "/images/featured/featured_home_3.jpg",
+    img: "/images/featured/home-promotion.jpg",
     lineOne: "Up to 40% off",
-    lineTwo: "In second hand guitars",
+    lineTwo: "In second hand vinyls",
     linkTitle: "Shop now",
     linkTo: "/shop"
   };
@@ -17,7 +17,7 @@ const HomePromotion = ({ classes }) => {
       <div
         className={classes.image}
         style={{
-          background: `url(${promotion.img})`
+          backgroundImage: `url(${promotion.img})`
         }}
       >
         <div className={classes.wrapper}>
@@ -40,7 +40,7 @@ const styles = (theme) => ({
 	image: {
 		height: '70vh',
     backgroundSize: 'cover',
-    backgroundPosition: 'top center',
+    backgroundPosition: '50% 50%',
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',

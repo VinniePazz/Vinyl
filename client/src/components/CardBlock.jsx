@@ -1,12 +1,13 @@
 import React from "react";
 import ShopCard from "./ShopCard";
+import HomeCard from './HomeCard'
 
 const CardBlock = props => {
   const renderCards = () =>
     props.list ? props.list.map((product, i) => <ShopCard key={i} {...product} />) : null;
 
   return (
-    <div className="card_block">
+    <section className="card_block">
       <div className="container">
         {props.title ? <div className="title">{props.title}</div> : null}
         <div
@@ -19,7 +20,7 @@ const CardBlock = props => {
           {renderCards(props.list)}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

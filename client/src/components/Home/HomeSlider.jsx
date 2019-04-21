@@ -5,16 +5,16 @@ import Button from "../Button";
 const HomeSlider = props => {
   const slides = [
     {
-      img: "/images/featured/featured_home.jpg",
-      lineOne: "Fender",
-      lineTwo: "Custom shop",
+      img: "/images/featured/home-vinyl.jpg",
+      lineOne: "best way",
+      lineTwo: "to feel the sound",
       linkTitle: "Shop now",
       linkTo: "/shop"
     },
     {
-      img: "/images/featured/featured_home_2.jpg",
-      lineOne: "B-Stock",
-      lineTwo: "Awesome discounts",
+      img: "/images/featured/home-vinyl-2.jpg",
+      lineOne: "all collection",
+      lineTwo: "of music, in our stocks !",
       linkTitle: "View offers",
       linkTo: "/shop"
     }
@@ -39,7 +39,7 @@ const HomeSlider = props => {
               className="featured_image"
               style={{
                 background: `url(${item.img})`,
-                height: `${window.innerHeight - 50}px`
+                height: `${window.innerHeight - 35}px`
               }}
             >
               <div className="featured_action">

@@ -45,7 +45,7 @@ a {
 }
 
 .bck_b_light {
-    background: #999592;
+    background: #4d4d4d;
 }
 
 .bck_b_dark {
@@ -389,12 +389,12 @@ footer .business_nfo .nfo {
 }
 
 .featured_container .featured_action .tag.title {
-    font-size: 70px;
+    font-size: 55px;
     font-weight: 700;
 }
 
 .featured_container .featured_action .tag.low_title {
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 300;
     margin-top: 10px;
 }

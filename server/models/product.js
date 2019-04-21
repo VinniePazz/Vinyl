@@ -19,7 +19,6 @@ const productSchema = mongoose.Schema(
       type: Number,
     },
     description: {
-      required: true,
       type: String,
       maxlength: 100000
     },

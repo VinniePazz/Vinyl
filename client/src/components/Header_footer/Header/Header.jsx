@@ -14,7 +14,7 @@ class Header extends Component {
         public: true
       },
       {
-        name: "Guitars",
+        name: "shop",
         linkTo: "/shop",
         public: true
       }

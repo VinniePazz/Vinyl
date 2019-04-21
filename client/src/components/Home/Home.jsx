@@ -22,7 +22,7 @@ class Home extends Component {
     return (
       <div>
         <HomeSlider />
-        <CardBlock list={products.bySell} title="Best Selling vinyls" />
+        <CardBlock list={products.bySell} title="Best Sales" />
         <HomePromotion />
         <CardBlock list={products.byArrival} title="New arrivals" />
       </div>
