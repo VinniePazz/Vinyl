@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { Component } from "react";
 import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
 
@@ -8,13 +8,13 @@ import { getGenres, addGenre } from "../../../actions/productActions";
 
 const validate = values => {
   const errors = {};
-  if (!values.genre) {
+  if (!values.name) {
     errors.name = "Required";
   }
   return errors;
 };
 
-class ManageGenres extends PureComponent {
+class ManageGenres extends Component {
   componentDidMount() {
     this.props.getGenres();
   }
@@ -63,7 +63,7 @@ class ManageGenres extends PureComponent {
           <div className="right">
             <form onSubmit={handleSubmit(this.submit)}>
               <Field
-                name="genre"
+                name="name"
                 type="text"
                 label="Add new genre"
                 component={TextInput}

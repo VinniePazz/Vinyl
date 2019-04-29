@@ -9,13 +9,13 @@ const FilterBar = ({ products, handleFilters }) => {
   return (
     <>
       <CollapseCheckbox
-        initState={true}
+        initState={false}
         title="Genres"
         list={products.genres}
         handleFilters={filters => handleFilters(filters, "genre")}
       />
       <CollapseRadio
-        initState={true}
+        initState={false}
         title="Price"
         list={price}
         handleFilters={filters => handleFilters(filters, "price")}

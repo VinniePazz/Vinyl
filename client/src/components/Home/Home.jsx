@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
+
 import HomeSlider from "./HomeSlider";
-import HomePromotion from "./HomePromotion";
-import CardBlock from "../CardBlock";
+import HomeCardBlock from "./HomeCardBlock";
 
 import {
   getProductsBySell,
@@ -14,18 +14,17 @@ class Home extends Component {
 
   componentDidMount() {
     this.props.getProductsBySell();
-    this.props.getProductsByArrival();
+		this.props.getProductsByArrival();
 	}
 
   render() {
     const { products } = this.props;
     return (
-      <div>
+      <>
         <HomeSlider />
-        <CardBlock list={products.bySell} title="Best Sales" />
-        <HomePromotion />
-        <CardBlock list={products.byArrival} title="New arrivals" />
-      </div>
+        <HomeCardBlock list={products.bySell} title="top sales" />
+        <HomeCardBlock list={products.byArrival} title="New arrivals" />
+      </>
     );
   }
 }

@@ -1,42 +1,122 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, NavLink, withRouter } from "react-router-dom";
+import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+import styled from "styled-components";
 
 import { connect } from "react-redux";
 import { logout } from "../../../actions/userActions";
 
+import ShoppingCart from "../../ShoppingCart";
+
+const Navigation = styled.header`
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 4em;
+  width: 100%;
+  z-index: 999;
+  padding: 0 1em;
+  background-color: #4b3645;
+  opacity: ${({ header }) =>
+    (header === "default" && "1") ||
+    (header === "showedOnScroll" && "1") ||
+    "0"};
+  transform: ${({ header }) =>
+    (header === "default" && "translateY(0)") ||
+    (header === "showedOnScroll" && "translateY(0)") ||
+    "translateY(-100%)"};
+  transition: all 0.3s ease;
+`;
+
+const Container = styled.div`
+  max-width: 1100px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+`;
+
+export const Logo = styled.div`
+  font-family: "Monoton", cursive;
+  color: #ffffff;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #e76f51;
+  }
+`;
+
+const NavBar = styled.nav`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  margin-left: auto;
+  color: #ffffff;
+`;
+
+const Navlink = styled.a`
+  display: block;
+  text-transform: uppercase;
+  margin-right: 1.5rem;
+  transition: color 0.2s;
+  position: relative;
+
+  &:hover {
+    color: #e76f51;
+  }
+`;
+
+export const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0.5em 0.5em;
+`;
+
+const CartCounter = styled.div`
+  position: absolute;
+  top: -5%;
+  right: -25%;
+  background: #6f666c;
+  font-size: 0.8rem;
+  border-radius: 100%;
+  height: 1.4rem;
+  width: 1.4rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 class Header extends Component {
   state = {
-    page: [
+    links: [
       {
-        name: "Home",
-        linkTo: "/",
-        public: true
+        name: "account",
+        linkTo: "/user/dashboard",
+        public: false
       },
       {
         name: "shop",
         linkTo: "/shop",
         public: true
-      }
-    ],
-    user: [
-      {
-        name: "My Cart",
-        linkTo: "/user/cart",
-        public: false
       },
       {
-        name: "My Account",
-        linkTo: "/user/dashboard",
-        public: false
-      },
-      {
-        name: "Log in",
+        name: "login",
         linkTo: "/login",
         public: true
       },
       {
-        name: "Log out",
+        name: "cart",
+        linkTo: "/user/cart",
+        public: false
+      },
+      {
+        name: "logout",
         public: false
       }
     ]
@@ -50,92 +130,106 @@ class Header extends Component {
     }
   };
 
-  cartLink = (item, i) => {
+  cartLink = item => {
     const user = this.props.user.userData;
+    const numOfProducts =
+      user.cart.length > 0
+        ? user.cart.reduce((acc, current) => (acc += current.quantity), 0)
+        : 0;
 
     return (
-      <div className="cart_link" key={i}>
-        <span>{user.cart ? user.cart.length : 0}</span>
-        <Link to={item.linkTo}>{item.name}</Link>
-      </div>
+      <Icon key={item.name} as={Link} to={item.linkTo}>
+        <ShoppingCart />
+        <CartCounter>{numOfProducts}</CartCounter>
+      </Icon>
     );
   };
 
-  defaultLink = (item, i) =>
-    item.name === "Log out" ? (
-      <div className="log_out_link" key={i} onClick={this.logoutHandler}>
-        {item.name}
-      </div>
-    ) : (
-      <Link to={item.linkTo} key={i}>
-        {item.name}
-      </Link>
-    );
+  defaultLink = item => {
+    switch (item.name) {
+      case "logout":
+        return (
+          <Button
+            variant="text"
+            color="secondary"
+            className={this.props.classes.logout}
+            key={item.name}
+            onClick={this.logoutHandler}
+          >
+            {item.name}
+          </Button>
+        );
+      case "login":
+        return (
+          <Button
+            component={Link}
+            to={item.linkTo}
+            variant="contained"
+            color="secondary"
+            className={this.props.classes.login}
+            key={item.name}
+          >
+            {item.name}
+          </Button>
+        );
+      default:
+        return (
+          <Navlink as={NavLink} to={item.linkTo} key={item.name}>
+            {item.name}
+          </Navlink>
+        );
+    }
+  };
 
-  showLinks = type => {
+  showLinks = links => {
     let list = [];
 
     if (this.props.user.userData) {
-      type.forEach(item => {
+      links.forEach(item => {
         if (!this.props.user.userData.isAuth) {
           if (item.public === true) {
             list.push(item);
           }
         } else {
-          if (item.name !== "Log in") {
+          if (item.name !== "login") {
             list.push(item);
           }
         }
       });
     }
 
-    return list.map((item, i) => {
-      if (item.name !== "My Cart") {
-        return this.defaultLink(item, i);
+    return list.map(item => {
+      if (item.name !== "cart") {
+        return this.defaultLink(item);
       } else {
-        return this.cartLink(item, i);
+        return this.cartLink(item);
       }
     });
   };
 
   render() {
-    const { page, user } = this.state;
-    const { classes } = this.props;
-
     return (
-      <header className="bck_b_light">
-        <div className="container">
-          <Link to="/" className={classes.logo}>
-            VINYL
-          </Link>
-          <div className="right">
-            <div className="top">{this.showLinks(user)}</div>
-            <div className="bottom">{this.showLinks(page)}</div>
-          </div>
-        </div>
-      </header>
+      <Navigation header={this.props.header}>
+        <Container>
+          <Logo as={Link} to="/">
+            vinyl
+          </Logo>
+          <NavBar>{this.showLinks(this.state.links)}</NavBar>
+        </Container>
+      </Navigation>
     );
   }
 }
 
 const styles = theme => ({
-  logo: {
-    fontFamily: '"Monoton", cursive',
-    color: "#ffffff",
-    fontSize: "2.5rem",
-    display: "flex",
-    justifyContent: "flexStart",
-    alignItems: "center",
-		width: "20%",
-		marginLeft: 0,
-
-    [theme.breakpoints.down("sm")]: {
-			width: "30%",	
-		},
-		[theme.breakpoints.down("xs")]: {
-			fontSize: "1.8rem",
-			width: "35%",
-    },
+  logout: {
+    marginLeft: "5rem",
+    padding: "5px 30px",
+    color: "#cac5c5"
+  },
+  login: {
+    marginLeft: "1rem",
+    padding: "5px 30px"
   }
 });
 
