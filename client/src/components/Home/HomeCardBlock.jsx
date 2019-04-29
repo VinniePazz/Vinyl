@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const CardContainer = styled.section`
   max-width: 71.25em;
-  margin: 4em auto;
+  margin: 3rem auto;
 `;
 
 const Heading = styled.h3`
@@ -12,7 +12,19 @@ const Heading = styled.h3`
 	text-transform: uppercase;
 	font-weight: 700;
 	text-align: center;
-	margin-bottom: 1.5em;
+	margin-bottom: 3rem;
+	position: relative;
+
+	&::after {
+		content: '';
+		position: absolute;
+		top: 120%;
+		left: 50%;
+		width: 5rem;
+		height: 5px;
+		background-color: #e76f51;
+		transform: translateX(-50%);
+	}
 `;
 
 const CardBlock = styled.div`

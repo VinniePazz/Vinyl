@@ -10,7 +10,7 @@ export default createMuiTheme({
     }
   },
   typography: {
-    fontFamily: '"Oswald", sans-serif',
+    fontFamily: '"Poppins", sans-serif',
     fontSize: 16,
     useNextVariants: true
   },

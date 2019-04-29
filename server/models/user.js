@@ -23,7 +23,6 @@ const userSchema = mongoose.Schema({
     },
     lastname:{
         type:String,
-        required: true,
         maxlength:100
     },
     cart:{

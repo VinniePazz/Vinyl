@@ -11,19 +11,10 @@ const Card = styled.div`
   cursor: pointer;
   text-align: center;
 
-  &:not(:first-child) {
-    border-left: 1px solid rgba(176, 176, 176, 0.3);
-  }
-
   &:hover {
     background-color: #c8f1ec;
   }
 
-  @media (max-width: 53.125em) {
-    &:nth-child(-n + 2) {
-      border-bottom: 1px solid rgba(176, 176, 176, 0.3);
-    }
-  }
 `;
 
 const CardImage = styled.img`
@@ -47,12 +38,13 @@ const CardContent = styled.div`
 
   & h3 {
     font-size: 1.4rem;
-    font-weight: 500;
+		font-weight: 400;
   }
 
   & p {
-    color: #E76F51;
-    font-size: 1rem;
+    color: #7b7b7b;
+    font-size: .9rem;
+		font-weight: bold;
   }
 `;
 

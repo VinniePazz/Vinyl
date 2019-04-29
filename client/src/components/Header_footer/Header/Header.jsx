@@ -1,13 +1,17 @@
 import React, { Component } from "react";
 import { Link, NavLink, withRouter } from "react-router-dom";
 import Button from "@material-ui/core/Button";
+import Drawer from "@material-ui/core/Drawer";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
+import MediaQuery from "react-responsive";
 
 import { connect } from "react-redux";
 import { logout } from "../../../actions/userActions";
 
 import ShoppingCart from "../../ShoppingCart";
+import MobileToogle from "./MobileToogle";
+import MobileNav from "./MobileNav";
 
 const Navigation = styled.header`
   position: fixed;
@@ -16,7 +20,6 @@ const Navigation = styled.header`
   height: 4em;
   width: 100%;
   z-index: 999;
-  padding: 0 1em;
   background-color: #4b3645;
   opacity: ${({ header }) =>
     (header === "default" && "1") ||
@@ -29,11 +32,13 @@ const Navigation = styled.header`
   transition: all 0.3s ease;
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
   max-width: 1100px;
   height: 100%;
   margin: 0 auto;
   display: flex;
+  justify-content: space-between;
+  padding: 0 1em;
   align-items: center;
 `;
 
@@ -54,11 +59,10 @@ const NavBar = styled.nav`
   display: flex;
   height: 100%;
   align-items: center;
-  margin-left: auto;
   color: #ffffff;
 `;
 
-const Navlink = styled.a`
+export const Navlink = styled.a`
   display: block;
   text-transform: uppercase;
   margin-right: 1.5rem;
@@ -67,6 +71,10 @@ const Navlink = styled.a`
 
   &:hover {
     color: #e76f51;
+  }
+
+  @media (max-width: 25em) {
+    margin-right: 0;
   }
 `;
 
@@ -78,7 +86,7 @@ export const Icon = styled.div`
   padding: 0.5em 0.5em;
 `;
 
-const CartCounter = styled.div`
+export const CartCounter = styled.div`
   position: absolute;
   top: -5%;
   right: -25%;
@@ -94,40 +102,7 @@ const CartCounter = styled.div`
 
 class Header extends Component {
   state = {
-    links: [
-      {
-        name: "account",
-        linkTo: "/user/dashboard",
-        public: false
-      },
-      {
-        name: "shop",
-        linkTo: "/shop",
-        public: true
-      },
-      {
-        name: "login",
-        linkTo: "/login",
-        public: true
-      },
-      {
-        name: "cart",
-        linkTo: "/user/cart",
-        public: false
-      },
-      {
-        name: "logout",
-        public: false
-      }
-    ]
-  };
-
-  logoutHandler = async () => {
-    const response = await this.props.logout();
-
-    if (response.success) {
-      this.props.history.push("/");
-    }
+    openDrawer: false
   };
 
   cartLink = item => {
@@ -181,7 +156,7 @@ class Header extends Component {
     }
   };
 
-  showLinks = links => {
+  renderLinks = links => {
     let list = [];
 
     if (this.props.user.userData) {
@@ -207,14 +182,91 @@ class Header extends Component {
     });
   };
 
+  toogleDrawer = () => {
+    this.setState(prevState => ({ openDrawer: !prevState.openDrawer }));
+  };
+
+  logoutHandler = async () => {
+    const response = await this.props.logout();
+
+    if (response.success) {
+      this.setState(
+        prevState => ({ openDrawer: !prevState.openDrawer }),
+        this.props.history.push("/")
+      );
+    }
+  };
+
+  handleMobileLink = path => {
+    this.props.history.push(path);
+    this.setState(prevState => ({ openDrawer: !prevState.openDrawer }));
+  };
+
   render() {
+    const links = [
+      {
+        name: "account",
+        linkTo: "/user/dashboard",
+        public: false
+      },
+      {
+        name: "shop",
+        linkTo: "/shop",
+        public: true
+      },
+      {
+        name: "login",
+        linkTo: "/login",
+        public: true
+      },
+      {
+        name: "cart",
+        linkTo: "/user/cart",
+        public: false
+      },
+      {
+        name: "logout",
+        public: false
+      }
+    ];
+
     return (
       <Navigation header={this.props.header}>
         <Container>
           <Logo as={Link} to="/">
             vinyl
           </Logo>
-          <NavBar>{this.showLinks(this.state.links)}</NavBar>
+          <MediaQuery query="(min-width: 600px)">
+            <NavBar>{this.renderLinks(links)}</NavBar>
+          </MediaQuery>
+          {this.props.user.userData && this.props.user.userData.isAuth ? (
+            <MediaQuery query="(max-width: 599px)">
+              <MobileToogle
+                toogleDrawer={this.toogleDrawer}
+                openDrawer={this.state.openDrawer}
+              />
+              {this.state.openDrawer && (
+                <Drawer
+                  anchor="right"
+                  open={this.state.openDrawer}
+                  onClose={this.toogleDrawer}
+                  PaperProps={{ style: { backgroundColor: "#4b3645" } }}
+                  transitionDuration={{ enter: 10000 }}
+                >
+                  <MobileNav
+                    links={links}
+                    user={this.props.user}
+                    logoutHandler={this.logoutHandler}
+                    handleMobileLink={this.handleMobileLink}
+                  />
+                </Drawer>
+              )}
+            </MediaQuery>
+          ) : (
+            <MediaQuery query="(max-width: 599px)">
+              <NavBar>{this.renderLinks(links)}</NavBar>
+            </MediaQuery>
+          )}
         </Container>
       </Navigation>
     );

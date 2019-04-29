@@ -174,8 +174,8 @@ app.get("/api/users/auth", auth, (req, res) => {
 app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
 
-  user.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
+  user.save((error, doc) => {
+    if (error) return res.json({ success: false, error });
     res.status(200).json({
       success: true
     });
@@ -183,7 +183,7 @@ app.post("/api/users/register", (req, res) => {
 });
 
 app.post("/api/users/login", (req, res) => {
-  User.findOne({ email: req.body.email }, (err, user) => {
+  User.findOne({ email: req.body.email }, (error, user) => {
     if (!user)
       return res.json({
         loginSuccess: false,
@@ -191,7 +191,7 @@ app.post("/api/users/login", (req, res) => {
         wrong: "email"
       });
 
-    user.comparePassword(req.body.password, (err, isMatch) => {
+    user.comparePassword(req.body.password, (error, isMatch) => {
       if (!isMatch)
         return res.json({
           loginSuccess: false,
@@ -199,8 +199,8 @@ app.post("/api/users/login", (req, res) => {
           wrong: "password"
         });
 
-      user.generateToken((err, user) => {
-        if (err) return res.status(400).send(err);
+      user.generateToken((error, user) => {
+        if (error) return res.status(400).send(error);
         res
           .cookie("w_auth", user.token)
           .status(200)
@@ -213,8 +213,8 @@ app.post("/api/users/login", (req, res) => {
 });
 
 app.get("/api/users/logout", auth, (req, res) => {
-  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, doc) => {
-    if (err) return res.json({ success: false, err });
+  User.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (error, doc) => {
+    if (error) return res.json({ success: false, error });
     return res.status(200).send({
       success: true
     });

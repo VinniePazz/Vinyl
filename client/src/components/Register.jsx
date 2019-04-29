@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Field, reduxForm, SubmissionError } from "redux-form";
-
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
 
 import { register } from "../actions/userActions";
+import { Dialog } from './Login'
 import TextInput from "../app/common/form/Textinput";
 
 const validate = values => {
@@ -57,15 +59,10 @@ class Register extends Component {
     } = this.props;
 
     return (
-      <div style={{ width: "500px", margin: "0 auto" }}>
+      <Dialog>
+				<h3>Create account</h3>
         <form onSubmit={handleSubmit(this.submit)}>
           <Field name="name" type="text" label="Name" component={TextInput} />
-          <Field
-            name="lastname"
-            type="text"
-            label="Lastname"
-            component={TextInput}
-          />
           <Field
             name="email"
             type="email"
@@ -85,15 +82,33 @@ class Register extends Component {
             component={TextInput}
           />
           {error && <p style={{ color: "red" }}>{error}</p>}
-          <button type="submit" disabled={invalid || submitting || pristine}>
-            Submit
-          </button>
-          {success && <p>SUCCESS</p>}
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            disabled={invalid || submitting || pristine}
+            fullWidth
+						classes={{ root: this.props.classes.root, disabled: this.props.classes.disabled }}
+          >
+            Create account
+          </Button>
+          {success && success.success && <p>WELCOME!</p>}
         </form>
-      </div>
+      </Dialog>
     );
   }
 }
+
+const styles = {
+  root: {
+		marginTop: "2em",
+		marginBottom: "1em"
+	},
+	disabled: {
+		backgroundColor: '#e76f517a !important',
+		color: '#ffffff !important'
+	}
+};
 
 const mapStateToProps = ({ user: { registerSuccess = null } }) => {
   return {
@@ -104,4 +119,4 @@ const mapStateToProps = ({ user: { registerSuccess = null } }) => {
 export default connect(
   mapStateToProps,
   { register }
-)(reduxForm({ form: "registerForm", validate })(Register));
+)(reduxForm({ form: "registerForm", validate })(withStyles(styles)(Register)));

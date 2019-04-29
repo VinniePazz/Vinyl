@@ -6,7 +6,8 @@ import Header from "../../components/Header_footer/Header/Header";
 import Footer from "../../components/Header_footer/Footer/Footer";
 
 const PageContainer = styled.div`
-  margin-top: 4em;
+	margin-top: 4em;
+	min-height: 75vh;
 `;
 
 class Layout extends Component {
