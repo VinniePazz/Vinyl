@@ -31,9 +31,9 @@ const productSchema = mongoose.Schema(
       ref: "Genre",
       required: true
     },
-    available: {
-      default: true,
-      type: Boolean
+    quantity: {
+			default: 0,
+      type: Number
     },
     sold: {
       type: Number,

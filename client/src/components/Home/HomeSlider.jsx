@@ -61,15 +61,15 @@ const HomeSlider = ({ classes }) => {
       img: "/images/featured/home-vinyl.jpg",
       lineOne: "best way",
       lineTwo: "to feel the sound",
-      linkTitle: "Shop now",
+      linkTitle: "view offers",
       linkTo: "/shop",
       type: "main"
     },
     {
       img: "/images/featured/home-vinyl-2.jpg",
-      lineOne: "all collection",
-      lineTwo: "of music, in our stocks !",
-      linkTitle: "View offers",
+      lineOne: "all music",
+      lineTwo: "in our shop !",
+      linkTitle: "get it",
       linkTo: "/shop",
       type: "secondary"
     }

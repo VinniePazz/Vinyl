@@ -9,7 +9,7 @@ import Home from "../../components/Home/Home";
 import Login from "../../components/Login";
 import Register from "../../components/Register";
 
-import UserDashboard from "../../components/User/UserDashboard";
+import UserProfile from "../../components/User/UserProfile";
 import ProductForm from "../../components/User/Admin/ProductForm";
 import ManageCategories from "../../components/User/Admin/ManageCategories";
 
@@ -31,7 +31,7 @@ class App extends React.Component {
               <Route
                 path="/user/dashboard"
                 exact
-                component={Auth(UserDashboard, true)}
+                component={Auth(UserProfile, true)}
               />
               <Route path="/user/cart" exact component={Auth(UserCart, true)} />
               <Route

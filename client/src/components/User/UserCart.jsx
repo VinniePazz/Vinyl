@@ -1,16 +1,48 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Link } from 'react-router-dom'
+import styled from "styled-components";
+import Button from "@material-ui/core/Button";
+
 import UserLayout from "../User/UserLayout";
 import UserProductBlock from "./UserProductBlock";
-import Purchase from "./Purchase";
+import { Heading } from "../Home/HomeCardBlock";
+import EmptyBoxIcon from "../icons/EmptyBox";
 
-import { connect } from "react-redux";
 import {
   getCartItems,
   removeCartItem,
   onPurchase
 } from "../../actions/userActions";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const CartHeading = styled(Heading)``;
+
+const EmptyCartBlock = styled.div`
+  margin-top: 5em;
+  text-align: center;
+
+  p {
+    margin-top: 1.5em;
+  }
+`;
+
+const TotalSum = styled.div`
+  padding: 0.5em 0;
+  text-align: center;
+  font-weight: 500;
+  font-size: 1.2rem;
+
+  span {
+    color: #e76f51;
+    font-weight: 600;
+    margin-left: 0.7em;
+  }
+`;
+
+const Purchase = styled.div`
+  padding: 0.5em 0;
+  text-align: center;
+`;
 
 class UserCart extends Component {
   state = {
@@ -62,15 +94,23 @@ class UserCart extends Component {
   };
 
   showNoItemMessage = () => (
-    <div className="cart_no_items">
-      <FontAwesomeIcon icon="frown" />
-      <div>You have no items</div>
-    </div>
+    <EmptyCartBlock>
+      <EmptyBoxIcon />
+      <p>your shopping cart is empty...</p>
+      <Button
+        component={Link}
+        to={`/shop`}
+        variant="text"
+        color="secondary"
+      >
+        go to shop!
+      </Button>
+    </EmptyCartBlock>
   );
 
   handlePurchase = async () => {
     await this.props.onPurchase({
-      cartDetail: this.props.user.cartDetail,
+      cartDetail: this.props.user.cartDetail
     });
 
     if (this.props.user.successPurchase) {
@@ -84,34 +124,45 @@ class UserCart extends Component {
   render() {
     return (
       <UserLayout>
-        <div>
-          <h1>My cart</h1>
-          <div className="user_cart">
-            <UserProductBlock
-              products={this.props.user}
-              type="cart"
-              removeItem={id => this.removeFromCart(id)}
-            />
-            {this.state.showTotal ? (
-              <div>
-                <div className="user_cart_sum">
-                  <div>Total amount: $ {this.state.total}</div>
-                </div>
-              </div>
-            ) : this.state.showSuccess ? (
-              <div className="cart_success">
-                <FontAwesomeIcon icon="smile" />
-                <div>THANK YOU</div>
-                <div>YOUR ORDER IS NOW COMPLETE</div>
-              </div>
-            ) : (
-              this.showNoItemMessage()
-            )}
+        <CartHeading> cart</CartHeading>
+        <UserProductBlock
+          products={this.props.user}
+          type="cart"
+          removeItem={id => this.removeFromCart(id)}
+        />
+        {this.state.showTotal ? (
+          <TotalSum>
+            <p>
+              Summary: <span>{this.state.total} $</span>
+            </p>
+          </TotalSum>
+        ) : this.state.showSuccess ? (
+          <div
+            style={{
+              textAlign: "center",
+              marginTop: "3em",
+              color: "#999592",
+              fontSize: "1.5rem"
+            }}
+          >
+            <div>THANK YOU</div>
+            <div>YOUR ORDER IS NOW COMPLETE</div>
           </div>
-          {this.state.showTotal ? (
-            <Purchase onPurchase={this.handlePurchase} />
-          ) : null}
-        </div>
+        ) : (
+          this.showNoItemMessage()
+        )}
+        {this.state.showTotal ? (
+          <Purchase>
+            <Button
+              style={{ width: "200px" }}
+              variant="contained"
+              color="secondary"
+              onClick={this.handlePurchase}
+            >
+              Buy
+            </Button>
+          </Purchase>
+        ) : null}
       </UserLayout>
     );
   }

@@ -1,20 +1,38 @@
 import React from "react";
+import {
+  Select,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  MenuItem
+} from "@material-ui/core";
 
 const SelectInput = React.memo(
   ({ options, input, label, meta: { touched, error, active } }) => {
     return (
-      <div>
-        <label>{label}</label>
-        <select {...input}>
-          <option value="">Select one</option>
-          {options.map(item => (
-            <option key={item._id || item.value} value={item._id || item.key}>
-              {item.name || item.value}
-            </option>
+      <FormControl
+        style={{ width: "100%", marginTop: "1em" }}
+        error={touched && error}
+      >
+        <InputLabel htmlFor="genre">{label}</InputLabel>
+        <Select
+          {...input}
+          inputProps={{
+            name: "genre",
+            id: "genre"
+          }}
+        >
+          <MenuItem value="">
+            <span>None</span>
+          </MenuItem>
+          {options.map(option => (
+            <MenuItem key={option.name} value={option._id}>
+              {option.name}
+            </MenuItem>
           ))}
-        </select>
-        {touched && error && <span style={{ color: "red" }}>{error}</span>}
-      </div>
+        </Select>
+        {touched && error && <FormHelperText>{error}</FormHelperText>}
+      </FormControl>
     );
   }
 );

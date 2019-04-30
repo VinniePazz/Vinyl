@@ -7,7 +7,7 @@ const CardContainer = styled.section`
   margin: 3rem auto;
 `;
 
-const Heading = styled.h3`
+export const Heading = styled.h3`
 	font-size: 1.5rem;
 	text-transform: uppercase;
 	font-weight: 700;
@@ -18,7 +18,7 @@ const Heading = styled.h3`
 	&::after {
 		content: '';
 		position: absolute;
-		top: 120%;
+		top: 150%;
 		left: 50%;
 		width: 5rem;
 		height: 5px;

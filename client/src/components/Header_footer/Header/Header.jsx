@@ -9,7 +9,7 @@ import MediaQuery from "react-responsive";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/userActions";
 
-import ShoppingCart from "../../ShoppingCart";
+import ShoppingCart from "../../icons/ShoppingCart"
 import MobileToogle from "./MobileToogle";
 import MobileNav from "./MobileNav";
 
@@ -114,7 +114,7 @@ class Header extends Component {
 
     return (
       <Icon key={item.name} as={Link} to={item.linkTo}>
-        <ShoppingCart />
+        <ShoppingCart hover />
         <CartCounter>{numOfProducts}</CartCounter>
       </Icon>
     );

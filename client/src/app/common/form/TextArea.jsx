@@ -11,14 +11,13 @@ const TextArea = React.memo(
   }) => {
     return (
       <div>
-        <label>{label}</label>
         <textarea
+          style={{ border: "1px solid rgba(0, 0, 0, 0.42)", marginTop: '2em', fontFamily: 'Poppins, sans-serif'}}
           {...input}
           placeholder={placeholder}
           rows={rows || 5}
           cols={cols || 10}
         />
-        {touched && error && <span style={{ color: "red" }}>{error}</span>}
       </div>
     );
   }

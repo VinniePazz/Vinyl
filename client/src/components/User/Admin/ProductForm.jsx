@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import axios from "axios";
+import styled from "styled-components";
+import { withStyles } from "@material-ui/core/styles";
 import { Field, reduxForm, SubmissionError } from "redux-form";
 import { connect } from "react-redux";
+
+import Button from "@material-ui/core/Button";
+
+import { Heading } from "../../Home/HomeCardBlock";
 
 import UserLayout from "../UserLayout";
 import TextInput from "../../../app/common/form/Textinput";
@@ -17,13 +23,8 @@ import {
 
 const validate = values => {
   const errors = {};
-
-  const requiredFields = [
-    "author",
-    "album",
-    "genre",
-    "price",
-  ];
+	console.log(values)
+  const requiredFields = ["author", "album", "genre", "price"];
   requiredFields.forEach(field => {
     if (!values[field]) {
       errors[field] = "Required";
@@ -32,6 +33,11 @@ const validate = values => {
 
   return errors;
 };
+
+const Container = styled.div`
+  width: 50%;
+  margin: 0 auto;
+`;
 
 class ProductForm extends Component {
   state = { images: [], uploading: false };
@@ -53,8 +59,8 @@ class ProductForm extends Component {
       this.props.reset();
       this.setState({
         images: []
-			});
-			window.scrollTo({ top: 0, behavior: "smooth" })
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -105,7 +111,7 @@ class ProductForm extends Component {
 
     return (
       <UserLayout>
-        <h1>Add product</h1>
+        <Heading>Add vinyl</Heading>
         <form onSubmit={handleSubmit(this.submit)}>
           <Field
             name="images"
@@ -116,34 +122,76 @@ class ProductForm extends Component {
             images={this.state.images}
             uploading={this.state.uploading}
           />
-          <Field name="author" type="text" label="Author" component={TextInput} />
-          <Field name="album" type="text" label="Album or song" component={TextInput} />
-					<Field
-            name="genre"
-            label="Genres"
-            options={products.genres || []}
-            component={SelectInput}
-          />
-          <Field
-            name="description"
-            label="Description"
-            placeholder="Describe vinyl's content"
-            rows={10}
-						cols={10}
-            component={TextArea}
-          />
-          <Field name="price" type="text" label="Price" component={TextInput} />
-					
-          <button type="submit" disabled={invalid || submitting || pristine}>
-            Submit
-          </button>
-          {submitFailed && <p style={{ color: "red" }}>{error}</p>}
-          {submitSucceeded && <p style={{ color: "green" }}>SUCCESS</p>}
+          <Container>
+            <Field
+              name="author"
+              type="text"
+              label="author"
+              component={TextInput}
+            />
+            <Field
+              name="album"
+              type="text"
+              label="album or song"
+              component={TextInput}
+            />
+            <Field name="year" type="text" label="year" component={TextInput} />
+            <Field
+              name="genre"
+              label="genre"
+              options={products.genres || []}
+              component={SelectInput}
+            />
+            <Field
+              name="price"
+              type="text"
+              label="price"
+              component={TextInput}
+            />
+            <Field
+              name="description"
+              label="description"
+              placeholder="describe vinyl's content if you want"
+              rows={10}
+              cols={10}
+              component={TextArea}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="secondary"
+              disabled={invalid || submitting || pristine}
+              fullWidth
+              classes={{
+                root: this.props.classes.root,
+                disabled: this.props.classes.disabled
+              }}
+            >
+              add vinyl
+            </Button>
+            {submitFailed && (
+              <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+            )}
+            {submitSucceeded && (
+              <p style={{ color: "green", textAlign: "center" }}>SUCCESS</p>
+            )}
+          </Container>
         </form>
       </UserLayout>
     );
   }
 }
+
+const styles = {
+  root: {
+    marginTop: "2em",
+    marginBottom: "1em"
+  },
+  disabled: {
+    backgroundColor: "#e76f517a !important",
+    color: "#ffffff !important"
+  }
+};
 
 const mapStateToProps = state => {
   return {
@@ -158,4 +206,6 @@ export default connect(
     addProduct,
     clearProduct
   }
-)(reduxForm({ form: "productForm", validate })(ProductForm));
+)(
+  reduxForm({ form: "productForm", validate })(withStyles(styles)(ProductForm))
+);
