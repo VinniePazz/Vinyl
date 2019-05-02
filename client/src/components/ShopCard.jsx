@@ -62,7 +62,7 @@ const CollContent = styled.div`
     font-weight: 400;
     top: 5%;
     position: absolute;
-    color: #e76f51;
+    color: #fafafa78;
   }
 
   & p:first-of-type {
@@ -85,11 +85,23 @@ const Actions = styled.div`
   }
 `;
 
-const ShopCard = ({ author, album, images, _id, price, genre, user }) => {
-	const width = document.documentElement.clientWidth;
+const ShopCard = ({
+  author,
+  album,
+  images,
+  _id,
+  price,
+  genre,
+  user,
+  addToCart
+}) => {
+  const width = document.documentElement.clientWidth;
 
   return (
-    <CollCard as={width < 960 && Link} to={`/product_detail/${_id}`}>
+    <CollCard
+      as={width < 960 ? Link : "div"}
+      to={width < 960 ? `/product_detail/${_id}` : "null"}
+    >
       <CollImage
         alt={`${author} / ${album}`}
         src={images.length > 0 ? images[0].url : "/images/placeholder.png"}
@@ -112,7 +124,7 @@ const ShopCard = ({ author, album, images, _id, price, genre, user }) => {
             <IconButton
               color="secondary"
               aria-label="Add to shopping cart"
-              onClick={addToCart()}
+              onClick={() => addToCart(_id)}
             >
               <AddShoppingCartIcon />
             </IconButton>

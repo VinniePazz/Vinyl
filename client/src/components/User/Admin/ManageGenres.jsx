@@ -90,7 +90,7 @@ class ManageGenres extends Component {
           <Field
             name="name"
             type="text"
-            label="genre"
+            label="type here"
             component={TextInput}
           />
           <Button

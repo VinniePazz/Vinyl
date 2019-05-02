@@ -105,7 +105,7 @@ const ImageBox = styled.div`
     }
     div {
       background-image: ${({ image }) =>
-        `linear-gradient(to bottom, #000000a1, #000000a1), url(${image})`};
+        `linear-gradient(to bottom, #402f3b85, #402f3b85), url(${image})`};
     }
   }
 

@@ -27,7 +27,7 @@ const validate = values => {
 
 export const Dialog = styled.div`
   max-width: 20em;
-  margin: 5em auto 0 auto;
+  margin: 10em auto 0 auto;
 
   h3 {
     font-size: 1.5em;

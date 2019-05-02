@@ -10,11 +10,20 @@ const Product = styled.div`
   display: flex;
   padding: 1em;
   transition: all 0.2s ease;
-  border: 1px solid #d6d6d6;
+  border: 1px solid 	#d6d6d63d;
   margin-bottom: 1em;
 
 	& h4 {
 		font-weight: 500;
+	}
+
+	@media (max-width: 499px) {
+		flex-direction: column;
+		align-items: center;
+
+		& > *:not(:last-child) {
+			margin-bottom: 1em;
+		}
 	}
 `;
 
@@ -37,11 +46,6 @@ const ProductInfo = styled.div`
   div {
     text-align: center;
   }
-
-  p:first-child {
-    color: #e76f51;
-
-  }
 `;
 
 const Quantity = styled.div`
@@ -59,7 +63,7 @@ const Price = styled.div`
   flex-direction: column;
   align-items: center;
   font-weight: bold;
-
+	color: #e76f51;
 
 `;
 

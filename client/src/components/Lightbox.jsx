@@ -46,7 +46,7 @@ class ImageLightBox extends Component {
         onClickPrev={this.gotoPrevious}
         onClickNext={this.gotoNext}
         onClose={this.closeLightbox}
-				showImageCount={false}
+				showImageCount={true}
       />
     );
   }

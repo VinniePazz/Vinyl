@@ -1,87 +1,129 @@
 import React from "react";
-import Button from "../Button";
+import styled from "styled-components";
+import Button from "@material-ui/core/Button";
+import { withRouter, Link } from "react-router-dom";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const ProductInfoSide = styled.div`
+  flex-grow: 1;
+`;
 
-const ProdNfo = props => {
-  const showProdTags = detail => (
-    <div className="product_tags">
-      {detail.shipping ? (
-        <div className="tag">
-          <div>
-            <FontAwesomeIcon icon="truck" />
-          </div>
-          <div className="tag_text">
-            <div>Free shipping</div>
-            <div>And return</div>
-          </div>
-        </div>
-      ) : null}
-      {detail.available ? (
-        <div className="tag">
-          <div>
-            <FontAwesomeIcon icon="check" />
-          </div>
-          <div className="tag_text">
-            <div>Available</div>
-            <div>in store</div>
-          </div>
-        </div>
-      ) : (
-        <div className="tag">
-          <div>
-            <FontAwesomeIcon icon="times" />
-          </div>
-          <div className="tag_text">
-            <div>Not Available</div>
-            <div>Preorder only</div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+const ProductDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
-  const showProdActions = detail => (
-    <div className="product_actions">
-      <div className="price">$ {detail.price}</div>
-      <div className="cart">
+const Album = styled.h2`
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 150%;
+    left: 50%;
+    width: 3rem;
+    height: 5px;
+    background-color: #e76f51;
+    transform: translateX(-50%);
+  }
+`;
+
+const Author = styled.h3`
+  margin-bottom: 1.5rem;
+`;
+
+const Year = styled.h3`
+  font-size: 0.8rem;
+  color: #fafafa78;
+  margin-bottom: 1.5rem;
+`;
+
+const Genre = styled.p`
+  font-size: 0.8rem;
+  color: #fafafa78;
+  margin-bottom: 3rem;
+
+  @media (max-width: 450px) {
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const Description = styled.p`
+  max-width: 30em;
+  text-align: center;
+  font-size: 0.8rem;
+  color: #fafafa78;
+  margin-bottom: 3rem;
+
+  @media (max-width: 699px) {
+    max-width: 25em;
+  }
+
+  @media (max-width: 450px) {
+    margin-bottom: 1.5rem;
+    max-width: 100%;
+  }
+`;
+
+const Price = styled.p`
+  font-size: 1.2rem;
+  margin-bottom: 3rem;
+  font-weight: 500;
+
+  @media (max-width: 450px) {
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const ProductInfo = ({
+  detail: {
+    album,
+    author,
+    genre,
+    price,
+    year,
+    _id,
+    description,
+    user
+  },
+  addToCart
+}) => {
+  const renderInfo = () => (
+    <ProductDetails>
+      <Album>{album}</Album>
+      <Author>{author}</Author>
+      <Year>{year}</Year>
+      <Genre>{genre.name}</Genre>
+      <Description>{description}</Description>
+      <Price>{price} $</Price>
+      {user && user.userData.isAuth ? (
         <Button
-          type="add_to_cart_link"
-          runAction={() => {
-            props.addToCart(detail._id);
-          }}
-        />
-      </div>
-    </div>
+          variant="contained"
+          color="secondary"
+          style={{ width: "30%" }}
+          onClick={() => addToCart(_id)}
+        >
+          buy
+        </Button>
+      ) : (
+        <Button
+          variant="contained"
+          color="secondary"
+          style={{ width: "30%" }}
+          component={Link}
+          to="/login"
+        >
+          buy
+        </Button>
+      )}
+    </ProductDetails>
   );
 
-  const showProdSpecifications = detail => (
-    <div className="product_specifications">
-      <h2>Specs:</h2>
-      <div>
-        <div className="item">
-          <strong>Frets:</strong> {detail.frets}
-        </div>
-        <div className="item">
-          <strong>Wood:</strong> {detail.wood.name}
-        </div>
-      </div>
-    </div>
-  );
-
-  const detail = props.detail;
-  return (
-    <div>
-      <h1>
-        {/* {detail.brand.name} {detail.name} */}
-				PRODUCT INFO HERE
-      </h1>
-      {/* <p>{detail.description}</p>
-      {showProdTags(detail)} */}
-      {showProdActions(detail)}
-      {/* {showProdSpecifications(detail)} */}
-    </div>
-  );
+  return <ProductInfoSide>{renderInfo()}</ProductInfoSide>;
 };
 
-export default ProdNfo;
+export default withRouter(ProductInfo);

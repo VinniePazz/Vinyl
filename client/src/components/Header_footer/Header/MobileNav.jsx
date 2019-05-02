@@ -11,6 +11,10 @@ import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 
+import ShoppingCart from "../../icons/ShoppingCart";
+import VinylIcon from "../../icons/VinylIcon";
+import AccountIcon from "../../icons/AccountIcon";
+
 const CartCounter = styled.div`
   position: absolute;
   top: -35%;
@@ -60,9 +64,9 @@ class MobileNav extends Component {
           <ListItem button key={item.name} onClick={() => this.props.handleMobileLink(item.linkTo)} >
             <ListItemIcon>
               {item.name === "account" ? (
-                <AccountCircleIcon className={this.props.classes.icon} />
+                <AccountIcon />
               ) : (
-                <ShopIcon className={this.props.classes.icon} />
+                <VinylIcon />
               )}
             </ListItemIcon>
             <ListItemText primary={item.name} classes={{ primary: this.props.classes.label }} />
@@ -81,7 +85,7 @@ class MobileNav extends Component {
     return (
       <ListItem button key={item.name} component={Link} to={item.linkTo} onClick={() => this.props.handleMobileLink(item.linkTo)}>
         <ListItemIcon className={this.props.classes.iconBox}>
-          <ShoppingCartIcon className={this.props.classes.icon} />
+          <ShoppingCart />
           <CartCounter>{numOfProducts}</CartCounter>
         </ListItemIcon>
         <ListItemText primary={item.name} classes={{ primary: this.props.classes.label }} />

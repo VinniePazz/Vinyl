@@ -2,6 +2,22 @@ import React, { Component } from "react";
 import LightBox from "../Lightbox";
 import styled from "styled-components";
 
+const ProductImageSide = styled.div`
+  width: 50%;
+
+  @media (max-width: 749px) {
+    width: 60%;
+  }
+
+  @media (max-width: 600px) {
+    width: 80%;
+  }
+
+  @media (max-width: 450px) {
+    width: 100%;
+  }
+`;
+
 const Poster = styled.div`
   background-image: ${({ image }) => `url(${image})`};
   background-size: cover !important;
@@ -28,6 +44,33 @@ const Poster = styled.div`
       box-shadow: none;
     }
   }
+
+  @media (max-width: 450px) {
+    transform: translate3d(0px, -0%, 0em) rotate3d(0, 0, -0, 0deg);
+    box-shadow: none;
+  }
+`;
+
+const Thumbs = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+	margin-top: 1rem;
+	margin-bottom: 1.5rem;
+`;
+
+const Thumb = styled.div`
+  height: 125px;
+  width: 125px;
+  background-image: ${({ image }) => `url(${image})`};
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  cursor: pointer;
+	transition: transform 0.1s linear;
+
+  &:hover {
+    transform: scale(1.05);
+	}
 `;
 
 class ProdImg extends Component {
@@ -69,12 +112,7 @@ class ProdImg extends Component {
   showThumbs = () =>
     this.state.lightboxImages.map((item, i) =>
       i > 0 ? (
-        <div
-          key={i}
-          onClick={() => this.handleLightBox(i)}
-          className="thumb"
-          style={{ background: `url(${item}) no-repeat` }}
-        />
+        <Thumb image={item} key={item} onClick={() => this.handleLightBox(i)} />
       ) : null
     );
 
@@ -89,14 +127,12 @@ class ProdImg extends Component {
   render() {
     const { detail } = this.props;
     return (
-      <div className="product_image_container">
-        <div>
-          <Poster
-            image={this.renderCardImage(detail)}
-            onClick={() => this.handleLightBox(0)}
-          />
-        </div>
-        <div className="main_thumbs">{this.showThumbs(detail)}</div>
+      <ProductImageSide>
+        <Poster
+          image={this.renderCardImage(detail)}
+          onClick={() => this.handleLightBox(0)}
+        />
+        <Thumbs>{this.showThumbs(detail)}</Thumbs>
         {this.state.lightbox ? (
           <LightBox
             id={detail.id}
@@ -106,7 +142,7 @@ class ProdImg extends Component {
             onclose={this.handleLightBoxClose}
           />
         ) : null}
-      </div>
+      </ProductImageSide>
     );
   }
 }

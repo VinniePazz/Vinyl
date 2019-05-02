@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import ProductInfo from "./ProductInfo";
@@ -10,6 +11,19 @@ import {
   getProductDetail,
   clearProductDetail
 } from "../../actions/productActions";
+
+const ProductPageContainer = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 3rem 1rem 3rem 1rem;
+  display: flex;
+	justify-content: center;
+	
+	@media (max-width: 699px) {
+		flex-direction: column;
+		align-items: center;
+	}
+`;
 
 class ProductPage extends Component {
   async componentDidMount() {
@@ -32,36 +46,31 @@ class ProductPage extends Component {
 
   render() {
     return (
-      <div>
-        <div className="container">
-          {this.props.products.prodDetail ? (
-            <div className="product_detail_wrapper">
-              <div className="left">
-                <div style={{ width: "500px" }}>
-                  <ProductImage detail={this.props.products.prodDetail[0]} />
-                </div>
-              </div>
-              <div className="right">
-                <ProductInfo
-                  addToCart={id => this.addToCartHandler(id)}
-                  detail={this.props.products.prodDetail[0]}
-                />
-              </div>
-            </div>
-          ) : (
-            <div style={{ textAlign: "center" }}>
-              <CircularProgress style={{ color: "#e76f51" }} thickness={4} />
-            </div>
-          )}
-        </div>
-      </div>
+      <ProductPageContainer>
+        {this.props.products.prodDetail ? (
+          <>
+            <ProductImage detail={this.props.products.prodDetail[0]} />
+            <ProductInfo
+              addToCart={id => this.addToCartHandler(id)}
+              detail={this.props.products.prodDetail[0]}
+							user={this.props.user}
+            />
+          </>
+        ) : (
+          <CircularProgress
+            style={{ color: "#e76f51"}}
+            thickness={4}
+          />
+        )}
+      </ProductPageContainer>
     );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    products: state.products
+		products: state.products,
+		user: state.user
   };
 };
 

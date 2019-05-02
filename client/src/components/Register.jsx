@@ -43,8 +43,8 @@ class Register extends Component {
       });
     } else {
       setTimeout(() => {
-        this.props.history.push("/login");
-      }, 3000);
+        this.props.history.push("/shop");
+      }, 1500);
     }
   };
 
@@ -92,7 +92,7 @@ class Register extends Component {
           >
             Create account
           </Button>
-          {success && success.success && <p>WELCOME!</p>}
+          {success && success.success && <p style={{textAlign: 'center'}}>WELCOME!</p>}
         </form>
       </Dialog>
     );
