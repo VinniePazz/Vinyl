@@ -25,25 +25,15 @@ const GenresBlock = styled.div`
   flex-wrap: wrap;
 	justify-content: center;
 	position: relative;
-	border: 1px solid rgba(0, 0, 0, 0.2);
 	padding: 1rem;
 	border-radius: 1em;
 
-	&::before {
-		content: 'existing genres';
-		position: absolute;
-		bottom: 95%;
-		left: 10%;
-		padding: 0 1em;
-		z-index: 999;
-		background: #ffffff;
-	}
 `;
 
 const Genre = styled.div`
   margin: 0.5em;
   padding: 0.5em 1em;
-  border: 2px solid #e76f51;
+  border: 2px solid #e76f5163;
   border-radius: 5px;
   color: #e76f51;
   font-weight: 500;
@@ -74,7 +64,6 @@ class ManageGenres extends Component {
   };
 
   showCategoryItems = () => {
-    console.log();
     return this.props.products.genres
       ? this.props.products.genres.map(genre => (
           <Genre key={genre._id}>{genre.name}</Genre>

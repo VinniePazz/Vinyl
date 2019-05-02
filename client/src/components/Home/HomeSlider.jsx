@@ -1,30 +1,37 @@
 import React from "react";
-import Slider from "react-slick";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const Image = styled.div`
-  position: relative;
+const Hero = styled.div`
   background-size: cover;
   background-position: center left;
   height: ${window.innerHeight}px;
-  background-image: ${({ image }) => `url(${image})`};
+  background-image: ${({ image }) =>
+    `linear-gradient(to bottom, #4b36451a, #1a171954), url(${image})`};
+
+  /* linear-gradient(to bottom,#4b364573,#2d1e29f2),url(/images/featured/home-vinyl-2.jpg) */
 
   @media (max-width: 600px) {
-    background-position: ${({ type }) =>
-      type === "main" ? "75% 50%" : "63% 50%"};
+    background-position: 75% 50%;
   }
 `;
 
+const Container = styled.div`
+	max-width: 1100px;
+	margin: 0 auto;
+	height: 100%;
+	position: relative;
+`;
+
 const Slogan = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 8%;
+	position: absolute;
+	bottom: 25%;
+	left: 1.5rem;
 
   & div {
-    background: #82828287;
+    background: #80808047;
     color: #ffffff;
     padding: 0px 0.5em;
     text-transform: uppercase;
@@ -43,7 +50,7 @@ const Slogan = styled.div`
   }
 
   @media (max-width: 600px) {
-    top: 35%;
+    bottom: 30%;
 
     & .top {
       font-size: 2.5rem;
@@ -56,64 +63,27 @@ const Slogan = styled.div`
 `;
 
 const HomeSlider = ({ classes }) => {
-  const slides = [
-    {
-      img: "/images/featured/home-vinyl.jpg",
-      lineOne: "best way",
-      lineTwo: "to feel the sound",
-      linkTitle: "view offers",
-      linkTo: "/shop",
-      type: "main"
-    },
-    {
-      img: "/images/featured/home-vinyl-2.jpg",
-      lineOne: "all music",
-      lineTwo: "in our shop !",
-      linkTitle: "get it",
-      linkTo: "/shop",
-      type: "secondary"
-    }
-  ];
-
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: false,
-    autoplay: true,
-    autoplaySpeed: 5000
-  };
-
-  const generateSlides = () =>
-    slides
-      ? slides.map((item, i) => (
-          <div key={item.img}>
-            <Image image={item.img} type={item.type}>
-              <Slogan>
-                <div className="top">{item.lineOne}</div>
-                <div className="bottom">{item.lineTwo}</div>
-                <Button
-                  component={Link}
-                  to={item.linkTo}
-                  className={classes.button}
-                  variant="contained"
-                  color="secondary"
-                >
-                  {item.linkTitle}
-                </Button>
-              </Slogan>
-            </Image>
-          </div>
-        ))
-      : null;
-
-  return (
-    <div className="featured_container">
-      <Slider {...settings}>{generateSlides()}</Slider>
-    </div>
+  const renderContent = () => (
+    <Hero image={"/images/featured/home-vinyl.jpg"}>
+      <Container>
+        <Slogan>
+          <div className="top">best way</div>
+          <div className="bottom">to feel the sound</div>
+          <Button
+            component={Link}
+            to={"/shop"}
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+          >
+            view offers
+          </Button>
+        </Slogan>
+      </Container>
+    </Hero>
   );
+
+  return renderContent();
 };
 
 const styles = theme => ({

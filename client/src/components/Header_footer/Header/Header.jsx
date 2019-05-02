@@ -9,7 +9,7 @@ import MediaQuery from "react-responsive";
 import { connect } from "react-redux";
 import { logout } from "../../../actions/userActions";
 
-import ShoppingCart from "../../icons/ShoppingCart"
+import ShoppingCart from "../../icons/ShoppingCart";
 import MobileToogle from "./MobileToogle";
 import MobileNav from "./MobileNav";
 
@@ -21,6 +21,7 @@ const Navigation = styled.header`
   width: 100%;
   z-index: 999;
   background-color: #4b3645;
+  background-image: linear-gradient(to bottom, #5d3c53, #2b1d27);
   opacity: ${({ header }) =>
     (header === "default" && "1") ||
     (header === "showedOnScroll" && "1") ||
@@ -50,8 +51,10 @@ export const Logo = styled.div`
   align-items: center;
   transition: color 0.2s;
 
-  &:hover {
-    color: #e76f51;
+  @media (min-width: 860px) {
+    &:hover {
+      color: #e76f51;
+    }
   }
 `;
 
@@ -69,8 +72,10 @@ export const Navlink = styled.a`
   transition: color 0.2s;
   position: relative;
 
-  &:hover {
-    color: #e76f51;
+  @media (min-width: 860px) {
+    &:hover {
+      color: #e76f51;
+    }
   }
 
   @media (max-width: 25em) {
@@ -251,7 +256,6 @@ class Header extends Component {
                   open={this.state.openDrawer}
                   onClose={this.toogleDrawer}
                   PaperProps={{ style: { backgroundColor: "#4b3645" } }}
-                  transitionDuration={{ enter: 10000 }}
                 >
                   <MobileNav
                     links={links}

@@ -6,8 +6,8 @@ import Header from "../../components/Header_footer/Header/Header";
 import Footer from "../../components/Header_footer/Footer/Footer";
 
 const PageContainer = styled.div`
-	margin-top: 4em;
-	min-height: 85vh;
+  margin-top: 4em;
+  min-height: 100vh;
 `;
 
 class Layout extends Component {
@@ -15,24 +15,22 @@ class Layout extends Component {
     header: "default"
   };
 
-	scrollTop = 0;
+  scrollTop = 0;
 
-  handleScroll = throttle((e) => {
-
+  handleScroll = throttle(e => {
     if (this.scrollTop >= 100 && window.pageYOffset > this.scrollTop) {
-      this.setState({ header: 'hidden' });
-		}
-		
-    if ( window.pageYOffset < this.scrollTop && this.scrollTop !== 0) {
-      this.setState({ header: 'showedOnScroll' });
-		}
-		
-    if ( window.pageYOffset === 0) {
-      this.setState({ header: 'default' });
+      this.setState({ header: "hidden" });
     }
 
-		this.scrollTop = window.pageYOffset;
+    if (window.pageYOffset < this.scrollTop && this.scrollTop !== 0) {
+      this.setState({ header: "showedOnScroll" });
+    }
 
+    if (window.pageYOffset === 0) {
+      this.setState({ header: "default" });
+    }
+
+    this.scrollTop = window.pageYOffset;
   }, 200);
 
   componentDidMount() {

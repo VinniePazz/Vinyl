@@ -3,11 +3,21 @@ import { createMuiTheme } from "@material-ui/core/styles";
 export default createMuiTheme({
   palette: {
     primary: {
-      main: "#4b3645"
+      main: "#ffffff"
     },
     secondary: {
       main: "#E76F51"
-    }
+		},
+		error: {
+			main: "#ff4d4d"
+		},
+		text: {
+			primary: 'rgba(255, 255, 255, 0.76)',
+			secondary: "rgba(255, 255, 255, 0.76)"
+		},
+		action: {
+			active: 'rgba(255, 255, 255, 0.76)'
+		}
   },
   typography: {
     fontFamily: '"Poppins", sans-serif',

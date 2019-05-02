@@ -10,7 +10,7 @@ const FooterContainer = styled(Container)`
 
 const Footer = () => {
   return (
-    <footer className="bck_b_dark">
+    <footer>
       <FooterContainer>
         <Logo as={Link} to="/">
           vinyl

@@ -36,7 +36,15 @@ const validate = values => {
 
 const Container = styled.div`
   width: 50%;
-  margin: 0 auto;
+	margin: 0 auto;
+	
+	@media (max-width: 740px) {
+		width: 75%;
+	}
+
+	@media (max-width: 500px) {
+		width: 100%;
+	}
 `;
 
 class ProductForm extends Component {
@@ -151,7 +159,7 @@ class ProductForm extends Component {
             <Field
               name="description"
               label="description"
-              placeholder="describe vinyl's content if you want"
+              placeholder="describe vinyl information here"
               rows={10}
               cols={10}
               component={TextArea}

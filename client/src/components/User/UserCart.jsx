@@ -102,6 +102,7 @@ class UserCart extends Component {
         to={`/shop`}
         variant="text"
         color="secondary"
+				style={{ marginTop: '1.5em' }}
       >
         go to shop!
       </Button>
@@ -140,12 +141,12 @@ class UserCart extends Component {
           <div
             style={{
               textAlign: "center",
-              marginTop: "3em",
-              color: "#999592",
+              marginTop: "5em",
+              color: "rgb(224, 136, 114)",
               fontSize: "1.5rem"
             }}
           >
-            <div>THANK YOU</div>
+            <div>THANK YOU !!!</div>
             <div>YOUR ORDER IS NOW COMPLETE</div>
           </div>
         ) : (

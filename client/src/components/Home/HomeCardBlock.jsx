@@ -4,7 +4,8 @@ import styled from "styled-components";
 
 const CardContainer = styled.section`
   max-width: 71.25em;
-  margin: 3rem auto;
+	margin: 0 auto;
+	padding: 1.5rem;
 `;
 
 export const Heading = styled.h3`

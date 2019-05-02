@@ -1,40 +1,57 @@
 import React from "react";
-import ShopCard from "./ShopCard";
-import { Grid, Button } from "@material-ui/core";
+import styled from "styled-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const ShopGallery = ({ products, grid, loadMore, size, limit }) => {
-	
+import ShopCard from "./ShopCard";
+import { Button } from "@material-ui/core";
+
+const Gallery = styled.div`
+  max-width: 1100px;
+	margin: 0 auto;
+	padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 24.2%);
+	grid-gap: 10px;
+	justify-content: center;
+
+	@media (max-width: 849px) {
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	}
+
+	@media (max-width: 499px) {
+		grid-template-columns: repeat(auto-fit, minmax(150px, 48%));
+	}
+`;
+
+const CenterUtil = styled.div`
+  text-align: center;
+  padding-top: 5em;
+`;
+
+const ShopGallery = ({ products, loadMore, size, limit }) => {
   if (!products) {
-    return <div>Loading...</div>;
+    return (
+      <CenterUtil>
+        <CircularProgress style={{ color: "#e76f51" }} thickness={4} />
+      </CenterUtil>
+    );
   } else if (products.length === 0) {
-    return <div>No Products...</div>;
+    return <CenterUtil>No such products yet...</CenterUtil>;
   }
 
   const renderButton = () => (
     <Button variant="contained" color="secondary" onClick={loadMore}>
-      Load more
+      more vinyls
     </Button>
   );
 
-  const renderGrid = grid =>
-    grid === "table"
-      ? products.map(product => (
-          <Grid item key={product._id} md={4} xs={12} sm={6}>
-            <ShopCard {...product} grid={grid} />
-          </Grid>
-        ))
-      : products.map(product => (
-          <Grid item key={product._id} xs={12}>
-            <ShopCard {...product} grid={grid} />
-          </Grid>
-        ));
+  const renderVinyls = () =>
+    products.map(product => <ShopCard key={product._id} {...product} />);
 
   return (
     <>
-      <Grid container spacing={16}>
-        {renderGrid(grid)}
-      </Grid>
-      <div style={{ margin: "1em 0 5em 0", textAlign: "center" }}>
+      <Gallery>{renderVinyls()}</Gallery>
+      <div style={{ margin: "3em 0 0", textAlign: "center" }}>
         {size > 0 && size >= limit && renderButton()}
       </div>
     </>

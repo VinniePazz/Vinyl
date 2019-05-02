@@ -1,61 +1,43 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 
 import Grid from "@material-ui/core/Grid";
 
 import ShopGallery from "./ShopGallery";
 import FilterBar from "./FilterBar";
 
-import {
-  getGenres,
-  getProductsToShop
-} from "../actions/productActions";
+import { getGenres, getProductsToShop } from "../actions/productActions";
 import { price } from "../app/data/price";
 
 import PageTop from "./PageTop";
 
 import ShopBar from "./ShopBar";
 
+const ShopBackground = styled.main`
+	padding-bottom: 10em;
+`;
+
 class Shop extends Component {
   state = {
-    grid: "table",
-    limit: 6,
+    limit: 10,
     skip: 0,
     filters: {
-      genre: [],
-      price: []
+      genre: []
     }
   };
 
   componentDidMount() {
     const { skip, limit, filters } = this.state;
-    window.scrollTo(0, 0);
 
     this.props.getGenres();
 
     this.props.getProductsToShop(skip, limit, filters);
   }
 
-  handlePrice = value => {
-    const data = price;
-    let array = [];
-
-    for (let key in data) {
-      if (data[key]._id === parseInt(value, 10)) {
-        array = data[key].array;
-      }
-    }
-    return array;
-  };
-
   handleFilters = (filters, category) => {
     const newFilters = { ...this.state.filters };
     newFilters[category] = filters;
-
-    if (category === "price") {
-      let priceValues = this.handlePrice(filters);
-      newFilters[category] = priceValues;
-    }
 
     this.showFilteredResults(newFilters);
 
@@ -85,38 +67,20 @@ class Shop extends Component {
     });
   };
 
-  handleGrid = type => {
-    this.setState({ grid: type });
-  };
-
   render() {
-		const { products } = this.props;
-		const { grid, limit } = this.state;
+    const { products } = this.props;
+    const { limit } = this.state;
 
     return (
-      <>
-        <PageTop title="Browse Products" />
-        <div className="container">
-          <Grid container spacing={24}>
-            <Grid item xs={4}>
-              <FilterBar
-                products={products}
-                handleFilters={this.handleFilters}
-              />
-            </Grid>
-            <Grid item xs={8}>
-              <ShopBar grid={grid} onClick={this.handleGrid} />
-              <ShopGallery
-                grid={grid}
-                limit={limit}
-                size={products.toShopSize}
-                products={products.toShop}
-                loadMore={this.loadMoreCards}
-              />
-            </Grid>
-          </Grid>
-        </div>
-      </>
+      <ShopBackground>
+        <PageTop genres={products.genres} handleFilters={this.handleFilters} />
+        <ShopGallery
+          limit={limit}
+          size={products.toShopSize}
+          products={products.toShop}
+          loadMore={this.loadMoreCards}
+        />
+      </ShopBackground>
     );
   }
 }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import PageTop from "../PageTop";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import ProductInfo from "./ProductInfo";
 import ProductImage from "./ProductImage";
@@ -18,8 +18,8 @@ class ProductPage extends Component {
     await this.props.getProductDetail(id);
     if (!this.props.products.prodDetail) {
       this.props.history.push("/");
-		}
-		window.scrollTo(0, 0)
+    }
+    window.scrollTo(0, 0);
   }
 
   componentWillUnmount() {
@@ -33,7 +33,6 @@ class ProductPage extends Component {
   render() {
     return (
       <div>
-        <PageTop title="Product detail" />
         <div className="container">
           {this.props.products.prodDetail ? (
             <div className="product_detail_wrapper">
@@ -50,7 +49,9 @@ class ProductPage extends Component {
               </div>
             </div>
           ) : (
-            "Loading"
+            <div style={{ textAlign: "center" }}>
+              <CircularProgress style={{ color: "#e76f51" }} thickness={4} />
+            </div>
           )}
         </div>
       </div>

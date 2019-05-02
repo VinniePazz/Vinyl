@@ -16,31 +16,43 @@ const DropzoneContainer = styled.div`
 
   .dropzone {
     height: 100%;
-		width: 25%;
-		border: none;
+    width: 25%;
+    border: none;
   }
 
-  @media (max-width: 900px) {
-    .dropzone {
-      width: 35%;
-    }
-	}
-	
-	@media (max-width: 700px) {
+  @media (max-width: 700px) {
     .dropzone {
       width: 40%;
     }
-	}
-	
-	@media (max-width: 550px) {
+  }
+
+  @media (max-width: 550px) {
     .dropzone {
       width: 50%;
     }
   }
+
+  @media (max-width: 960px) {
+    width: 50%;
+    margin: 0 auto;
+
+    .dropzone {
+      width: 50%;
+    }
+	}
+	
+	@media (max-width: 740px) {
+		width: 75%;
+	}
+
+	@media (max-width: 500px) {
+		width: 100%;
+		height: 25vh;
+  }
 `;
 
 const StyledDropZone = styled.div`
-  background: #e76f51;
+  background: #e76f5154;
   cursor: pointer;
   height: 100%;
   width: 100%;
@@ -50,13 +62,13 @@ const StyledDropZone = styled.div`
   transition: all 0.15s ease-out;
 
   p {
-    color: #ffffff;
-		text-align: center;
-		padding: 1em;
+    color: #fafafa;
+    text-align: center;
+    padding: 1em;
   }
 
   &:hover {
-    background-color: #b94e33;
+    background-color: #e76f51cf;
   }
 `;
 
@@ -96,6 +108,17 @@ const ImageBox = styled.div`
         `linear-gradient(to bottom, #000000a1, #000000a1), url(${image})`};
     }
   }
+
+  @media (max-width: 960px) {
+    width: 50%;
+  }
+`;
+
+const Loader = styled.div`
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 class Fileupload extends Component {
@@ -124,7 +147,7 @@ class Fileupload extends Component {
           accept="image/jpeg, image/png, image/gif, image/bmp"
           onDrop={e => this.props.handleDrop(e)}
           multiple={false}
-					className="dropzone"
+          className="dropzone"
         >
           <StyledDropZone>
             <p>click to upload image</p>
@@ -132,15 +155,9 @@ class Fileupload extends Component {
         </Dropzone>
         {this.showUploadedImages()}
         {this.props.uploading && (
-          <div
-            className="dropzone_box"
-            style={{
-              textAlign: "center",
-              paddingTop: "60px"
-            }}
-          >
-            <CircularProgress style={{ color: "#e76f51" }} thickness={6} />
-          </div>
+          <Loader>
+            <CircularProgress style={{ color: "#e76f51" }} thickness={4} />
+          </Loader>
         )}
       </DropzoneContainer>
     );

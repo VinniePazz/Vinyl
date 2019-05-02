@@ -22,11 +22,11 @@ const SelectInput = React.memo(
             id: "genre"
           }}
         >
-          <MenuItem value="">
+          <MenuItem value="" style={{color: 'rgba(10, 10, 10, 0.91)'}}>
             <span>None</span>
           </MenuItem>
           {options.map(option => (
-            <MenuItem key={option.name} value={option._id}>
+            <MenuItem key={option.name} value={option._id} style={{color: 'rgba(10, 10, 10, 0.91)'}}>
               {option.name}
             </MenuItem>
           ))}

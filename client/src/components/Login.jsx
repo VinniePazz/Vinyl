@@ -52,7 +52,7 @@ export const Dialog = styled.div`
 const Divider = styled.p`
   padding: 1em 0;
   text-align: center;
-  color: #29292994;
+  color: #fafafa;
 `;
 
 class Login extends Component {
@@ -80,7 +80,7 @@ class Login extends Component {
     }
 
     if (response && response.loginSuccess) {
-      this.props.history.push("/");
+      this.props.history.goBack();
     }
   };
 
