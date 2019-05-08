@@ -11,7 +11,7 @@ import {
   CLEAR_PRODUCT_DETAIL
 } from "./types";
 
-import { PRODUCT_SERVER } from "../app/common/utils/misc";
+import { PRODUCT_SERVER } from "../app/utils/misc";
 
 export const getProductDetail = (id) => async dispatch => {
 

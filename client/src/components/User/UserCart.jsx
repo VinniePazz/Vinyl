@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import UserLayout from "../User/UserLayout";
 import UserProductBlock from "./UserProductBlock";
-import { Heading } from "../Home/HomeCardBlock";
+import { Heading } from "../../styled_components";
 import EmptyBoxIcon from "../icons/EmptyBox";
 
 import {
@@ -64,7 +65,11 @@ class UserCart extends Component {
         await this.props.getCartItems(cartItems, user.userData.cart);
         if (this.props.user.cartDetail.length > 0) {
           this.calculateTotal(this.props.user.cartDetail);
+        } else {
+          this.setState({ loading: false });
         }
+      } else {
+        this.setState({ loading: false });
       }
     }
   }
@@ -78,7 +83,8 @@ class UserCart extends Component {
 
     this.setState({
       total,
-      showTotal: true
+      showTotal: true,
+      loading: false
     });
   };
 
@@ -86,7 +92,8 @@ class UserCart extends Component {
     await this.props.removeCartItem(id);
     if (this.props.user.cartDetail.length <= 0) {
       this.setState({
-        showTotal: false
+        showTotal: false,
+        loading: false
       });
     } else {
       this.calculateTotal(this.props.user.cartDetail);
@@ -102,7 +109,7 @@ class UserCart extends Component {
         to={`/shop`}
         variant="text"
         color="secondary"
-				style={{ marginTop: '1.5em' }}
+        style={{ marginTop: "1.5em" }}
       >
         go to shop!
       </Button>
@@ -125,45 +132,51 @@ class UserCart extends Component {
   render() {
     return (
       <UserLayout>
-        <CartHeading> cart</CartHeading>
-        <UserProductBlock
-          products={this.props.user}
-          type="cart"
-          removeItem={id => this.removeFromCart(id)}
-        />
-        {this.state.showTotal ? (
-          <TotalSum>
-            <p>
-              Summary: <span>{this.state.total} $</span>
-            </p>
-          </TotalSum>
-        ) : this.state.showSuccess ? (
-          <div
-            style={{
-              textAlign: "center",
-              marginTop: "5em",
-              color: "rgb(224, 136, 114)",
-              fontSize: "1.5rem"
-            }}
-          >
-            <div>THANK YOU !!!</div>
-            <div>YOUR ORDER IS NOW COMPLETE</div>
-          </div>
+        {this.state.loading ? (
+          <CircularProgress color="secondary" size={40} thickness={4} />
         ) : (
-          this.showNoItemMessage()
+          <>
+            <CartHeading> cart</CartHeading>
+            <UserProductBlock
+              products={this.props.user}
+              type="cart"
+              removeItem={id => this.removeFromCart(id)}
+            />
+            {this.state.showTotal ? (
+              <TotalSum>
+                <p>
+                  Summary: <span>{this.state.total} $</span>
+                </p>
+              </TotalSum>
+            ) : this.state.showSuccess ? (
+              <div
+                style={{
+                  textAlign: "center",
+                  marginTop: "5em",
+                  color: "rgb(224, 136, 114)",
+                  fontSize: "1.5rem"
+                }}
+              >
+                <div>THANK YOU FOR YOUR ORDER</div>
+                <div>YOUR TASTE OF MUSIC IS AWESOME!!!</div>
+              </div>
+            ) : (
+              this.showNoItemMessage()
+            )}
+            {this.state.showTotal ? (
+              <Purchase>
+                <Button
+                  style={{ width: "200px" }}
+                  variant="contained"
+                  color="secondary"
+                  onClick={this.handlePurchase}
+                >
+                  Buy
+                </Button>
+              </Purchase>
+            ) : null}
+          </>
         )}
-        {this.state.showTotal ? (
-          <Purchase>
-            <Button
-              style={{ width: "200px" }}
-              variant="contained"
-              color="secondary"
-              onClick={this.handlePurchase}
-            >
-              Buy
-            </Button>
-          </Purchase>
-        ) : null}
       </UserLayout>
     );
   }

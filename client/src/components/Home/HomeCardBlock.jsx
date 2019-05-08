@@ -2,30 +2,12 @@ import React from "react";
 import HomeCard from "./HomeCard";
 import styled from "styled-components";
 
+import { Heading } from '../../styled_components'
+
 const CardContainer = styled.section`
   max-width: 71.25em;
 	margin: 0 auto;
 	padding: 1.5rem;
-`;
-
-export const Heading = styled.h3`
-	font-size: 1.5rem;
-	text-transform: uppercase;
-	font-weight: 700;
-	text-align: center;
-	margin-bottom: 3rem;
-	position: relative;
-
-	&::after {
-		content: '';
-		position: absolute;
-		top: 150%;
-		left: 50%;
-		width: 5rem;
-		height: 5px;
-		background-color: #e76f51;
-		transform: translateX(-50%);
-	}
 `;
 
 const CardBlock = styled.div`
@@ -46,7 +28,7 @@ const HomeCardBlock = ({ title, list }) => {
 
   return (
     <CardContainer>
-			<Heading>{title}</Heading>
+			<Heading shadow={true}>{title}</Heading>
 			<CardBlock>
 				{renderCards(list)}
 			</CardBlock>

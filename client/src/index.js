@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
+import ReduxToastr from "react-redux-toastr";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 
+import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import "./styles.css";
 
 import { configureStore } from "./app/store/configureStore";
@@ -24,9 +25,9 @@ import {
   faPlusCircle,
   faTruck,
   faCheck,
-	faTimes,
-	faFrown,
-	faSmile
+  faTimes,
+  faFrown,
+  faSmile
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   fab,
@@ -40,9 +41,9 @@ library.add(
   faPlusCircle,
   faTruck,
   faCheck,
-	faTimes,
-	faFrown,
-	faSmile
+  faTimes,
+  faFrown,
+  faSmile
 );
 // =============================================================================
 
@@ -51,9 +52,15 @@ const store = configureStore();
 let render = () => {
   ReactDOM.render(
     <Provider store={store}>
-			<MuiThemeProvider theme={theme}>
-				<App />
-			</MuiThemeProvider>
+      <MuiThemeProvider theme={theme}>
+        <ReduxToastr
+          position="bottom-right"
+          transitionIn="fadeIn"
+          transitionOut="fadeOut"
+          closeOnToastrClick
+        />
+        <App />
+      </MuiThemeProvider>
     </Provider>,
     document.getElementById("root")
   );

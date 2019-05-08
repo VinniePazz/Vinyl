@@ -1,7 +1,10 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import { withRouter, Link } from "react-router-dom";
+
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const ProductInfoSide = styled.div`
   flex-grow: 1;
@@ -80,17 +83,10 @@ const Price = styled.p`
 `;
 
 const ProductInfo = ({
-  detail: {
-    album,
-    author,
-    genre,
-    price,
-    year,
-    _id,
-    description,
-    user
-  },
-  addToCart
+  detail: { album, author, genre, price, year, _id, description },
+  user,
+	addToCart,
+	loading
 }) => {
   const renderInfo = () => (
     <ProductDetails>
@@ -100,15 +96,26 @@ const ProductInfo = ({
       <Genre>{genre.name}</Genre>
       <Description>{description}</Description>
       <Price>{price} $</Price>
-      {user && user.userData.isAuth ? (
-        <Button
-          variant="contained"
-          color="secondary"
-          style={{ width: "30%" }}
-          onClick={() => addToCart(_id)}
-        >
-          buy
-        </Button>
+      {user && user.userData.isAuth === true ? (
+        !loading ? (
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ width: "30%" }}
+            onClick={() => addToCart(_id)}
+          >
+            buy
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ width: "30%" }}
+            onClick={() => addToCart(_id)}
+          >
+            <CircularProgress color="secondary" size={25} thickness={4} />
+          </Button>
+        )
       ) : (
         <Button
           variant="contained"
@@ -126,4 +133,10 @@ const ProductInfo = ({
   return <ProductInfoSide>{renderInfo()}</ProductInfoSide>;
 };
 
-export default withRouter(ProductInfo);
+const mapStateToProps = state => {
+  return {
+    loading: state.loading
+  };
+};
+
+export default connect(mapStateToProps)(withRouter(ProductInfo));

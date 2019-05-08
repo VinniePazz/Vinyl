@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Field, reduxForm, SubmissionError } from "redux-form";
+import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -27,7 +28,7 @@ const validate = values => {
 
 export const Dialog = styled.div`
   max-width: 20em;
-  margin: 10em auto 0 auto;
+  margin: 25vh auto 0 auto;
 
   h3 {
     font-size: 1.5em;
@@ -63,9 +64,7 @@ class Login extends Component {
       throw new SubmissionError({
         _error: "Something goes wrong with server. Try again later"
       });
-    }
-
-    if (!response.loginSuccess) {
+    } else if (!response.loginSuccess) {
       if (response.wrong === "email") {
         throw new SubmissionError({
           email: "Wrong email",
@@ -108,7 +107,14 @@ class Login extends Component {
             color="secondary"
             disabled={invalid || submitting || pristine}
             fullWidth
-            classes={{ root: this.props.classes.root, disabled: this.props.classes.disabled }}
+            classes={{
+              root: this.props.classes.root,
+              disabled: this.props.classes.disabled,
+              label:
+                invalid || submitting || pristine
+                  ? this.props.classes.label
+                  : ""
+            }}
           >
             Login
           </Button>
@@ -118,7 +124,7 @@ class Login extends Component {
             color="secondary"
             component={Link}
             to="/register"
-						fullWidth
+            fullWidth
           >
             create account
           </Button>
@@ -131,11 +137,14 @@ class Login extends Component {
 const styles = {
   root: {
     marginTop: "2em"
-	},
-	disabled: {
-		backgroundColor: '#e76f517a !important',
-		color: '#ffffff !important'
-	}
+  },
+  disabled: {
+    backgroundColor: "#e76f517a !important",
+    color: "#ffffff !important"
+  },
+  label: {
+    color: "rgba(255, 255, 255, 0.76)"
+  }
 };
 
 export default connect(

@@ -1,7 +1,7 @@
 const express = require("express");
-const path = require('path');
+const path = require("path");
 const async = require("async");
-const crypto = require('crypto');
+const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
 const formidable = require("express-formidable");
 const cloudinary = require("cloudinary");
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(express.static('client/build'))
+app.use(express.static("client/build"));
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -27,7 +27,7 @@ cloudinary.config({
 const { User } = require("./models/user");
 const { Genre } = require("./models/genre");
 const { Product } = require("./models/product");
-const { Payment } = require('./models/payment');
+const { Payment } = require("./models/payment");
 
 // Middlewares ===================================================
 const { auth } = require("./middleware/auth");
@@ -35,15 +35,13 @@ const { admin } = require("./middleware/admin");
 
 //NodeMailer will be here
 
-
-
 //=================================================================
 //             PRODUCTS
 //=================================================================
 
 app.post("/api/product/shop", (req, res) => {
-	let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
-	let order = req.body.order ? req.body.order : "desc";
+  let sortBy = req.body.sortBy ? req.body.sortBy : "_id";
+  let order = req.body.order ? req.body.order : "desc";
   let limit = req.body.limit ? parseInt(req.body.limit) : 25;
   let skip = parseInt(req.body.skip);
   let findArgs = {};
@@ -59,8 +57,8 @@ app.post("/api/product/shop", (req, res) => {
         findArgs[key] = req.body.filters[key];
       }
     }
-	}
-	
+  }
+
   Product.find(findArgs)
     .populate("genre")
     .sort({ [sortBy]: order })
@@ -113,7 +111,7 @@ app.get("/api/product/articles_by_id", (req, res) => {
   Product.find({ _id: { $in: items } })
     .populate("genre")
     .exec((error, docs) => {
-			if (error) return res.status(400).send(error);
+      if (error) return res.status(400).send(error);
       return res.status(200).send(docs);
     });
 });
@@ -164,7 +162,6 @@ app.get("/api/users/auth", auth, (req, res) => {
     isAuth: true,
     email: req.user.email,
     name: req.user.name,
-    lastname: req.user.lastname,
     role: req.user.role,
     cart: req.user.cart,
     history: req.user.history
@@ -175,9 +172,17 @@ app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((error, doc) => {
-    if (error) return res.json({ success: false, error });
-    res.status(200).json({
-      success: true
+		if (error) return res.json({ success: false, error });
+		console.log('NEW USER', doc)
+    user.generateToken((error, user) => {
+      if (error) return res.status(400).send(error);
+      res
+        .cookie("w_auth", user.token)
+        .status(200)
+        .json({
+					success: true,
+					user: doc
+        });
     });
   });
 });
@@ -237,7 +242,6 @@ app.post("/api/users/uploadimage", auth, admin, formidable(), (req, res) => {
   );
 });
 
-
 app.get("/api/users/removeimage", auth, admin, (req, res) => {
   let image_id = req.query.public_id;
 
@@ -246,7 +250,6 @@ app.get("/api/users/removeimage", auth, admin, (req, res) => {
     res.status(200).send("ok");
   });
 });
-
 
 app.post("/api/users/addToCart", auth, (req, res) => {
   User.findOne({ _id: req.user._id }, (err, doc) => {
@@ -342,9 +345,9 @@ app.post("/api/users/purchase", auth, (req, res) => {
     email: req.user.email
   };
   paymentData.metaData = {
-		paymentId: `PAY-${Date.now()}`,
-		dateOfPurchase: Date.now()
-	};
+    paymentId: `PAY-${Date.now()}`,
+    dateOfPurchase: Date.now()
+  };
   paymentData.buyingProduct = history;
 
   User.findOneAndUpdate(
@@ -354,13 +357,13 @@ app.post("/api/users/purchase", auth, (req, res) => {
     (error, user) => {
       if (error) return res.json({ success: false, error });
 
-			const payment = new Payment(paymentData);
-			
+      const payment = new Payment(paymentData);
+
       payment.save((error, doc) => {
-				if (error) return res.json({ success: false, error });
-				
-				let products = [];
-				
+        if (error) return res.json({ success: false, error });
+
+        let products = [];
+
         doc.buyingProduct.forEach(item => {
           products.push({ id: item.id, quantity: item.quantity });
         });
@@ -393,39 +396,38 @@ app.post("/api/users/purchase", auth, (req, res) => {
   );
 });
 
-app.post('/api/users/update_profile',auth,(req,res)=>{
-
-	User.findOneAndUpdate(
-			{ _id: req.user._id },
-			{
-					"$set": req.body
-			},
-			{ new: true },
-			(error,doc)=>{
-					if(error) return res.json({success:false,error});
-					return res.status(200).send({
-							userData: {
-								isAdmin: doc.role === 0 ? false : true,
-								isAuth: true,
-								email: doc.email,
-								name: doc.name,
-								lastname: doc.lastname,
-								role: doc.role,
-								cart: doc.cart,
-								history: doc.history
-							},
-							success:true
-					})
-			}
-	);
-})
+app.post("/api/users/update_profile", auth, (req, res) => {
+  User.findOneAndUpdate(
+    { _id: req.user._id },
+    {
+      $set: req.body
+    },
+    { new: true },
+    (error, doc) => {
+      if (error) return res.json({ success: false, error });
+      return res.status(200).send({
+        userData: {
+          isAdmin: doc.role === 0 ? false : true,
+          isAuth: true,
+          email: doc.email,
+          name: doc.name,
+          lastname: doc.lastname,
+          role: doc.role,
+          cart: doc.cart,
+          history: doc.history
+        },
+        success: true
+      });
+    }
+  );
+});
 /////////////////////////  BOTTOM  //////////////////////////////
 
-// HEROKU 
-if( process.env.NODE_ENV === 'production' ){
-	app.get('*',(req,res)=>{
-			res.sendfile(path.resolve(__dirname,'../client','build','index.html'))
-	})
+// HEROKU
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendfile(path.resolve(__dirname, "../client", "build", "index.html"));
+  });
 }
 
 // ERROR ROUTE MUST BE HERE!!!

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import UserLayout from "./UserLayout";
 import UserHistory from "./UserHistory";
 import Button from "@material-ui/core/Button";
-import { Heading } from '../Home/HomeCardBlock'
+import { Heading } from '../../styled_components'
 
 const UserInfoBlock = styled.div`
   display: flex;

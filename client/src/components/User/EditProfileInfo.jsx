@@ -8,7 +8,7 @@ import TextInput from "../../app/common/form/Textinput";
 
 import { editProfile } from "../../actions/userActions";
 
-import { Heading } from "../Home/HomeCardBlock";
+import { Heading } from "../../styled_components/Headings";
 import Button from "@material-ui/core/Button";
 
 const validate = values => {
@@ -64,16 +64,22 @@ class EditProfileInfo extends Component {
               fullWidth
               classes={{
                 root: this.props.classes.root,
-                disabled: this.props.classes.disabled
+                disabled: this.props.classes.disabled,
+                label:
+                  invalid || submitting || pristine
+                    ? this.props.classes.label
+                    : ""
               }}
             >
               change profile
             </Button>
             {submitFailed && (
-              <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+              <p style={{ color: "#ff4d4d", textAlign: "center" }}>{error}</p>
             )}
             {submitSucceeded && (
-              <p style={{ color: "green", textAlign: "center" }}>SUCCESS</p>
+              <p style={{ color: "#fafafa", textAlign: "center" }}>
+                Profile changed
+              </p>
             )}
           </form>
         </Container>
@@ -90,6 +96,9 @@ const styles = {
   disabled: {
     backgroundColor: "#e76f517a !important",
     color: "#ffffff !important"
+  },
+  label: {
+    color: "rgba(255, 255, 255, 0.76)"
   }
 };
 

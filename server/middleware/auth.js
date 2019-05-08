@@ -2,9 +2,10 @@ const { User } = require('./../models/user');
 
 let auth = (req,res,next) => {
     let token = req.cookies.w_auth;
-
+		console.log('token', token)
     User.findByToken(token,(err,user)=>{
-        if(err) throw err;
+				if(err) throw err;
+				console.log(user)
         if(!user) return res.json({
             isAuth: false,
             error: true

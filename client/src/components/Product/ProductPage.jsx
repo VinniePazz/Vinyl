@@ -23,6 +23,10 @@ const ProductPageContainer = styled.div`
 		flex-direction: column;
 		align-items: center;
 	}
+
+	@media (min-height: 799px) {
+		padding: 10rem 1rem 3rem 1rem;
+	}
 `;
 
 class ProductPage extends Component {

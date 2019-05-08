@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toastr } from "react-redux-toastr";
 
 import {
   LOGIN_USER,
@@ -12,13 +13,20 @@ import {
   EDIT_USER_PROFILE
 } from "./types";
 
-import { USER_SERVER, PRODUCT_SERVER } from "../app/common/utils/misc";
+import { USER_SERVER, PRODUCT_SERVER } from "../app/utils/misc";
 
 export const register = user => async dispatch => {
+	console.log('register')
   try {
-    const response = await axios.post(`${USER_SERVER}/register`, user);
+		const registerResponse = await axios.post(`${USER_SERVER}/register`, user);
+		console.log(registerResponse)
+		if(!registerResponse.data.success) {
+			return "duplicate";
+		}
 
-    dispatch({ type: REGISTER_USER, payload: response.data });
+		const response = await axios.get(`${USER_SERVER}/auth`);
+		console.log(response)
+		dispatch({ type: AUTH_USER, payload: response.data });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -50,14 +58,28 @@ export const login = user => async dispatch => {
 };
 
 export const addToCart = _id => async dispatch => {
-  const response = await axios.post(
-    `${USER_SERVER}/addToCart?productId=${_id}`
-  );
+  try {
+    dispatch({ type: "ASYNC_ACTION_START" });
 
-  dispatch({
-    type: ADD_TO_CART_USER,
-    payload: response.data
-  });
+    const response = await axios.post(
+      `${USER_SERVER}/addToCart?productId=${_id}`
+    );
+
+    dispatch({
+      type: ADD_TO_CART_USER,
+      payload: response.data
+    });
+
+    toastr.success("", "vinyl added to cart", {
+      timeOut: 3000,
+      className: "toastr"
+		});
+		
+    dispatch({ type: "ASYNC_ACTION_FINISH" });
+  } catch {
+    toastr.error("Opps...", "server is down. Please, try later");
+    dispatch({ type: "ASYNC_ACTION_FINISH" });
+  }
 };
 
 export const getCartItems = (cartItems, userCart) => async dispatch => {
@@ -109,13 +131,15 @@ export const onPurchase = cardDetail => async dispatch => {
   });
 };
 
-export const editProfile = (dataToSubmit) => async dispatch => {
-  const response = await axios
-    .post(`${USER_SERVER}/update_profile`, dataToSubmit)
-		dispatch({
-			type: EDIT_USER_PROFILE,
-			payload: response.data
-		}) 
-	
-	return response.data;
-}
+export const editProfile = dataToSubmit => async dispatch => {
+  const response = await axios.post(
+    `${USER_SERVER}/update_profile`,
+    dataToSubmit
+  );
+  dispatch({
+    type: EDIT_USER_PROFILE,
+    payload: response.data
+  });
+
+  return response.data;
+};

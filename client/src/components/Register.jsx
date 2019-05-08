@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 
 import { register } from "../actions/userActions";
-import { Dialog } from './Login'
+import { Dialog } from "./Login";
 import TextInput from "../app/common/form/Textinput";
 
 const validate = values => {
@@ -37,14 +37,18 @@ class Register extends Component {
   submit = async values => {
     const response = await this.props.register(values);
 
-    if (!response.success) {
+    if (response === "duplicate") {
       throw new SubmissionError({
-        _error: response.error.message
+        _error: "such email already exist"
+      });
+    }
+
+    if (!response.isAuth) {
+      throw new SubmissionError({
+        _error: "something vent wrong"
       });
     } else {
-      setTimeout(() => {
-        this.props.history.push("/shop");
-      }, 1500);
+      this.props.history.push("/user/cart");
     }
   };
 
@@ -55,12 +59,13 @@ class Register extends Component {
       submitting,
       pristine,
       error,
-      success
+      submitSucceeded,
+      submitFailed
     } = this.props;
 
     return (
       <Dialog>
-				<h3>Create account</h3>
+        <h3>Create account</h3>
         <form onSubmit={handleSubmit(this.submit)}>
           <Field name="name" type="text" label="Name" component={TextInput} />
           <Field
@@ -81,18 +86,29 @@ class Register extends Component {
             label="Confirm Password"
             component={TextInput}
           />
-          {error && <p style={{ color: "red" }}>{error}</p>}
           <Button
             type="submit"
             variant="contained"
             color="secondary"
             disabled={invalid || submitting || pristine}
             fullWidth
-						classes={{ root: this.props.classes.root, disabled: this.props.classes.disabled }}
+            classes={{
+              root: this.props.classes.root,
+              disabled: this.props.classes.disabled,
+              label:
+                invalid || submitting || pristine
+                  ? this.props.classes.label
+                  : ""
+            }}
           >
             Create account
           </Button>
-          {success && success.success && <p style={{textAlign: 'center'}}>WELCOME!</p>}
+          {submitSucceeded && (
+            <p style={{ color: "#fafafa", textAlign: "center" }}>success</p>
+          )}
+          {submitFailed && (
+            <p style={{ color: "#ff4d4d", textAlign: "center" }}>{error}</p>
+          )}
         </form>
       </Dialog>
     );
@@ -101,13 +117,16 @@ class Register extends Component {
 
 const styles = {
   root: {
-		marginTop: "2em",
-		marginBottom: "1em"
-	},
-	disabled: {
-		backgroundColor: '#e76f517a !important',
-		color: '#ffffff !important'
-	}
+    marginTop: "2em",
+    marginBottom: "1em"
+  },
+  disabled: {
+    backgroundColor: "#e76f517a !important",
+    color: "#ffffff !important"
+  },
+  label: {
+    color: "rgba(255, 255, 255, 0.76)"
+  }
 };
 
 const mapStateToProps = ({ user: { registerSuccess = null } }) => {

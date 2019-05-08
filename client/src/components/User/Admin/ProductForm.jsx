@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 import Button from "@material-ui/core/Button";
 
-import { Heading } from "../../Home/HomeCardBlock";
+import { Heading } from "../../../styled_components";
 
 import UserLayout from "../UserLayout";
 import TextInput from "../../../app/common/form/Textinput";
@@ -178,7 +178,7 @@ class ProductForm extends Component {
               add vinyl
             </Button>
             {submitFailed && (
-              <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+              <p style={{ color: "#ff4d4d", textAlign: "center" }}>{error}</p>
             )}
             {submitSucceeded && (
               <p style={{ color: "green", textAlign: "center" }}>SUCCESS</p>

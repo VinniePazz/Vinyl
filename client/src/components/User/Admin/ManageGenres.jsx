@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 
-import { Heading } from "../../Home/HomeCardBlock";
+import { Heading } from "../../../styled_components";
 
 import TextInput from "../../../app/common/form/Textinput";
 
@@ -34,7 +34,6 @@ const Genre = styled.div`
   margin: 0.5em;
   padding: 0.5em 1em;
   border: 2px solid #e76f5163;
-  border-radius: 5px;
   color: #e76f51;
   font-weight: 500;
 `;
@@ -56,7 +55,7 @@ class ManageGenres extends Component {
 
     if (!response.success) {
       throw new SubmissionError({
-        _error: response.error.message
+        _error: "this genre already exist"
       });
     } else {
       this.props.reset();
@@ -107,10 +106,10 @@ class ManageGenres extends Component {
             add genre
           </Button>
           {submitFailed && (
-            <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+            <p style={{ color: "#ff4d4d", textAlign: "center" }}>{error}</p>
           )}
           {submitSucceeded && (
-            <p style={{ color: "green", textAlign: "center" }}>SUCCESS</p>
+            <p style={{ color: "green", textAlign: "center" }}>success</p>
           )}
         </GenreForm>
       </>

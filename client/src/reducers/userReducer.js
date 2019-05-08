@@ -1,4 +1,4 @@
-import { createReducer } from "../app/common/utils/createReducer";
+import { createReducer } from "../app/utils/createReducer";
 import {
   LOGIN_USER,
   LOGOUT_USER,

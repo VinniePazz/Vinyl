@@ -1,4 +1,4 @@
-import { createReducer } from "../app/common/utils/createReducer";
+import { createReducer } from "../app/utils/createReducer";
 import {
   GET_PRODUCTS_BY_SELL,
   GET_PRODUCTS_BY_ARRIVAL,

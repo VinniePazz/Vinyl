@@ -31,7 +31,7 @@ const Slogan = styled.div`
 	left: 1.5rem;
 
   & div {
-    background: #80808047;
+    background: #1d1c1c4d;
     color: #ffffff;
     padding: 0px 0.5em;
     text-transform: uppercase;

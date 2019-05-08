@@ -41,7 +41,8 @@ const Tabs = styled.aside`
 
 const TabContent = styled.main`
   flex-grow: 1;
-  margin-left: 2em;
+	margin-left: 2em;
+	text-align: center; /* for loader */
 
   @media (max-width: 960px) {
     margin-left: 0;

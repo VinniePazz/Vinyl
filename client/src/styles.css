@@ -884,3 +884,10 @@ footer .business_nfo .nfo {
   background-position: center center !important;
   border: 1px solid #eaeaea;
 }
+
+.toastr {
+	background-color: #e76f51 !important;
+	padding: .5em 1em;
+	display: flex;
+	align-items: center;
+}

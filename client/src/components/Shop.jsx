@@ -2,25 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 
-import Grid from "@material-ui/core/Grid";
-
 import ShopGallery from "./ShopGallery";
-import FilterBar from "./FilterBar";
-
-import { getGenres, getProductsToShop } from "../actions/productActions";
-import { price } from "../app/data/price";
-
 import PageTop from "./PageTop";
 
-import ShopBar from "./ShopBar";
+import { getGenres, getProductsToShop } from "../actions/productActions";
 
-const ShopBackground = styled.main`
-	padding-bottom: 10em;
+const ShopGalleryUtilTop = styled.main`
+  @media (min-height: 799px) and (min-width: 1600px) {
+    padding-top: 5rem;
+  }
 `;
 
 class Shop extends Component {
   state = {
-    limit: 10,
+    limit: 8,
     skip: 0,
     filters: {
       genre: []
@@ -72,7 +67,7 @@ class Shop extends Component {
     const { limit } = this.state;
 
     return (
-      <ShopBackground>
+      <ShopGalleryUtilTop>
         <PageTop genres={products.genres} handleFilters={this.handleFilters} />
         <ShopGallery
           limit={limit}
@@ -80,7 +75,7 @@ class Shop extends Component {
           products={products.toShop}
           loadMore={this.loadMoreCards}
         />
-      </ShopBackground>
+      </ShopGalleryUtilTop>
     );
   }
 }
