@@ -1,8 +1,8 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, withRouter, useRouter } from "react-router-dom";
 
-import ScrollToTop from '../utils/ScrollToTop';
+import Auth from "../../components/auth/Auth";
+import ScrollToTop from "../utils/ScrollToTop";
 
 import Layout from "./Layout";
 import Home from "../../components/Home/Home";
@@ -18,52 +18,46 @@ import ProductPage from "../../components/Product/ProductPage";
 import UserCart from "../../components/User/UserCart";
 import EditProfileInfo from "../../components/User/EditProfileInfo";
 
-import Auth from "../../components/auth/Auth";
+const App = (props) => {
+	console.log(props.location)
+  return (
+    <ScrollToTop>
+      <Layout>
+        <Switch>
+          <Route
+            path="/user/dashboard"
+            exact
+            component={Auth(UserProfile, true)}
+          />
+          <Route path="/user/cart" exact component={Auth(UserCart, true)} />
+          <Route
+            path="/user/user_profile"
+            exact
+            component={Auth(EditProfileInfo, true)}
+          />
+          <Route
+            path="/admin/add_product"
+            exact
+            component={Auth(ProductForm, true)}
+          />
+          <Route
+            path="/admin/manage_categories"
+            exact
+            component={Auth(ManageCategories, true)}
+          />
+          <Route
+            path="/product_detail/:id"
+            exact
+            component={Auth(ProductPage, null)}
+          />
+          <Route path="/register" exact component={Auth(Register, false)} />
+          <Route path="/login" exact component={Auth(Login, false)} />
+          <Route path="/shop" exact component={Auth(Shop, null)} />
+          <Route path="/" exact component={Auth(Home, null)} />
+        </Switch>
+      </Layout>
+    </ScrollToTop>
+  );
+};
 
-class App extends React.Component {
-  render() {
-    console.log("App is rendered");
-    return (
-      <BrowserRouter>
-        <ScrollToTop>
-          <Layout>
-            <Switch>
-              <Route
-                path="/user/dashboard"
-                exact
-                component={Auth(UserProfile, true)}
-              />
-              <Route path="/user/cart" exact component={Auth(UserCart, true)} />
-              <Route
-                path="/user/user_profile"
-                exact
-                component={Auth(EditProfileInfo, true)}
-              />
-              <Route
-                path="/admin/add_product"
-                exact
-                component={Auth(ProductForm, true)}
-              />
-              <Route
-                path="/admin/manage_categories"
-                exact
-                component={Auth(ManageCategories, true)}
-              />
-              <Route
-                path="/product_detail/:id"
-                exact
-                component={Auth(ProductPage, null)}
-              />
-              <Route path="/register" exact component={Auth(Register, false)} />
-              <Route path="/login" exact component={Auth(Login, false)} />
-              <Route path="/shop" exact component={Auth(Shop, null)} />
-              <Route path="/" exact component={Auth(Home, null)} />
-            </Switch>
-          </Layout>
-        </ScrollToTop>
-      </BrowserRouter>
-    );
-  }
-}
-
-export default App;
+export default withRouter(App);

@@ -1,11 +1,12 @@
 import React from "react";
+import { connect } from "react-redux";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 import UserLayout from "./UserLayout";
 import UserHistory from "./UserHistory";
 import Button from "@material-ui/core/Button";
-import { Heading } from '../../styled_components'
+import { Heading } from "../../styled_components";
 
 const UserInfoBlock = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ const UserInfoText = styled.p`
 `;
 
 const HistoryHeading = styled(Heading)`
-	margin-top: 3rem;
+  margin-top: 3rem;
 `;
 
 const UserProfile = React.memo(({ user }) => {
@@ -50,16 +51,40 @@ const UserProfile = React.memo(({ user }) => {
         </Button>
       </UserInfoBlock>
 
-      {user.userData.history ? (
+      {user.userData.history.length > 0 ? (
         <>
           <HistoryHeading>History of purchases</HistoryHeading>
           <div className="user_product_block_wrapper">
             <UserHistory products={user.userData.history} />
           </div>
         </>
-      ) : null}
+      ) : (
+        <>
+          <HistoryHeading>History of purchases</HistoryHeading>
+          <p
+            style={{ paddingTop: "1.5em", color: "rgba(250, 250, 250, 0.35)" }}
+          >
+            history is empty...
+          </p>
+          <Button
+            component={Link}
+            to={`/shop`}
+            variant="text"
+            color="secondary"
+            style={{ marginTop: "1.5em" }}
+          >
+            go to shop
+          </Button>
+        </>
+      )}
     </UserLayout>
   );
 });
 
-export default UserProfile;
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect()(UserProfile);

@@ -105,9 +105,10 @@ const CollContent = styled.div`
   left: 0;
   bottom: 0;
   padding: 1em;
+	opacity: 0;
   background-color: #2b2028f2;
   transform: translateX(-110%);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, opacity 0.5s ease;
 
   display: flex;
   flex-direction: column;
@@ -117,6 +118,7 @@ const CollContent = styled.div`
   @media (min-width: 960px) {
     ${CollCard}:hover & {
       transform: translateX(0);
+			opacity: 1;
     }
   }
 

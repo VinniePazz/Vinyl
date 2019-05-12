@@ -10,105 +10,14 @@ import { connect } from "react-redux";
 import { logout } from "../../../actions/userActions";
 
 import ShoppingCart from "../../icons/ShoppingCart";
+import CartCounter from "./CartCounter";
 import MobileToogle from "./MobileToogle";
 import MobileNav from "./MobileNav";
-
-const Navigation = styled.header`
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 4em;
-  width: 100%;
-  z-index: 999;
-  background-color: #4b3645;
-  background-image: linear-gradient(to bottom, #5d3c53, #2b1d27);
-  opacity: ${({ header }) =>
-    (header === "default" && "1") ||
-    (header === "showedOnScroll" && "1") ||
-    "0"};
-  transform: ${({ header }) =>
-    (header === "default" && "translateY(0)") ||
-    (header === "showedOnScroll" && "translateY(0)") ||
-    "translateY(-100%)"};
-  transition: all 0.3s ease;
-`;
-
-export const Container = styled.div`
-  max-width: 1100px;
-  height: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 1em;
-  align-items: center;
-`;
-
-export const Logo = styled.div`
-  font-family: "Monoton", cursive;
-  color: #ffffff;
-  font-size: 2.5rem;
-  display: flex;
-  align-items: center;
-  transition: color 0.2s;
-
-  @media (min-width: 860px) {
-    &:hover {
-      color: #e76f51;
-    }
-  }
-`;
-
-const NavBar = styled.nav`
-  display: flex;
-  height: 100%;
-  align-items: center;
-  color: #ffffff;
-`;
-
-export const Navlink = styled.a`
-  display: block;
-  text-transform: uppercase;
-  margin-right: 1.5rem;
-  transition: color 0.2s;
-  position: relative;
-
-  @media (min-width: 860px) {
-    &:hover {
-      color: #e76f51;
-    }
-  }
-
-  @media (max-width: 25em) {
-    margin-right: 0;
-  }
-`;
-
-export const Icon = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 0.5em 0.5em;
-`;
-
-export const CartCounter = styled.div`
-  position: absolute;
-  top: -5%;
-  right: -25%;
-  background: #6f666c;
-  font-size: 0.8rem;
-  border-radius: 100%;
-  height: 1.4rem;
-  width: 1.4rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 class Header extends Component {
   state = {
     openDrawer: false
-  };
+	};
 
   cartLink = item => {
     const user = this.props.user.userData;
@@ -276,6 +185,86 @@ class Header extends Component {
     );
   }
 }
+
+// ======================== Styled components ========================
+const Navigation = styled.header`
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 4em;
+  width: 100%;
+  z-index: 999;
+  background-color: #4b3645;
+  background-image: linear-gradient(to bottom, #5d3c53, #2b1d27);
+  opacity: ${({ header }) =>
+    (header === "default" && "1") ||
+    (header === "showedOnScroll" && "1") ||
+    "0"};
+  transform: ${({ header }) =>
+    (header === "default" && "translateY(0)") ||
+    (header === "showedOnScroll" && "translateY(0)") ||
+    "translateY(-100%)"};
+  transition: all 0.3s ease;
+`;
+
+export const Container = styled.div`
+  max-width: 1100px;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1em;
+  align-items: center;
+`;
+
+export const Logo = styled.div`
+  font-family: "Monoton", cursive;
+  color: #ffffff;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+
+  @media (min-width: 860px) {
+    &:hover {
+      color: #e76f51;
+    }
+  }
+`;
+
+const NavBar = styled.nav`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  color: #ffffff;
+`;
+
+export const Navlink = styled.a`
+  display: block;
+  text-transform: uppercase;
+  margin-right: 1.5rem;
+  transition: color 0.2s;
+  position: relative;
+
+  @media (min-width: 860px) {
+    &:hover {
+      color: #e76f51;
+    }
+  }
+
+  @media (max-width: 25em) {
+    margin-right: 0;
+  }
+`;
+
+export const Icon = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0.5em 0.5em;
+`;
+// ===================================================================
 
 const styles = theme => ({
   logout: {

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import ReduxToastr from "react-redux-toastr";
 import { MuiThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter } from "react-router-dom";
 
 import "react-redux-toastr/lib/css/react-redux-toastr.min.css";
 import "./styles.css";
@@ -52,15 +53,17 @@ const store = configureStore();
 let render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <MuiThemeProvider theme={theme}>
-        <ReduxToastr
-          position="bottom-right"
-          transitionIn="fadeIn"
-          transitionOut="fadeOut"
-          closeOnToastrClick
-        />
-        <App />
-      </MuiThemeProvider>
+      <BrowserRouter>
+        <MuiThemeProvider theme={theme}>
+          <ReduxToastr
+            position="bottom-right"
+            transitionIn="fadeIn"
+            transitionOut="fadeOut"
+            closeOnToastrClick
+          />
+          <App />
+        </MuiThemeProvider>
+      </BrowserRouter>
     </Provider>,
     document.getElementById("root")
   );

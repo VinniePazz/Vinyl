@@ -173,7 +173,6 @@ app.post("/api/users/register", (req, res) => {
 
   user.save((error, doc) => {
 		if (error) return res.json({ success: false, error });
-		console.log('NEW USER', doc)
     user.generateToken((error, user) => {
       if (error) return res.status(400).send(error);
       res
@@ -387,7 +386,8 @@ app.post("/api/users/purchase", auth, (req, res) => {
             res.status(200).json({
               successPurchase: true,
               cart: user.cart,
-              cartDetail: []
+							cartDetail: [],
+							history: user.history
             });
           }
         );

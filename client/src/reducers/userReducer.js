@@ -77,7 +77,8 @@ export const onPurchase = (state, payload) => {
     successPurchase: payload.successPurchase,
     userData: {
       ...state.userData,
-      cart: payload.cart
+			cart: payload.cart,
+			history: payload.history
     },
     cartDetail: payload.cartDetail
   };

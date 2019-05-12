@@ -111,7 +111,7 @@ class UserCart extends Component {
         color="secondary"
         style={{ marginTop: "1.5em" }}
       >
-        go to shop!
+        go to shop
       </Button>
     </EmptyCartBlock>
   );
@@ -157,7 +157,7 @@ class UserCart extends Component {
                   fontSize: "1.5rem"
                 }}
               >
-                <div>THANK YOU FOR YOUR ORDER</div>
+                <div>THANK YOU FOR YOUR PURCHASE</div>
                 <div>YOUR TASTE OF MUSIC IS AWESOME!!!</div>
               </div>
             ) : (

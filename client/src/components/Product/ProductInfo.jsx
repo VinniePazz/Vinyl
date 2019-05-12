@@ -101,30 +101,27 @@ const ProductInfo = ({
           <Button
             variant="contained"
             color="secondary"
-            style={{ width: "30%" }}
             onClick={() => addToCart(_id)}
           >
-            buy
+            add to cart
           </Button>
         ) : (
           <Button
             variant="contained"
             color="secondary"
-            style={{ width: "30%" }}
             onClick={() => addToCart(_id)}
           >
-            <CircularProgress color="secondary" size={25} thickness={4} />
+            <CircularProgress color="primary" size={25} thickness={4} />
           </Button>
         )
       ) : (
         <Button
           variant="contained"
           color="secondary"
-          style={{ width: "30%" }}
           component={Link}
           to="/login"
         >
-          buy
+          add to cart
         </Button>
       )}
     </ProductDetails>

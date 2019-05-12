@@ -16,17 +16,15 @@ import {
 import { USER_SERVER, PRODUCT_SERVER } from "../app/utils/misc";
 
 export const register = user => async dispatch => {
-	console.log('register')
+  console.log("register");
   try {
-		const registerResponse = await axios.post(`${USER_SERVER}/register`, user);
-		console.log(registerResponse)
-		if(!registerResponse.data.success) {
-			return "duplicate";
-		}
+    const registerResponse = await axios.post(`${USER_SERVER}/register`, user);
+    if (!registerResponse.data.success) {
+      return "duplicate";
+    }
 
-		const response = await axios.get(`${USER_SERVER}/auth`);
-		console.log(response)
-		dispatch({ type: AUTH_USER, payload: response.data });
+    const response = await axios.get(`${USER_SERVER}/auth`);
+    dispatch({ type: AUTH_USER, payload: response.data });
     return response.data;
   } catch (error) {
     console.error(error);
@@ -54,7 +52,6 @@ export const login = user => async dispatch => {
 
   dispatch({ type: LOGIN_USER, payload: response.data });
   return response.data;
-  // Нужно понять как правильно обработать ошибку с сервера на клиенте. Например, если данного пути нету и тд!!! Желательно, отобразить это в форме
 };
 
 export const addToCart = _id => async dispatch => {
@@ -64,7 +61,7 @@ export const addToCart = _id => async dispatch => {
     const response = await axios.post(
       `${USER_SERVER}/addToCart?productId=${_id}`
     );
-
+		console.log(response.data)
     dispatch({
       type: ADD_TO_CART_USER,
       payload: response.data
@@ -73,8 +70,8 @@ export const addToCart = _id => async dispatch => {
     toastr.success("", "vinyl added to cart", {
       timeOut: 3000,
       className: "toastr"
-		});
-		
+    });
+
     dispatch({ type: "ASYNC_ACTION_FINISH" });
   } catch {
     toastr.error("Opps...", "server is down. Please, try later");
