@@ -19,7 +19,6 @@ import UserCart from "../../components/User/UserCart";
 import EditProfileInfo from "../../components/User/EditProfileInfo";
 
 const App = (props) => {
-	console.log(props.location)
   return (
     <ScrollToTop>
       <Layout>

@@ -24,7 +24,7 @@ export const logout = state => {
   return {
     ...state,
     userData: {
-      isAuthL: false
+      isAuth: false
     }
   };
 };

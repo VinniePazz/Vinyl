@@ -51,7 +51,7 @@ const UserProfile = React.memo(({ user }) => {
         </Button>
       </UserInfoBlock>
 
-      {user.userData.history.length > 0 ? (
+      {user.userData.isAuth && user.userData.history.length > 0 ? (
         <>
           <HistoryHeading>History of purchases</HistoryHeading>
           <div className="user_product_block_wrapper">
