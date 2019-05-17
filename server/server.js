@@ -125,7 +125,8 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
       article: doc
     });
   } catch (error) {
-    res.json({ success: false, error });
+		res.json({ success: false, error });
+		console.log(error)
   }
 });
 

@@ -23,7 +23,6 @@ import {
 
 const validate = values => {
   const errors = {};
-	console.log(values)
   const requiredFields = ["author", "album", "genre", "price"];
   requiredFields.forEach(field => {
     if (!values[field]) {
@@ -153,7 +152,7 @@ class ProductForm extends Component {
             <Field
               name="price"
               type="text"
-              label="price"
+              label="price (99.99)"
               component={TextInput}
             />
             <Field

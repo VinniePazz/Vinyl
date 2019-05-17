@@ -76,7 +76,6 @@ export const getGenres = () => async dispatch => {
 
 export const addGenre = (genre, existingGenres) => async dispatch => {
   const response = await axios.post(`${PRODUCT_SERVER}/genre`, genre);
-	console.log('GENRE', response.data)
 	if (!response.data.success) {
 		return response.data;
 	}
