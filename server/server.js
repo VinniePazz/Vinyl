@@ -126,7 +126,6 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
     });
   } catch (error) {
 		res.json({ success: false, error });
-		console.log(error)
   }
 });
 
