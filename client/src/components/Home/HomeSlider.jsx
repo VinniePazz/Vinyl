@@ -52,6 +52,10 @@ const Slogan = styled.div`
   @media (max-width: 600px) {
     bottom: 30%;
 
+		& div {
+			background: #1d1c1cb8;
+		}
+
     & .top {
       font-size: 2.5rem;
     }

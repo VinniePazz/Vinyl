@@ -157,8 +157,7 @@ class UserCart extends Component {
                   fontSize: "1.5rem"
                 }}
               >
-                <div>THANK YOU FOR YOUR PURCHASE</div>
-                <div>YOUR TASTE OF MUSIC IS AWESOME!!!</div>
+                <div>THANK YOU FOR YOUR PURCHASE!</div>
               </div>
             ) : (
               this.showNoItemMessage()
