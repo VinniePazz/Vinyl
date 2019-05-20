@@ -20,6 +20,10 @@ const Container = styled.div`
 
   @media (max-width: 500px) {
     padding: 1.5em 2em;
+	}
+	
+	@media (min-width: 1600px) and (min-height: 800px) {
+    margin: 15vh auto;
   }
 `;
 

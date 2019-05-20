@@ -34,8 +34,8 @@ export default function(ComposedClass, reload, adminRoute = null) {
     render() {
       if (this.state.loading) {
         return (
-          <div className="main_loader">
-            <CircularProgress color="secondary" thickness={4} />
+          <div style={{textAlign: 'center', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+            <CircularProgress color="secondary" thickness={4} style={{marginTop: '-64px'}} />
           </div>
         );
       }

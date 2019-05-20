@@ -17,16 +17,16 @@ const ProductPageContainer = styled.div`
   margin: 0 auto;
   padding: 3rem 1rem 3rem 1rem;
   display: flex;
-	justify-content: center;
-	
-	@media (max-width: 699px) {
-		flex-direction: column;
-		align-items: center;
-	}
+  justify-content: center;
 
-	@media (min-height: 799px) {
-		padding: 10rem 1rem 3rem 1rem;
-	}
+  @media (max-width: 699px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (min-height: 900px) {
+    padding: 10rem 1rem 3rem 1rem;
+  }
 `;
 
 class ProductPage extends Component {
@@ -57,14 +57,11 @@ class ProductPage extends Component {
             <ProductInfo
               addToCart={id => this.addToCartHandler(id)}
               detail={this.props.products.prodDetail[0]}
-							user={this.props.user}
+              user={this.props.user}
             />
           </>
         ) : (
-          <CircularProgress
-            style={{ color: "#e76f51"}}
-            thickness={4}
-          />
+          null
         )}
       </ProductPageContainer>
     );
@@ -73,8 +70,8 @@ class ProductPage extends Component {
 
 const mapStateToProps = state => {
   return {
-		products: state.products,
-		user: state.user
+    products: state.products,
+    user: state.user
   };
 };
 

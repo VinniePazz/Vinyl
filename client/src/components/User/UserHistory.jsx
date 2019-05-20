@@ -4,20 +4,22 @@ import moment from "moment";
 const UserHistoryBlock = props => {
   const renderBlocks = () =>
     props.products
-      ? props.products.map((product, i) => (
-          <tr key={i}>
-            <td>{moment(product.dateOfPurchase).format("MM-DD-YYYY")}</td>
-            <td>
-              {product.author} "{product.album}"
-            </td>
-            <td>$ {product.price}</td>
-            <td>{product.quantity}</td>
-          </tr>
-        )).reverse()
+      ? props.products
+          .map((product, i) => (
+            <tr key={i}>
+              <td>{moment(product.dateOfPurchase).format("MM-DD-YYYY")}</td>
+              <td>
+                {product.author} "{product.album}"
+              </td>
+              <td>$ {product.price}</td>
+              <td>{product.quantity}</td>
+            </tr>
+          ))
+          .reverse()
       : null;
 
   return (
-    <div className="history_blocks">
+    <div style={{ display: "flex", justifyContent: "center" }}>
       <table>
         <thead>
           <tr>

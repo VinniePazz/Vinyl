@@ -25,7 +25,7 @@ const Gallery = styled.div`
 
 const CenterUtil = styled.div`
   text-align: center;
-  padding-top: 5em;
+  padding-top: 10em;
 `;
 
 const ShopGallery = ({ products, loadMore, size, limit }) => {
@@ -36,7 +36,7 @@ const ShopGallery = ({ products, loadMore, size, limit }) => {
       </CenterUtil>
     );
   } else if (products.length === 0) {
-    return <CenterUtil>No such products yet...</CenterUtil>;
+    return <CenterUtil>Products with this genre doesn't exist yet...</CenterUtil>;
   }
 
   const renderButton = () => (

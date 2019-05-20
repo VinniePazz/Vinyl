@@ -19,11 +19,13 @@ const Genre = styled.div`
   ${({ clicked }) => clicked && "background-color: #e76f51"};
   font-weight: 500;
   cursor: pointer;
-	transition: all 0.2s ease;
-	
-	&:hover {
-		border: 2px solid #e76f51;
-	}
+  transition: all 0.2s ease;
+
+  @media (min-width: 960px) {
+    &:hover {
+      border: 2px solid #e76f51;
+    }
+  }
 `;
 
 class PageTop extends Component {

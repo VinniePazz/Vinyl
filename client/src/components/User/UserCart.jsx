@@ -9,6 +9,7 @@ import UserLayout from "../User/UserLayout";
 import UserProductBlock from "./UserProductBlock";
 import { Heading } from "../../styled_components";
 import EmptyBoxIcon from "../icons/EmptyBox";
+import CompleteIcon from "../icons/CompleteIcon";
 
 import {
   getCartItems,
@@ -18,12 +19,16 @@ import {
 
 const CartHeading = styled(Heading)``;
 
-const EmptyCartBlock = styled.div`
+const CartBlock = styled.div`
   margin-top: 5em;
   text-align: center;
 
   p {
     margin-top: 1.5em;
+  }
+
+  @media (max-width: 450px) {
+    margin-top: 10em;
   }
 `;
 
@@ -101,7 +106,7 @@ class UserCart extends Component {
   };
 
   showNoItemMessage = () => (
-    <EmptyCartBlock>
+    <CartBlock>
       <EmptyBoxIcon />
       <p>your shopping cart is empty...</p>
       <Button
@@ -113,7 +118,14 @@ class UserCart extends Component {
       >
         go to shop
       </Button>
-    </EmptyCartBlock>
+    </CartBlock>
+  );
+
+  showCompletePurchase = () => (
+    <CartBlock>
+      <CompleteIcon />
+      <div>THANK YOU FOR YOUR PURCHASE!</div>
+    </CartBlock>
   );
 
   handlePurchase = async () => {
@@ -149,16 +161,7 @@ class UserCart extends Component {
                 </p>
               </TotalSum>
             ) : this.state.showSuccess ? (
-              <div
-                style={{
-                  textAlign: "center",
-                  marginTop: "5em",
-                  color: "rgb(224, 136, 114)",
-                  fontSize: "1.5rem"
-                }}
-              >
-                <div>THANK YOU FOR YOUR PURCHASE!</div>
-              </div>
+              this.showCompletePurchase()
             ) : (
               this.showNoItemMessage()
             )}

@@ -19,23 +19,25 @@ const Hero = styled.div`
 `;
 
 const Container = styled.div`
-	max-width: 1100px;
-	margin: 0 auto;
-	height: 100%;
-	position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 100%;
+  position: relative;
 `;
 
 const Slogan = styled.div`
-	position: absolute;
-	bottom: 25%;
-	left: 1.5rem;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  bottom: 23%;
+  left: 1.5rem;
 
   & div {
     background: #1d1c1c4d;
     color: #ffffff;
     padding: 0px 0.5em;
     text-transform: uppercase;
-    display: table;
   }
 
   & .top {
@@ -50,18 +52,30 @@ const Slogan = styled.div`
   }
 
   @media (max-width: 600px) {
-    bottom: 30%;
+    bottom: 25%;
 
-		& div {
-			background: #1d1c1cb8;
-		}
+    & div {
+      background: #1d1c1cb8;
+    }
 
     & .top {
-      font-size: 2.5rem;
+      font-size: 3.5rem;
     }
 
     & .bottom {
-      font-size: 1.8rem;
+      font-size: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1600px) {
+    bottom: 25%;
+
+    & .top {
+      font-size: 4.5rem;
+    }
+
+    & .bottom {
+      font-size: 3.5rem;
     }
   }
 `;
@@ -94,7 +108,10 @@ const styles = theme => ({
   button: {
     marginTop: ".5rem",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.2rem"
+      fontSize: "1.8rem"
+    },
+    [theme.breakpoints.up("lg")]: {
+      fontSize: "1.8rem"
     }
   }
 });

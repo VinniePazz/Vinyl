@@ -48,6 +48,15 @@ const DropzoneContainer = styled.div`
 	@media (max-width: 500px) {
 		width: 100%;
 		height: 25vh;
+	}
+	
+	@media (min-width: 1600px) and (min-height: 900px) {
+
+		height: 20vh;
+
+    /* .dropzone {
+      width: 40%;
+    } */
   }
 `;
 

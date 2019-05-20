@@ -159,8 +159,7 @@ class ProductForm extends Component {
               name="description"
               label="description"
               placeholder="describe vinyl information here"
-              rows={10}
-              cols={10}
+              rows={5}
               component={TextArea}
             />
             <Button

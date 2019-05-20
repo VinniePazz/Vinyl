@@ -43,6 +43,10 @@ const Year = styled.h3`
   font-size: 0.8rem;
   color: #fafafa78;
   margin-bottom: 1.5rem;
+
+  @media (max-width: 699px) {
+    font-size: 1rem;
+  }
 `;
 
 const Genre = styled.p`
@@ -50,8 +54,9 @@ const Genre = styled.p`
   color: #fafafa78;
   margin-bottom: 3rem;
 
-  @media (max-width: 450px) {
+  @media (max-width: 699px) {
     margin-bottom: 1.5rem;
+    font-size: 1rem;
   }
 `;
 
@@ -64,6 +69,7 @@ const Description = styled.p`
 
   @media (max-width: 699px) {
     max-width: 25em;
+    font-size: 1rem;
   }
 
   @media (max-width: 450px) {
@@ -79,21 +85,22 @@ const Price = styled.p`
 
   @media (max-width: 450px) {
     margin-bottom: 1.5rem;
+    font-size: 1.4rem;
   }
 `;
 
 const ProductInfo = ({
   detail: { album, author, genre, price, year, _id, description },
   user,
-	addToCart,
-	loading
+  addToCart,
+  loading
 }) => {
   const renderInfo = () => (
     <ProductDetails>
       <Album>{album}</Album>
       <Author>{author}</Author>
-      <Year>{year}</Year>
       <Genre>{genre.name}</Genre>
+      <Year>{year}</Year>
       <Description>{description}</Description>
       <Price>{price} $</Price>
       {user && user.userData.isAuth === true ? (
@@ -101,6 +108,7 @@ const ProductInfo = ({
           <Button
             variant="contained"
             color="secondary"
+            size="large"
             onClick={() => addToCart(_id)}
           >
             add to cart
@@ -120,6 +128,7 @@ const ProductInfo = ({
           color="secondary"
           component={Link}
           to="/login"
+          size="large"
         >
           add to cart
         </Button>
