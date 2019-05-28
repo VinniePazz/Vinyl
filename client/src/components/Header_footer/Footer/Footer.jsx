@@ -14,6 +14,11 @@ const FooterContainer = styled(Container)`
   padding: 2.5em 1em;
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.3);
+	text-align: center;
+
+	@media (max-width: 500px) {
+		font-size: 1rem;
+	}
 `;
 
 const LinkBar = styled.ul`

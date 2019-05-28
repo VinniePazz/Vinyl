@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const SVG = styled.svg`
   fill: rgba(255, 255, 255, 0.3);
-  width: ${({ width }) => width || "15px"};
-  height: ${({ height }) => height || "15px"};
+  width: ${({ width }) => width || "20px"};
+  height: ${({ height }) => height || "20px"};
   transition: fill 0.2s;
   &:hover {
     fill: ${({ activeSection }) => activeSection === 2 ? '#1f8a8a' : '#e76f51b8'} ;

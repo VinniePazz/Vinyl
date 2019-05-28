@@ -1,7 +1,8 @@
 html {
   box-sizing: border-box;
   background: #4b3645;
-  background-image: linear-gradient(to bottom, #4b3645, #1a1719);
+	background-image: linear-gradient(to bottom, #4b3645, #1a1719);
+	background-repeat: no-repeat;
 }
 
 @media (max-width: 960px) {

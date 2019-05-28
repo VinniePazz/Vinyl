@@ -225,7 +225,7 @@ export const Logo = styled.div`
   align-items: center;
   transition: color 0.2s;
 
-  @media (min-width: 860px) {
+  @media (min-width: 960px) {
     &:hover {
       color: #e76f51;
     }
@@ -246,7 +246,7 @@ export const Navlink = styled.a`
   transition: color 0.2s;
   position: relative;
 
-  @media (min-width: 860px) {
+  @media (min-width: 960px) {
     &:hover {
       color: #e76f51;
     }

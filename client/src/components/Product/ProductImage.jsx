@@ -95,7 +95,6 @@ class ProdImg extends Component {
               ? detail.images[0].url
               : `/images/placeholder.png`
           }
-          handleLightBox={() => this.handleLightBox(0)}
         />
         <Thumbs>{this.showThumbs(detail)}</Thumbs>
         {this.state.lightbox ? (
