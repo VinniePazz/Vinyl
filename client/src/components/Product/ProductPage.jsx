@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 import ProductInfo from "./ProductInfo";
 import ProductImage from "./ProductImage";

@@ -1,14 +1,14 @@
 import { createReducer } from "../app/utils/createReducer";
 import {
   GET_PRODUCTS_BY_SELL,
-	GET_PRODUCTS_BY_ARRIVAL,
-	GET_PRODUCTS_BY_SEARCH,
+  GET_PRODUCTS_BY_ARRIVAL,
   GET_GENRES,
   ADD_GENRE,
   GET_PRODUCTS_TO_SHOP,
+  GET_PRODUCTS_BY_SEARCH,
   ADD_PRODUCT,
-	CLEAR_PRODUCT,
-	GET_PRODUCT_DETAIL,
+  CLEAR_PRODUCT,
+  GET_PRODUCT_DETAIL,
   CLEAR_PRODUCT_DETAIL
 } from "../actions/types";
 
@@ -54,7 +54,7 @@ export const productsToShop = (state, payload) => {
 export const productsToSearch = (state, payload) => {
   return {
     ...state,
-    toSearch: payload,
+    toSearch: payload
   };
 };
 

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Field, reduxForm, SubmissionError } from "redux-form";
-import { toastr } from "react-redux-toastr";
 import styled from "styled-components";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";

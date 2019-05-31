@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import styled, { keyframes, css } from "styled-components";
+import React from "react";
+import styled from "styled-components";
 
 const CartCounter = ({ children }) => {
   return <Counter active={children > 0 ? true : false}>{children}</Counter>;

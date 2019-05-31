@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Field, reduxForm } from "redux-form";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -94,6 +93,7 @@ const VinylLink = styled.li`
   padding: 0.5em;
   display: flex;
   transition: 0.3s ease;
+  cursor: pointer;
 
   img {
     display: block;
@@ -145,6 +145,13 @@ class SearchBar extends Component {
     });
   };
 
+  handleLink = id => {
+    this.setState({
+      suggestions: []
+    });
+    this.props.history.push(`/product_detail/${id}`);
+  };
+
   handleChange = e => {
     this.setState({ value: e.target.value });
 
@@ -176,7 +183,11 @@ class SearchBar extends Component {
           {this.state.open ? (
             <Dropdown>
               {this.state.suggestions.map(vinyl => (
-                <VinylLink as={Link} to="/">
+                <VinylLink
+                  onClick={() => {
+                    this.handleLink(vinyl._id);
+                  }}
+                >
                   <img
                     src={vinyl.images[0].url || "/images/placeholder.png"}
                     alt={vinyl.author}
@@ -206,4 +217,4 @@ export default connect(
   {
     getProductsToSearch
   }
-)(reduxForm({ form: "searchForm" })(SearchBar));
+)(withRouter(SearchBar));

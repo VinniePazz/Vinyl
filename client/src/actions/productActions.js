@@ -2,10 +2,10 @@ import axios from "axios";
 import {
   GET_PRODUCTS_BY_SELL,
   GET_PRODUCTS_BY_ARRIVAL,
-  GET_PRODUCTS_BY_SEARCH,
   GET_GENRES,
   ADD_GENRE,
   GET_PRODUCTS_TO_SHOP,
+  GET_PRODUCTS_BY_SEARCH,
   ADD_PRODUCT,
   CLEAR_PRODUCT,
   GET_PRODUCT_DETAIL,
@@ -63,6 +63,8 @@ export const getProductsToSearch = () => async dispatch => {
 export const addProduct = product => async dispatch => {
   const response = await axios.post(`${PRODUCT_SERVER}/article`, product);
   dispatch({ type: ADD_PRODUCT, payload: response.data });
+  const responseToSearch = await axios.get(`${PRODUCT_SERVER}/search`);
+  dispatch({ type: GET_PRODUCTS_BY_SEARCH, payload: responseToSearch.data });
   return response.data;
 };
 

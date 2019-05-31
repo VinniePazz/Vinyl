@@ -1,6 +1,5 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import { withStyles } from "@material-ui/core/styles";
 
 const TextInput = React.memo(
   ({ input, label, type, meta: { touched, error, invalid }, ...custom }) => {

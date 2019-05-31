@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 
-import { Logo, Container } from "../Header/Header";
+import { Container } from "../Header/Header";
 
 import FacebookIcon from "../../icons/FacebookIcon";
 import GithubIcon from "../../icons/GithubIcon";

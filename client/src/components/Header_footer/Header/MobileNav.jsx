@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";

@@ -11,8 +11,6 @@ const Hero = styled.div`
   background-image: ${({ image }) =>
     `linear-gradient(to bottom, #4b36451a, #1a171954), url(${image})`};
 
-  /* linear-gradient(to bottom,#4b364573,#2d1e29f2),url(/images/featured/home-vinyl-2.jpg) */
-
   @media (max-width: 600px) {
     background-position: 75% 50%;
   }

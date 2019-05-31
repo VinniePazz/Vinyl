@@ -125,7 +125,7 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
       article: doc
     });
   } catch (error) {
-		res.json({ success: false, error });
+    res.json({ success: false, error });
   }
 });
 
@@ -179,15 +179,15 @@ app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
 
   user.save((error, doc) => {
-		if (error) return res.json({ success: false, error });
+    if (error) return res.json({ success: false, error });
     user.generateToken((error, user) => {
       if (error) return res.status(400).send(error);
       res
         .cookie("w_auth", user.token)
         .status(200)
         .json({
-					success: true,
-					user: doc
+          success: true,
+          user: doc
         });
     });
   });
@@ -393,8 +393,8 @@ app.post("/api/users/purchase", auth, (req, res) => {
             res.status(200).json({
               successPurchase: true,
               cart: user.cart,
-							cartDetail: [],
-							history: user.history
+              cartDetail: [],
+              history: user.history
             });
           }
         );
