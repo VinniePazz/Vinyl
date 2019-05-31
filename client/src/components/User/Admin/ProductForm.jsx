@@ -35,19 +35,26 @@ const validate = values => {
 
 const Container = styled.div`
   width: 50%;
-	margin: 0 auto;
-	
-	@media (max-width: 740px) {
-		width: 75%;
-	}
+  margin: 0 auto;
 
-	@media (max-width: 500px) {
-		width: 100%;
-	}
+  @media (max-width: 740px) {
+    width: 75%;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+  }
 `;
 
 class ProductForm extends Component {
-  state = { images: [], uploading: false };
+  constructor(props) {
+    super(props);
+    this.textArea = React.createRef();
+    this.state = {
+      images: [],
+      uploading: false
+    };
+  }
 
   async componentDidMount() {
     await this.props.getGenres();
@@ -102,7 +109,16 @@ class ProductForm extends Component {
       uploading: false,
       images: [...this.state.images, response.data]
     });
-  };
+	};
+	
+	handleFocus = () => {
+		console.log(this.textArea.current)
+		this.textArea.current.placeholder = " ";
+	}
+
+	handleBlur = () => {
+		this.textArea.current.placeholder = "Describe vinyl content here";
+	}
 
   render() {
     const {
@@ -156,11 +172,15 @@ class ProductForm extends Component {
               component={TextInput}
             />
             <Field
+              ref={this.textArea}
               name="description"
               label="description"
               placeholder="describe vinyl information here"
               rows={5}
               component={TextArea}
+							value="describe"
+              onFocus={this.handleFocus}
+              onBlur={this.handleBlur}
             />
             <Button
               type="submit"

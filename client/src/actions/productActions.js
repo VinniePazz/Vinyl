@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   GET_PRODUCTS_BY_SELL,
   GET_PRODUCTS_BY_ARRIVAL,
+  GET_PRODUCTS_BY_SEARCH,
   GET_GENRES,
   ADD_GENRE,
   GET_PRODUCTS_TO_SHOP,
@@ -13,17 +14,16 @@ import {
 
 import { PRODUCT_SERVER } from "../app/utils/misc";
 
-export const getProductDetail = (id) => async dispatch => {
-
-	const response = await axios.get(
+export const getProductDetail = id => async dispatch => {
+  const response = await axios.get(
     `${PRODUCT_SERVER}/articles_by_id?id=${id}&type=single`
   );
   dispatch({ type: GET_PRODUCT_DETAIL, payload: response.data });
-}
+};
 
 export const clearProductDetail = () => {
-  return({ type: CLEAR_PRODUCT_DETAIL, payload: "" });
-}
+  return { type: CLEAR_PRODUCT_DETAIL, payload: "" };
+};
 
 export const getProductsBySell = () => async dispatch => {
   const response = await axios.get(
@@ -55,6 +55,11 @@ export const getProductsToShop = (
   });
 };
 
+export const getProductsToSearch = () => async dispatch => {
+  const response = await axios.get(`${PRODUCT_SERVER}/search`);
+  dispatch({ type: GET_PRODUCTS_BY_SEARCH, payload: response.data });
+};
+
 export const addProduct = product => async dispatch => {
   const response = await axios.post(`${PRODUCT_SERVER}/article`, product);
   dispatch({ type: ADD_PRODUCT, payload: response.data });
@@ -76,10 +81,10 @@ export const getGenres = () => async dispatch => {
 
 export const addGenre = (genre, existingGenres) => async dispatch => {
   const response = await axios.post(`${PRODUCT_SERVER}/genre`, genre);
-	if (!response.data.success) {
-		return response.data;
-	}
-	
+  if (!response.data.success) {
+    return response.data;
+  }
+
   let genres = [...existingGenres, response.data.genre];
 
   dispatch({

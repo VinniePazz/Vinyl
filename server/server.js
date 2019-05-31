@@ -129,6 +129,13 @@ app.post("/api/product/article", auth, admin, async (req, res) => {
   }
 });
 
+app.get("/api/product/search", (req, res) => {
+  Product.find({}, (error, products) => {
+    if (error) return res.status(400).send(error);
+    res.status(200).send(products);
+  });
+});
+
 //=================================
 //              GENRE
 //=================================

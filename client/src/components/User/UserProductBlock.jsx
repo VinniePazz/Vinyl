@@ -10,21 +10,22 @@ const Product = styled.div`
   display: flex;
   padding: 1em;
   transition: all 0.2s ease;
-  border: 1px solid 	#d6d6d63d;
+  border: 1px solid #d6d6d63d;
   margin-bottom: 1em;
 
-	& h4 {
-		font-weight: 500;
-	}
+  & h4 {
+    font-weight: 500;
+  }
 
-	@media (max-width: 499px) {
-		flex-direction: column;
-		align-items: center;
+  @media (max-width: 499px) {
+    flex-direction: column;
+    align-items: center;
+    font-size: 18px;
 
-		& > *:not(:last-child) {
-			margin-bottom: 1em;
-		}
-	}
+    & > *:not(:last-child) {
+      margin-bottom: 1em;
+    }
+  }
 `;
 
 const ProductImage = styled.div`
@@ -41,7 +42,11 @@ const ProductInfo = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 0.5em;
-	font-weight: 500;
+  font-weight: 500;
+
+  h4 {
+    color: #f5f5f56b;
+  }
 
   div {
     text-align: center;
@@ -53,8 +58,11 @@ const Quantity = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-	font-weight: 500;
+  font-weight: 500;
 
+  h4 {
+    color: #f5f5f56b;
+  }
 `;
 
 const Price = styled.div`
@@ -63,15 +71,17 @@ const Price = styled.div`
   flex-direction: column;
   align-items: center;
   font-weight: bold;
-	color: #e76f51;
 
+	h4 {
+		color: #f5f5f56b;
+  }
 `;
 
 const Remove = styled.div`
-  flex-basis: 10%;;
+  flex-basis: 10%;
   display: flex;
   flex-direction: column;
-	justify-content: flex-start;
+  justify-content: flex-start;
 `;
 
 const UserProductBlock = ({ products, removeItem }) => {

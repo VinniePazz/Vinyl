@@ -8,16 +8,18 @@ import MediaQuery from "react-responsive";
 
 import { connect } from "react-redux";
 import { logout } from "../../../actions/userActions";
+import { getProductsToSearch } from "../../../actions/productActions";
 
 import ShoppingCart from "../../icons/ShoppingCart";
 import CartCounter from "./CartCounter";
 import MobileToogle from "./MobileToogle";
 import MobileNav from "./MobileNav";
+import SearchBar from "./SearchBar";
 
 class Header extends Component {
   state = {
     openDrawer: false
-	};
+  };
 
   cartLink = item => {
     const user = this.props.user.userData;
@@ -150,6 +152,7 @@ class Header extends Component {
           <Logo as={Link} to="/">
             vinyl
           </Logo>
+          <SearchBar />
           <MediaQuery query="(min-width: 600px)">
             <NavBar>{this.renderLinks(links)}</NavBar>
           </MediaQuery>
@@ -286,5 +289,5 @@ const mapStateToProps = ({ user }) => {
 
 export default connect(
   mapStateToProps,
-  { logout }
+  { logout, getProductsToSearch }
 )(withRouter(withStyles(styles)(Header)));

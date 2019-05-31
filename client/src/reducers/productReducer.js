@@ -1,7 +1,8 @@
 import { createReducer } from "../app/utils/createReducer";
 import {
   GET_PRODUCTS_BY_SELL,
-  GET_PRODUCTS_BY_ARRIVAL,
+	GET_PRODUCTS_BY_ARRIVAL,
+	GET_PRODUCTS_BY_SEARCH,
   GET_GENRES,
   ADD_GENRE,
   GET_PRODUCTS_TO_SHOP,
@@ -50,6 +51,13 @@ export const productsToShop = (state, payload) => {
   };
 };
 
+export const productsToSearch = (state, payload) => {
+  return {
+    ...state,
+    toSearch: payload,
+  };
+};
+
 export const addProduct = (state, payload) => {
   return {
     ...state,
@@ -83,6 +91,7 @@ export default createReducer(initialState, {
   [GET_PRODUCTS_BY_ARRIVAL]: byArrival,
   [GET_GENRES]: genres,
   [GET_PRODUCTS_TO_SHOP]: productsToShop,
+  [GET_PRODUCTS_BY_SEARCH]: productsToSearch,
   [ADD_PRODUCT]: addProduct,
   [CLEAR_PRODUCT]: clearProduct,
   [GET_PRODUCT_DETAIL]: getProductDetail,
