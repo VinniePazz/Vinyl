@@ -15,6 +15,7 @@ A classic example of a commercial website with a hint of e-commerse store, where
 - [x] Browsing, buying, adding, editing vinyls and genres of music
 - [x] Authorization via normal e-mail flow with **JWT**
 - [x] Minimalistic implementation of the user profile with history of buying and email/password info
+- [x] File-iploading with **Cloudinary service**
 - [x] Search of all products existing in the store
 - [ ] Purchase flow via some third-party service with paypal, cards, etc was not implemented for simplicity reasons!  Cause i appreciate your time 😉
 - [x] Cool realistic physic-based 3d animation of card by majestic **react-spring** library. I couldn't to not mention it 😊. Sad note: (not working properly in IE, Edge and some versions Safari)
