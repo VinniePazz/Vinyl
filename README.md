@@ -23,4 +23,4 @@ A classic example of a commercial website with a hint of e-commerse store, where
 That's all the main functionallity presented on the app 🤘 Feel free to visit site and trying to edit something. Your private info isnt used anywhere!!! Cause site was created only with educational intention in mind!
 
 
-###### You can  freely send me any suggestions, proposals ets on my mail.
+###### You can  freely send me any suggestions, proposals ets on my <a href="mailto:dimasmakouz@gmail.com" target="blank">mail</a>
