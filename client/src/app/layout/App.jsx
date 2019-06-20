@@ -18,6 +18,8 @@ import ProductPage from "../../components/Product/ProductPage";
 import UserCart from "../../components/User/UserCart";
 import EditProfileInfo from "../../components/User/EditProfileInfo";
 
+import NotFound from "../common/NotFound";
+
 class App extends Component {
   componentDidMount() {
     window.addEventListener(
@@ -63,6 +65,7 @@ class App extends Component {
             <Route path="/login" exact component={Auth(Login, false)} />
             <Route path="/shop" exact component={Auth(Shop, null)} />
             <Route path="/" exact component={Auth(Home, null)} />
+            <Route component={NotFound} />
           </Switch>
         </Layout>
       </ScrollToTop>

@@ -76,7 +76,7 @@ const HomeCard = ({ images, album, author, price, _id }) => {
   return (
     <Card as={Link} to={`/product_detail/${_id}`}>
       <CardImage
-        src={images.length > 0 ? images[0].url : "/images/placeholder.png"}
+        src={images.length > 0 ? images[0].url : "/images/placeholder.jpg"}
       />
       <CardContent>
         <h3>{album}</h3>

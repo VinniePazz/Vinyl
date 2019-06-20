@@ -31,7 +31,7 @@ const ShopCard = ({
     >
       <CollImage
         alt={`${author} / ${album}`}
-        src={images.length > 0 ? images[0].url : "/images/placeholder.png"}
+        src={images.length > 0 ? images[0].url : "/images/placeholder.jpg"}
       />
       <CollContent>
         <h3>{album}</h3>

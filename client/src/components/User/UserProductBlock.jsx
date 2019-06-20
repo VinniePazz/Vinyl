@@ -89,7 +89,7 @@ const UserProductBlock = ({ products, removeItem }) => {
     if (images.length > 0) {
       return images[0].url;
     } else {
-      return "/images/placeholder.png";
+      return "/images/placeholder.jpg";
     }
   };
 

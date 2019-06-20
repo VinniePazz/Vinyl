@@ -93,7 +93,7 @@ class ProdImg extends Component {
           image={
             detail.images.length > 0
               ? detail.images[0].url
-              : `/images/placeholder.png`
+              : `/images/placeholder.jpg`
           }
         />
         <Thumbs>{this.showThumbs(detail)}</Thumbs>
